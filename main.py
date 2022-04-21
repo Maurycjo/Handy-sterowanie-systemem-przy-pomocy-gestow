@@ -1,11 +1,13 @@
+import time
 
 from SystemController import  SystemController
 import keyboard
-
+from ChromeController import ChromeController
 controller=SystemController()
+chrome=ChromeController()
 
 volume=float(controller.get_windowsVolume())
-print(volume)
+
 
 while True:
     key=0
@@ -17,7 +19,18 @@ while True:
     elif key=='3':
         controller.windowsVolumeUp()
     elif key=='4':
-        volume-=3
         controller.windowsVolumeDown()
-    print (volume)
-    print(key)
+
+    elif key>='5' and key <='9':
+        if key=='5':
+            chrome.initWindow()
+        elif key=='6':
+            chrome.newWindow()
+        elif key=='7':
+            chrome.openYt()
+        elif key=='8':
+            chrome.closeCurrentTab()
+        elif key=='9':
+            chrome.switchTab()
+        time.sleep(1)
+

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1d9d0122-956d-41d9-b724-78a6a7d72898" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ChromeController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SystemController.py" beforeDir="false" afterPath="$PROJECT_DIR$/SystemController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +78,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1650565457199</updated>
-      <workItem from="1650565467955" duration="5220000" />
+      <workItem from="1650565467955" duration="8450000" />
     </task>
     <servers />
   </component>
@@ -97,6 +97,6 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Sterowanie_interfejsem_system_w_operacyjnym_przy_pomocy_gestow$main.coverage" NAME="main Coverage Results" MODIFIED="1650570723051" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Sterowanie_interfejsem_system_w_operacyjnym_przy_pomocy_gestow$main.coverage" NAME="main Coverage Results" MODIFIED="1650573904150" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
