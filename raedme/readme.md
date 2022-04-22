@@ -1,1 +1,1 @@
-Sterowanie interfejsem systemu przy pomocy bibliotek: openCv
+Sterowanie interfejsem systemu przy pomocy bibliotek : openCv
