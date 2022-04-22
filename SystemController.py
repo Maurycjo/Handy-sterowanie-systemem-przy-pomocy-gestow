@@ -1,8 +1,11 @@
 
 import platform
 import pyautogui
+import ctypes
 try:
-    from ctypes import cast, POINTER
+    #import win32gui
+    #import win32con
+    from ctypes import cast, POINTER,wintypes as w
     from comtypes import CLSCTX_ALL
 except ImportError:
     pass
@@ -25,6 +28,37 @@ class SystemController(object):
         self.operating_system_name=platform.system()
         self.currentVolume=self.volume.GetMasterVolumeLevel()
 
+
+    def minimize_window(self):
+        user32 = ctypes.WinDLL('user32')
+        user32.GetForegroundWindow.argtypes = ()
+        user32.GetForegroundWindow.restype = w.HWND
+        user32.ShowWindow.argtypes = w.HWND, w.BOOL
+        user32.ShowWindow.restype = w.BOOL
+        SW_MINIMIZE = 6
+        hWnd = user32.GetForegroundWindow()
+        user32.ShowWindow(hWnd, SW_MINIMIZE)
+
+
+    def maximize_window(self):
+        user32 = ctypes.WinDLL('user32')
+        user32.GetForegroundWindow.argtypes = ()
+        user32.GetForegroundWindow.restype = w.HWND
+        user32.ShowWindow.argtypes = w.HWND, w.BOOL
+        user32.ShowWindow.restype = w.BOOL
+        SW_MAXIMIZE = 3
+        hWnd = user32.GetForegroundWindow()
+        user32.ShowWindow(hWnd, SW_MAXIMIZE)
+
+
+    def close_window(self):
+        user32 = ctypes.WinDLL('user32')
+        user32.GetForegroundWindow.argtypes = ()
+        user32.GetForegroundWindow.restype = w.HWND
+        user32.ShowWindow.argtypes = w.HWND, w.BOOL
+        user32.ShowWindow.restype = w.BOOL
+        hWnd = user32.GetForegroundWindow()
+        user32.ShowWindow(hWnd, 0)
 
     @property
     def scrollSpeed(self):
