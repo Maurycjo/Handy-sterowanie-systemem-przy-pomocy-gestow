@@ -2,6 +2,7 @@
 import platform
 import pyautogui
 import ctypes
+
 try:
     #import win32gui
     #import win32con
@@ -27,8 +28,6 @@ class SystemController(object):
     def __init__(self):
         self.operating_system_name=platform.system()
         self.currentVolume=self.volume.GetMasterVolumeLevel()
-
-
     def minimize_window(self):
         user32 = ctypes.WinDLL('user32')
         user32.GetForegroundWindow.argtypes = ()
@@ -39,7 +38,6 @@ class SystemController(object):
         hWnd = user32.GetForegroundWindow()
         user32.ShowWindow(hWnd, SW_MINIMIZE)
 
-
     def maximize_window(self):
         user32 = ctypes.WinDLL('user32')
         user32.GetForegroundWindow.argtypes = ()
@@ -49,8 +47,6 @@ class SystemController(object):
         SW_MAXIMIZE = 3
         hWnd = user32.GetForegroundWindow()
         user32.ShowWindow(hWnd, SW_MAXIMIZE)
-
-
     def close_window(self):
         user32 = ctypes.WinDLL('user32')
         user32.GetForegroundWindow.argtypes = ()
@@ -58,8 +54,7 @@ class SystemController(object):
         user32.ShowWindow.argtypes = w.HWND, w.BOOL
         user32.ShowWindow.restype = w.BOOL
         hWnd = user32.GetForegroundWindow()
-        user32.ShowWindow(hWnd, 0)
-
+        user32.ShowWindow(hWnd,0)
     @property
     def scrollSpeed(self):
         return self._scrollSpeed
@@ -72,8 +67,6 @@ class SystemController(object):
 
     def scrollDown(self, speed=_scrollSpeed):
         pyautogui.scroll(-self.scrollSpeed)
-
-
 
     def windowsVolumeUp(self):
         value=self.get_windowsVolume()+self.volumeChange
@@ -88,7 +81,14 @@ class SystemController(object):
             value=-65.25
         self.currentVolume=value
         self.volume.SetMasterVolumeLevel(self.currentVolume, None)
-
+    def zoom_in(self):
+        pyautogui.keyDown('ctrl')
+        pyautogui.press('+')
+        pyautogui.keyUp('ctrl')
+    def zoom_out(self):
+        pyautogui.keyDown('ctrl')
+        pyautogui.press('-')
+        pyautogui.keyUp('ctrl')
 
     def get_windowsVolume(self):
         return self.currentVolume

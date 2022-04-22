@@ -32,13 +32,17 @@ while True:
             chrome.closeCurrentTab()
         elif key=='9':
             chrome.switchTab()
-        time.sleep(1)
-    elif key == 'a':
+    elif key=='a':
         controller.minimize_window()
-    elif key == 'b':
-            controller.maximize_window()
-    elif key == 'c':
+    elif key=='b':
+        controller.maximize_window()
+    elif key=='c':
         controller.close_window()
-
-
+    elif key=='d':
+        controller.zoom_in()
+    elif key=='e':
+        controller.zoom_out()
+    elif key == 'q':
+        break
+    time.sleep(1)
 
