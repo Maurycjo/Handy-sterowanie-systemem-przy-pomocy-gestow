@@ -1,5 +1,7 @@
 from selenium import webdriver
 
+#install ChromeDriver
+#link: https://sites.google.com/chromium.org/driver/downloads?authuser=0
 
 class ChromeController(object):
     PATH="C:\Program Files (x86)\ChromeDriver\chromedriver.exe"
