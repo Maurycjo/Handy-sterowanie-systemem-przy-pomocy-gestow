@@ -13,7 +13,8 @@ except ImportError:
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
 class SystemController(object):
-
+    def __init__(self):
+        pyautogui.FAILSAFE=False
 #scroll
     _scrollSpeed=200
 
