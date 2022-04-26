@@ -147,7 +147,7 @@ def start_windows_gesture_library():
                 controller.scrollUp()
                 gesture = True
                 print("gest17")
-            elif our_values[0][18] > 0.80 and position==18:
+            elif our_values[0][18] > 0.90 and position==18:
                 time_before = datetime.datetime.now()
                 gesture = True
                 print("gest18")
