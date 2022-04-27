@@ -89,6 +89,16 @@ class SystemController(object):
         pyautogui.keyDown('ctrl')
         pyautogui.press('-')
         pyautogui.keyUp('ctrl')
+        
+    def brightness_up(self):
+        pyautogui.keyDown('fn')
+        pyautogui.press('up')
+        pyautogui.keyUp('fn')
+    
+    def brightness_down(self):
+        pyautogui.keyDown('fn')
+        pyautogui.press('down')
+        pyautogui.keyUp('fn')
 
     def get_windowsVolume(self):
         return self.currentVolume
