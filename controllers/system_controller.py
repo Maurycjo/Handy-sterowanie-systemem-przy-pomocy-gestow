@@ -1,6 +1,6 @@
 import platform
-import pyautogui
 import ctypes
+import pyautogui
 import screen_brightness_control as sbc
 try:
     # import win32gui
@@ -11,20 +11,21 @@ except ImportError:
     pass
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
-class SystemController(object):
+
+class SystemController:
     # scroll
-    _scrollSpeed = 200
+    _scroll_speed = 200
 
     # windows volume
     devices = AudioUtilities.GetSpeakers()
-    interface = devices.Activate(
-        IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    interface = devices.Activate(IAudioEndpointVolume._iid_,
+                                 CLSCTX_ALL, None)
     volume = cast(interface, POINTER(IAudioEndpointVolume))
-    volumeChange = 0.6525
+    volume_change = 0.6525
 
     def __init__(self):
         self.operating_system_name = platform.system()
-        self.currentVolume = self.volume.GetMasterVolumeLevel()
+        self.current_volume = self.volume.GetMasterVolumeLevel()
 
     def minimize_window(self):
         user32 = ctypes.WinDLL('user32')
@@ -56,32 +57,32 @@ class SystemController(object):
         user32.ShowWindow(hWnd, 0)
 
     @property
-    def scrollSpeed(self):
-        return self._scrollSpeed
+    def scroll_speed(self):
+        return self._scroll_speed
 
-    @scrollSpeed.setter
-    def scrollSpeed(self, speed):
-        self._scrollSpeed = speed
+    @scroll_speed.setter
+    def scroll_speed(self, speed):
+        self._scroll_speed = speed
 
-    def scrollUp(self, speed=_scrollSpeed):
-        pyautogui.scroll(self.scrollSpeed)
+    def scroll_up(self, speed=_scroll_speed):
+        pyautogui.scroll(self.scroll_speed)
 
-    def scrollDown(self, speed=_scrollSpeed):
-        pyautogui.scroll(-self.scrollSpeed)
+    def scroll_down(self, speed=_scroll_speed):
+        pyautogui.scroll(-self.scroll_speed)
 
-    def windowsVolumeUp(self):
-        value = self.get_windowsVolume() + self.volumeChange
+    def windows_volume_up(self):
+        value = self.get_windows_volume() + self.volume_change
         if value > 0:
             value = 0
-        self.currentVolume = value
-        self.volume.SetMasterVolumeLevel(self.currentVolume, None)
+        self.current_volume = value
+        self.volume.SetMasterVolumeLevel(self.current_volume, None)
 
-    def windowsVolumeDown(self):
-        value = self.get_windowsVolume() - self.volumeChange
+    def windows_volume_down(self):
+        value = self.get_windows_volume() - self.volume_change
         if value < -65.25:
             value = -65.25
-        self.currentVolume = value
-        self.volume.SetMasterVolumeLevel(self.currentVolume, None)
+        self.current_volume = value
+        self.volume.SetMasterVolumeLevel(self.current_volume, None)
 
     def zoom_in(self):
         pyautogui.keyDown('ctrl')
@@ -95,26 +96,23 @@ class SystemController(object):
 
     def brightness_up(self):
         current_brightness = sbc.get_brightness()
-        if(current_brightness[0]<=90):
+        if current_brightness[0]<=90:
             sbc.set_brightness(current_brightness[0]+10)
         else:
             sbc.set_brightness(100)
 
     def brightness_down(self):
         current_brightness=sbc.get_brightness()
-        if ( current_brightness[0]>= 10):
+        if current_brightness[0]>= 10:
             sbc.set_brightness(current_brightness[0] - 10)
         else:
             sbc.set_brightness(0)
 
-    def get_windowsVolume(self):
-        return self.currentVolume
+    def get_windows_volume(self):
+        return self.current_volume
 
     def scroll_right(self):
         pyautogui.press('right')
+
     def scroll_left(self):
         pyautogui.press('left')
-
-
-
-
