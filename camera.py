@@ -1,24 +1,21 @@
-#!/usr/bin/env python
-# coding: utf-8
+# opencv koniecznie w wersji 3.4.2.16- na innych nie działa
 
-                                            #opencv koniecznie w wersji 3.4.2.16- na innych nie działa
-
-
-from models import ModelType,ModelFactory
 from keras.layers import Input
 from keras.models import Model
-import pandas as pd
 from collections import deque
 import numpy as np
 import datetime
 import cv2
-from SystemController import  SystemController
-from ChromeController import ChromeController
-controller=SystemController()
-chrome=ChromeController()
+
+from controllers.system_controller import SystemController
+from controllers.chrome_controller import ChromeController
+from gesture_liblary.models import ModelType, ModelFactory
+
 
 def start_windows_gesture_library():
 
+    controller = SystemController()
+    chrome = ChromeController()
 
     model = ModelFactory(rgbpath='trained_models/rgblstm.h5', trained=True).getModel(ModelType.RGB)
 
@@ -29,7 +26,6 @@ def start_windows_gesture_library():
     x = model.layers[1].layer(rgbinput)
     for layer in model.layers[2:-3]:
         x = layer.layer(x)
-    x
 
     encoder = Model(inputs=rgbinput, outputs=x)
     encoder.summary()
@@ -38,17 +34,13 @@ def start_windows_gesture_library():
     #
     x = model.layers[-2](lstminput)
     x = model.layers[-1](x)
-    x
 
     lstm = Model(inputs=lstminput, outputs=x)
     lstm.summary()
-
-    valid = pd.read_csv('20bnjester_csv_files/valid.csv')
-
     q = deque([np.zeros(1024) for i in range(10)])  # queue of extracted features , initialy filled with zeros
 
-    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)    #parametryzacja-wybór kamery w aplikacji
-    time_before=datetime.datetime.now()
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)    # parametryzacja-wybór kamery w aplikacji
+    time_before = datetime.datetime.now()
     time_now=time_before
     gesture=False
     no_wait=False
@@ -223,3 +215,6 @@ def start_windows_gesture_library():
 
     cap.release()
     cv2.destroyAllWindows()
+
+if __name__ =='__main__':
+    start_windows_gesture_library()
