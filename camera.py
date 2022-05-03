@@ -170,7 +170,8 @@ def start_windows_gesture_library():
             elif max_value > 0.9 and position == 19:
                 time_before = datetime.datetime.now()
                 gesture = True
-                wait_time = 1.0
+                wait_time = 1.5
+                controller.close_window()
                 print("gest19")
             elif max_value > 0.9 and position == 20:
                 time_before = datetime.datetime.now()
@@ -190,7 +191,8 @@ def start_windows_gesture_library():
             elif max_value > 0.9 and position == 23:
                 time_before = datetime.datetime.now()
                 gesture = True
-                wait_time = 1.0
+                wait_time = 1.5
+                controller.maximize_window()
                 print("gest23")
             elif max_value > 0.9 and position == 24:
                 time_before = datetime.datetime.now()
@@ -202,7 +204,8 @@ def start_windows_gesture_library():
                 time_before = datetime.datetime.now()
                 gesture = True
                 print("gest25")
-                wait_time = 1.0
+                wait_time = 1.5
+                controller.minimize_window()
             elif max_value > 0.9 and position == 26:
                 time_before = datetime.datetime.now()
                 gesture = True
