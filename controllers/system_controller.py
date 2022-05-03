@@ -116,3 +116,8 @@ class SystemController:
 
     def scroll_left(self):
         pyautogui.press('left')
+
+    def switch_window(self):
+        pyautogui.keyDown('alt')
+        pyautogui.press('tab')
+        pyautogui.keyUp('alt')
