@@ -41,12 +41,12 @@ def start_windows_gesture_library():
 
     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)    # parametryzacja-wybór kamery w aplikacji
     time_before = datetime.datetime.now()
-    time_now=time_before
-    gesture=False
-    no_wait=False
-    position=0
-    max_value=0.0
-    wait_time=1.0
+    time_now = time_before
+    gesture = False
+    no_wait = False
+    position = 0
+    max_value = 0.0
+    wait_time = 1.0
     while True:
         ret, frame = cap.read()
         cv2.imshow('Obraz', frame)
@@ -59,9 +59,9 @@ def start_windows_gesture_library():
         if float(c.total_seconds()) > wait_time:    #Zapobiega wykrywaniu jednego wykonanego gestu kilka razy
             no_wait=True
         else:
-            no_wait=False
-        if gesture==False or no_wait:
-            gesture=False
+            no_wait = False
+        if gesture is False or no_wait:
+            gesture = False
             position=0
             max_value = -10.0
             for i in range(len(our_values[0])):
@@ -216,5 +216,6 @@ def start_windows_gesture_library():
     cap.release()
     cv2.destroyAllWindows()
 
-if __name__ =='__main__':
+
+if __name__ == '__main__':
     start_windows_gesture_library()
