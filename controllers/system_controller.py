@@ -1,7 +1,10 @@
 import platform
 import ctypes
 import pyautogui
-import screen_brightness_control as sbc
+try:
+    import screen_brightness_control as sbc
+except:
+    pass
 try:
     # import win32gui
     # import win32con
@@ -116,3 +119,8 @@ class SystemController:
 
     def scroll_left(self):
         pyautogui.press('left')
+
+    def switch_window(self):
+        pyautogui.keyDown('alt')
+        pyautogui.press('tab')
+        pyautogui.keyUp('alt')
