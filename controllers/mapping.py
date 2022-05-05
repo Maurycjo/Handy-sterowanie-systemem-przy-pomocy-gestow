@@ -2,6 +2,9 @@ from controllers.functions_getter import FunctionsGetter
 from controllers.system_controller import SystemController
 from controllers.chrome_controller import ChromeController
 import json
+from plyer import notification
+
+
 class Mapping():
     def __init__(self):
         self.gesture={}
@@ -26,6 +29,13 @@ class Mapping():
 
     def gesture_action(self,number):
         print(str(number))
+        notification.notify(
+            title='Gesture detected!',
+            message=str(number),
+            app_name='Handy',
+            #app_icon='path/to/the/icon.png',
+            timeout=1
+        )
         contains=False
         key2=None
         for key in self.gesture.keys():
