@@ -8,8 +8,8 @@ import pandas as pd
 from utils import RgbGenerator
 from models import ModelFactory,ModelType
 import numpy as np  #linia dodana
-train=pd.read_csv('../20bnjester_csv_files/train.csv')
-valid=pd.read_csv('../20bnjester_csv_files/valid.csv')
+train=pd.read_csv('../neuron_network_files/train.csv')
+valid=pd.read_csv('../neuron_network_files/valid.csv')
 
 
 model =ModelFactory(rgbpath='trained_models/rgblstm.h5',trained=True).getModel(ModelType.RGB)
