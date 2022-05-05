@@ -124,3 +124,5 @@ class SystemController:
         pyautogui.keyDown('alt')
         pyautogui.press('tab')
         pyautogui.keyUp('alt')
+    def mouse_start(self):
+        pass

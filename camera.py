@@ -68,166 +68,131 @@ class Camera:
                     if our_values[0][i] > max_value:
                         max_value = our_values[0][i]
                         position = i
-                if max_value > 0.9 and position == 0:
-                    time_before=datetime.datetime.now()
-                    print("doing something, no gesture")
-                elif max_value > 0.9 and position == 1:
+                if max_value > 0.9 and position == 1:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0     #czas oczekiwania na następny gest
+                    wait_time = 1.3     #czas oczekiwania na następny gest
                     print("gest1")
                     self.gesture_map.gesture_action(1)
-                elif max_value > 0.9 and position == 2:
-                    print("no gesture")
                 elif max_value > 0.9 and position == 3:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest3")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(2)
                 elif max_value > 0.9 and position == 4:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest4")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(3)
                 elif max_value > 0.9 and position == 5:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest5")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(4)
                 elif max_value > 0.9 and position == 6:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest6")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(5)
                 elif max_value > 0.9 and position == 7:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest7")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(6)
                 elif max_value > 0.9 and position == 8:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest8")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(7)
                 elif max_value > 0.9 and position == 9:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest9")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(8)
                 elif max_value > 0.9 and position == 10:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest10")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(9)
                 elif max_value > 0.7 and position == 11:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    print("gest11")
-                    wait_time = 1.0
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(10)
-
                 elif max_value > 0.7 and position == 12:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest12")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(11)
                 elif max_value > 0.7 and position == 13:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest13")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(12)
                 elif max_value > 0.9 and position == 14:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest14")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(13)
                 elif max_value > 0.7 and position == 15:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest15")
-
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(14)
                 elif max_value > 0.9 and position == 16:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest16")
-
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(15)
                 elif max_value > 0.9 and position == 17:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest17")
-
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(16)
                 elif max_value > 0.90 and position == 18:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest18")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(17)
-
                 elif max_value > 0.9 and position == 19:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.5
-
-                    print("gest19")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(18)
                 elif max_value > 0.9 and position == 20:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest20")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(19)
                 elif max_value > 0.9 and position == 21:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest21")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(20)
                 elif max_value > 0.9 and position == 22:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest22")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(21)
                 elif max_value > 0.9 and position == 23:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.5
-                    print("gest23")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(22)
                 elif max_value > 0.9 and position == 24:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest24")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(23)
                 elif max_value > 0.9 and position == 25:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    print("gest25")
-                    wait_time = 1.5
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(24)
                 elif max_value > 0.9 and position == 26:
                     time_before = datetime.datetime.now()
                     gesture = True
-                    wait_time = 1.0
-                    print("gest26")
+                    wait_time = 1.3
                     self.gesture_map.gesture_action(25)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):

@@ -24,7 +24,8 @@ class FunctionsGetter:
             "brightness_down": self.controller.brightness_down ,
             "scroll_right": self.controller.scroll_right ,
             "scroll_left": self.controller.scroll_left ,
-            "switch_window": self.controller.switch_window
+            "switch_window": self.controller.switch_window ,
+            "mouse_start": self.controller.mouse_start
         }
         self.dct = {**self.dct, **self.u_dict}
 
