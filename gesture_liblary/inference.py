@@ -11,7 +11,6 @@ import numpy as np  #linia dodana
 train=pd.read_csv('../neuron_network_files/train.csv')
 valid=pd.read_csv('../neuron_network_files/valid.csv')
 
-
 model =ModelFactory(rgbpath='trained_models/rgblstm.h5',trained=True).getModel(ModelType.RGB)
 model.summary()
 
@@ -21,9 +20,7 @@ predict_gen = RgbGenerator(valid)
 
 y_pred = model.predict_generator(predict_gen,1750)
 
-
 y_pred = np.argmax(y_pred,axis=1)
-
 
 y_true = np.argmax(valid.iloc[:14000,1:].values,axis=1)
 

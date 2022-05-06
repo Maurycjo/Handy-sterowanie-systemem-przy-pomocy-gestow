@@ -12,10 +12,13 @@ from controllers.mapping import Mapping
 from gesture_liblary.models import ModelType, ModelFactory
 
 class Camera:
+    def __init__(self):
+        self.recognize==True
+    def stop_gesture_recognition(self):
+        self.recognize=False
     def start_windows_gesture_library(self):
 
         self.gesture_map = Mapping()
-
 
         model = ModelFactory(rgbpath='trained_models/rgblstm.h5', trained=True).getModel(ModelType.RGB)
 
@@ -48,6 +51,8 @@ class Camera:
         max_value = 0.0
         wait_time = 1.0
         while True:
+            if self.recognize is False:
+                return
             ret, frame = cap.read()
             cv2.imshow('Obraz', frame)
             q.popleft()

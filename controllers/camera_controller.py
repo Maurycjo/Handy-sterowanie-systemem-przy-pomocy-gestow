@@ -3,7 +3,7 @@ class ApplicationController():
     def __init__(self):
         self.camera_list=[]
         self.camera_list=self.get_all_camera_from_system()
-        self.used_camera_number=self.camera_list[0]
+        self.used_camera_number=0
         self.cap=cv2.VideoCapture(self.used_camera_number)
 
     def get_all_camera_from_system(self):
