@@ -364,7 +364,7 @@ class Worker1(QThread):
 
     def run(self):
         self.ThreadActive = True
-        Capture = cv2.VideoCapture(0,  cv2.CAP_DSHOW)
+        Capture = cv2.VideoCapture(2,  cv2.CAP_DSHOW)
         while self.ThreadActive:
             ret, frame = Capture.read()
             if ret:
