@@ -106,3 +106,5 @@ venv.bak/
 #rgblstm.h5
 .h5
 trained_models/rgblstm.h5
+
+.idea
