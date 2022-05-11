@@ -14,12 +14,15 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import cv2
-
+import sys
+sys.path.insert(0,"..")
+from controllers.controller import Controller
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(725, 571)
+        self.cont=Controller()
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -30,6 +33,20 @@ class Ui_MainWindow(object):
         self.gestureTab.setObjectName("gestureTab")
         self.gridLayout = QtWidgets.QGridLayout(self.gestureTab)
         self.gridLayout.setObjectName("gridLayout")
+
+
+        self.mainTab = QtWidgets.QWidget()          ###########
+        self.mainTab.setObjectName("mainTab")
+        self.mainLayout = QtWidgets.QGridLayout(self.mainTab)
+        self.mainLayout.setObjectName("mainLayout")
+        self.start_button = QtWidgets.QPushButton(self.mainTab)
+        self.start_button.setObjectName("start_button")
+        self.mainLayout.addWidget(self.start_button,1,1,1,1)
+        self.start_button.clicked.connect(lambda: self.cont.start_gesture_recognition())
+        self.stop_button = QtWidgets.QPushButton(self.mainTab)
+        self.stop_button.setObjectName("stop_button")
+        self.stop_button.clicked.connect(lambda: self.cont.stop_gesture_recognition())
+        self.mainLayout.addWidget(self.stop_button, 2, 1, 1, 1)
         self.applyButton_2 = QtWidgets.QPushButton(self.gestureTab)
         self.applyButton_2.setObjectName("applyButton_2")
         self.gridLayout.addWidget(self.applyButton_2, 3, 3, 1, 1)
@@ -208,6 +225,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.widget_6)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         self.gridLayout.addWidget(self.scrollArea, 2, 0, 1, 4)
+
+        self.tabWidget.addTab(self.mainTab, "")
         self.tabWidget.addTab(self.gestureTab, "")
         self.cameraTab = QtWidgets.QWidget()
         self.cameraTab.setObjectName("cameraTab")
@@ -231,6 +250,7 @@ class Ui_MainWindow(object):
         # self.videoVidget.setGeometry(QtCore.QRect(200, 70, 311, 141))
         # self.videoVidget.setLocale(QtCore.QLocale(QtCore.QLocale.Polish, QtCore.QLocale.Poland))
         # self.videoVidget.setObjectName("videoVidget")
+
         self.tabWidget.addTab(self.cameraTab, "")
         self.horizontalLayout_2.addWidget(self.tabWidget)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -252,7 +272,8 @@ class Ui_MainWindow(object):
         self.applyButton_2.setText(_translate("MainWindow", "Zastosuj"))
         self.resetButton.setText(_translate("MainWindow", "Reset"))
         self.cancelButton.setText(_translate("MainWindow", "Anuluj"))
-
+        self.start_button.setText(_translate("MainWindow", "Start Handy"))
+        self.stop_button.setText(_translate("MainWindow", "Stop Handy"))
         self.label.setText(_translate("MainWindow", "TextLabel"))
 
         self.comboBox.setItemText(0, _translate("MainWindow", "Gest 1"))
@@ -352,6 +373,7 @@ class Ui_MainWindow(object):
         self.comboBox_6.setItemText(14, _translate("MainWindow", "Gest 15"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.gestureTab), _translate("MainWindow", "Gesty"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.cameraTab), _translate("MainWindow", "Kamera"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.mainTab), _translate("MainWindow", "Start"))
         # if self.cameraTab.isActiveWindow():
 
     def ImageUpdateSlot(self, Image):

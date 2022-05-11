@@ -2,7 +2,6 @@
 # coding: utf-8
 
 
-
 from keras.models import Model,load_model
 from keras.layers import Conv2D,TimeDistributed,LSTM,Flatten,Input,Dense,Dropout,MaxPool2D,BatchNormalization,MaxPooling2D,merge,Activation,add,concatenate,GlobalAveragePooling2D
 from keras.models import Model
@@ -36,7 +35,7 @@ class ModelFactory:
         
     def __rgbmodel(self):
         if self.trained:
-            return load_model(self.rgbpath)
+            return load_model("../"+self.rgbpath)
         else:
             return self.__rgb() #dodałem self.
         
