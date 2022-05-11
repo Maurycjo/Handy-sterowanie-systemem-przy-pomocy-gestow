@@ -3,12 +3,14 @@ sys.path.insert(0, "..")
 from controllers.functions_getter import FunctionsGetter
 from controllers.system_controller import SystemController
 from controllers.chrome_controller import ChromeController
+from controllers.gesture_name_mapper import NameMapper
 import json
 from plyer import notification
 
 class Mapping():
     def __init__(self):
         self.gesture={}
+        self.name_mapper=NameMapper()
         self.read_default_configuration_from_file()
         self.controller = SystemController()
         self.chrome = ChromeController()
@@ -29,7 +31,7 @@ class Mapping():
             self.gesture = {int(k): v for (k, v) in data.items()}
 
     def gesture_action(self,number):
-        print(str(number))
+        print(str(number)+" "+self.name_mapper.get_gesture_name(number))
         # notification.notify(
         #     title='Gesture detected!',
         #     message=str(number),
