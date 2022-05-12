@@ -156,11 +156,25 @@ class Ui_MainWindow(object):
         self.FeedLabel = QLabel()
         self.VBL.addWidget(self.FeedLabel)
 
-        self.CancelBTN = QPushButton("Cancel")
-        self.CancelBTN.clicked.connect(self.CancelFeed)
-        self.VBL.addWidget(self.CancelBTN)
+
+        self.camerasComboBox = QtWidgets.QComboBox(self.cameraTab)
+
+
+        self.VBL.addWidget(self.camerasComboBox)
 
         self.Worker1 = Worker1(self.cont)
+
+        arr = self.cont.get_camera_controller().get_all_cameras()
+        for i in arr:
+            print(str(i))
+            self.camerasComboBox.addItem(str(i))
+
+        #print("*****")
+        print(int(self.camerasComboBox.currentText()))
+
+        cameraNumber=int(self.camerasComboBox.currentText())
+        self.camerasComboBox.activated.connect(lambda:
+            self.cont.get_camera_controller().set_used_camera_number(cameraNumber))
 
         self.Worker1.start()
         self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
@@ -218,6 +232,9 @@ class Ui_MainWindow(object):
 
     def CancelFeed(self):
         self.Worker1.stop()
+
+    def testButtonClicked(self):
+        print ("printed")
 
 
 class Worker1(QThread):
