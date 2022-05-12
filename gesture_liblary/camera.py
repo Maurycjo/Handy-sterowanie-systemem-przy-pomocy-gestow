@@ -9,53 +9,53 @@ import sys
 sys.path.insert(0,"..")
 from controllers.mapping import Mapping
 
-
 from gesture_liblary.models import ModelType, ModelFactory
 
 class Camera:
     def __init__(self):
         self.recognize=True
+        self.gesture_map = Mapping()
+        self.initialize_recognition()
     def stop_gesture_recognition(self):
         self.recognize=False
-    def start_windows_gesture_library(self):
+    def initialize_recognition(self):
 
-        self.gesture_map = Mapping()
+        self.model = ModelFactory(rgbpath='trained_models/rgblstm.h5', trained=True).getModel(ModelType.RGB)
 
-        model = ModelFactory(rgbpath='trained_models/rgblstm.h5', trained=True).getModel(ModelType.RGB)
+        self.model.summary()
 
-        model.summary()
+        self.rgbinput = Input((150, 100, 3))
 
-        rgbinput = Input((150, 100, 3))
+        self.x = self.model.layers[1].layer(self.rgbinput)
+        for layer in self.model.layers[2:-3]:
+            self.x = layer.layer(self.x)
 
-        x = model.layers[1].layer(rgbinput)
-        for layer in model.layers[2:-3]:
-            x = layer.layer(x)
+        self.encoder = Model(inputs=self.rgbinput, outputs=self.x)
+        self.encoder.summary()
 
-        encoder = Model(inputs=rgbinput, outputs=x)
-        encoder.summary()
-
-        lstminput = Input((10, 1024))
+        self.lstminput = Input((10, 1024))
         #
-        x = model.layers[-2](lstminput)
-        x = model.layers[-1](x)
+        self.x = self.model.layers[-2](self.lstminput)
+        self.x = self.model.layers[-1](self.x)
 
-        lstm = Model(inputs=lstminput, outputs=x)
-        lstm.summary()
-        q = deque([np.zeros(1024) for i in range(10)])  # queue of extracted features , initialy filled with zeros
+        self.lstm = Model(inputs=self.lstminput, outputs=self.x)
+        self.lstm.summary()
+        self.q = deque([np.zeros(1024) for i in range(10)])  # queue of extracted features , initialy filled with zeros
 
-        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)    # parametryzacja-wybór kamery w aplikacji
+        self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)    # parametryzacja-wybór kamery w aplikacji
+    def start_windows_gesture_library(self):
+        self.recognize=True
+
         time_before = datetime.datetime.now()
         gesture = False
         wait_time = 1.0
         while True:
             if self.recognize is False:
                 return
-            ret, frame = cap.read()
-            #cv2.imshow('Obraz', frame)
-            q.popleft()
-            q.append(encoder.predict(np.array([cv2.resize(frame / 255., (100, 150))]))[0])
-            our_values = lstm.predict(np.array([q]))
-            # print(our_values)          #Szukane wartości
+            ret, frame = self.cap.read()
+            self.q.popleft()
+            self.q.append(self.encoder.predict(np.array([cv2.resize(frame / 255., (100, 150))]))[0])
+            our_values = self.lstm.predict(np.array([self.q]))
             time_now = datetime.datetime.now()
             c = time_now-time_before
             if float(c.total_seconds()) > wait_time:    #Zapobiega wykrywaniu jednego wykonanego gestu kilka razy
@@ -74,7 +74,6 @@ class Camera:
                     time_before = datetime.datetime.now()
                     gesture = True
                     wait_time = 1.6     #czas oczekiwania na następny gest
-                    print("gest1")
                     self.gesture_map.gesture_action(1)
                 elif max_value > 0.9 and position == 3:
                     time_before = datetime.datetime.now()
@@ -196,10 +195,6 @@ class Camera:
                     gesture = True
                     wait_time = 1.6
                     self.gesture_map.gesture_action(25)
-
-        cap.release()
-        cv2.destroyAllWindows()
-
 
 if __name__ == '__main__':
     cam=Camera
