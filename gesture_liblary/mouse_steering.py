@@ -5,25 +5,23 @@ import pyautogui
 from win32api import GetSystemMetrics
 
 class GestureMouseSteering:
-    def __init__(self):
+    def __init__(self,camera):
         self.active=True
-
+        self.cam = camera
     def stop_mouse_steering(self):
         self.active=False
 
 
     def start_mouse_steering(self):
-
-        cap = cv2.VideoCapture(0)
-
+        self.active = True
         mp_hands = mp.solutions.hands
         hands =mp_hands.Hands()
         mp_draw=mp.solutions.drawing_utils
 
         width = GetSystemMetrics(0)
         height = GetSystemMetrics(1)
-        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 600)
-        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
+        #cap.set(cv2.CAP_PROP_FRAME_WIDTH, 600)
+        #cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
         pyautogui.FAILSAFE=False
         mouse_click_lock=False
         right_mouse_click_lock=False
@@ -32,9 +30,9 @@ class GestureMouseSteering:
         mouse_x=0
         mouse_y=0
         while True:
-            if self.active==False:
+            if self.active is False:
                 break
-            succes, img =cap.read()
+            succes, img =self.cam.get_camera_image()
             flip_img = cv2.flip(img, 1)
             img_rgb=cv2.cvtColor(flip_img, cv2.COLOR_BGR2RGB)
             results= hands.process(img_rgb)

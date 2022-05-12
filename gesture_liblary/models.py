@@ -8,14 +8,10 @@ from keras.models import Model
 #from keras.optimizers import Adam
 from keras.layers.advanced_activations import LeakyReLU
 
-
-
 class ModelType:
     RGB = 0
     FLOW = 1
     FULL = 2
-
-
 
 class ModelFactory:
     def __init__(self,flowpath='trained_models/flowlstm.h5',rgbpath='trained_models/rgblstm.h5',fullpath='trained_models/rgbflow.h5',trained=True):

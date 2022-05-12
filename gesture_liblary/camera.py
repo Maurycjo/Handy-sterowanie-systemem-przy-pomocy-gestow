@@ -11,10 +11,11 @@ from controllers.mapping import Mapping
 
 from gesture_liblary.models import ModelType, ModelFactory
 
-class Camera:
-    def __init__(self):
+class Camera():
+    def __init__(self, function_getter, sys_controller, camera_controller):
         self.recognize=True
-        self.gesture_map = Mapping()
+        self.cam_controller=camera_controller
+        self.gesture_map = Mapping(function_getter, sys_controller)
         self.initialize_recognition()
     def stop_gesture_recognition(self):
         self.recognize=False
@@ -42,7 +43,7 @@ class Camera:
         self.lstm.summary()
         self.q = deque([np.zeros(1024) for i in range(10)])  # queue of extracted features , initialy filled with zeros
 
-        self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)    # parametryzacja-wybór kamery w aplikacji
+
     def start_windows_gesture_library(self):
         self.recognize=True
 
@@ -52,7 +53,7 @@ class Camera:
         while True:
             if self.recognize is False:
                 return
-            ret, frame = self.cap.read()
+            ret, frame = self.cam_controller.get_camera_image()
             self.q.popleft()
             self.q.append(self.encoder.predict(np.array([cv2.resize(frame / 255., (100, 150))]))[0])
             our_values = self.lstm.predict(np.array([self.q]))

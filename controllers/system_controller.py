@@ -1,13 +1,12 @@
 import platform
 import ctypes
 import pyautogui
+from gesture_liblary.mouse_steering import GestureMouseSteering
 try:
     import screen_brightness_control as sbc
 except:
     pass
 try:
-    # import win32gui
-    # import win32con
     from ctypes import cast, POINTER, wintypes as w
     from comtypes import CLSCTX_ALL
 except ImportError:
@@ -29,7 +28,11 @@ class SystemController:
     def __init__(self):
         self.operating_system_name = platform.system()
         self.current_volume = self.volume.GetMasterVolumeLevel()
-
+        self.camera=None
+        self.mouse_steering = None
+    def set_camera_reference(self,camera):
+        self.camera= camera
+        self.mouse_steering = GestureMouseSteering(camera)
     def minimize_window(self):
         user32 = ctypes.WinDLL('user32')
         user32.GetForegroundWindow.argtypes = ()
@@ -125,4 +128,6 @@ class SystemController:
         pyautogui.press('tab')
         pyautogui.keyUp('alt')
     def mouse_start(self):
-        pass
+        print('mouse_start')
+        self.mouse_steering.start_mouse_steering()
+        print('mouse_stop')

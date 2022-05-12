@@ -1,20 +1,22 @@
 import cv2
-class ApplicationController():
+from controllers.camera_checker import CameraChecker
+class CameraController():
     def __init__(self):
         self.camera_list=[]
-        self.camera_list=self.get_all_camera_from_system()
-        self.used_camera_number=0
+        self.camera_checker = CameraChecker()
+        self.available_ports,self.working_ports,self.non_working_ports = self.camera_checker.list_ports()
+        self.used_camera_number=self.working_ports[0]
         self.cap=cv2.VideoCapture(self.used_camera_number)
 
-    def get_all_camera_from_system(self):
-        self.camera_list.clear()
-        for i in range(100):
-            cap = cv2.VideoCapture(i,cv2.CAP_DSHOW)
-            if cap.isOpened():
-                self.camera_list.append(i)
-                cap.release()
-        self.camera_list.pop(-1)
-        print(self.camera_list)
+    # def get_all_camera_from_system(self):
+    #     self.camera_list.clear()
+    #     for i in range(100):
+    #         cap = cv2.VideoCapture(i,cv2.CAP_DSHOW)
+    #         if cap.isOpened():
+    #             self.camera_list.append(i)
+    #             cap.release()
+    #     self.camera_list.pop(-1)
+    #     print(self.camera_list)
 
     def get_used_camera_number(self):
         return self.used_camera_number

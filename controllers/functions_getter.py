@@ -2,7 +2,7 @@ import os
 
 from controllers import user_scripts
 
-class FunctionsGetter:
+class FunctionsGetter():
 
     def __init__(self, controller):
         self.u_scripts=user_scripts

@@ -8,13 +8,13 @@ import json
 from plyer import notification
 
 class Mapping():
-    def __init__(self):
+    def __init__(self,func_getter,sys_controller):
         self.gesture={}
         self.name_mapper=NameMapper()
         self.read_default_configuration_from_file()
-        self.controller = SystemController()
+        self.controller = sys_controller
         self.chrome = ChromeController()
-        self.function_getter=FunctionsGetter(self.controller)
+        self.function_getter=func_getter
 
     def save_configuration_to_file(self):
         with open("../user_configuration.json", "w") as outfile:
