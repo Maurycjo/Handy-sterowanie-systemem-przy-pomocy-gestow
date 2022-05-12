@@ -166,11 +166,7 @@ class Ui_MainWindow(object):
 
         arr = self.cont.get_camera_controller().get_all_cameras()
         for i in arr:
-            print(str(i))
             self.camerasComboBox.addItem(str(i))
-
-        #print("*****")
-        print(int(self.camerasComboBox.currentText()))
 
         cameraNumber=int(self.camerasComboBox.currentText())
         self.camerasComboBox.activated.connect(lambda:
@@ -233,10 +229,6 @@ class Ui_MainWindow(object):
     def CancelFeed(self):
         self.Worker1.stop()
 
-    def testButtonClicked(self):
-        print ("printed")
-
-
 class Worker1(QThread):
     def __init__(self,controller):
         super().__init__()
@@ -246,8 +238,9 @@ class Worker1(QThread):
     def run(self):
         self.ThreadActive = True
         self.camera=self.controller.get_camera_controller()
-        Capture = self.camera.get_capture()
+
         while self.ThreadActive:
+            Capture = self.camera.get_capture()
             ret, frame = Capture.read()
             if ret:
                 Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
