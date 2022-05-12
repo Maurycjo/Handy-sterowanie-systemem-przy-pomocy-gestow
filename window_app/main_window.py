@@ -217,9 +217,23 @@ class Ui_MainWindow(object):
         self.FeedLabel = QLabel()
         self.VBL.addWidget(self.FeedLabel)
 
-        self.CancelBTN = QPushButton("Cancel")
-        self.CancelBTN.clicked.connect(self.CancelFeed)
-        self.VBL.addWidget(self.CancelBTN)
+        index = 0
+        arr = []
+        while True:
+            cap = cv2.VideoCapture(index)
+            if not cap.read()[0]:
+                break
+            else:
+                arr.append(index)
+            cap.release()
+            index += 1
+
+        self.camerasComboBox = QtWidgets.QComboBox(self.cameraTab)
+
+        for i  in arr:
+            self.camerasComboBox.addItem(str(i))
+
+        self.VBL.addWidget(self.camerasComboBox)
 
         self.Worker1 = Worker1()
 
@@ -366,7 +380,7 @@ class Worker1(QThread):
 
     def run(self):
         self.ThreadActive = True
-        Capture = cv2.VideoCapture(2,  cv2.CAP_DSHOW)
+        Capture = cv2.VideoCapture(0)
         while self.ThreadActive:
             ret, frame = Capture.read()
             if ret:
