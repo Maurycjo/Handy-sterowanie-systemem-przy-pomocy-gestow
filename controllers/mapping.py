@@ -50,3 +50,4 @@ class Mapping():
             return self.function_getter.call_function(self.gesture.get(key2))
         else:
             return False
+

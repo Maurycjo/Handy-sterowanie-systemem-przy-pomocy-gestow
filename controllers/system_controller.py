@@ -131,3 +131,5 @@ class SystemController:
         print('mouse_start')
         self.mouse_steering.start_mouse_steering()
         print('mouse_stop')
+    def stop_mouse(self):
+        self.mouse_steering.stop_mouse_steering()

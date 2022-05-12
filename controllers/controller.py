@@ -6,6 +6,7 @@ import threading
 class Controller():
     def __init__(self,function_getter,sys_controller):
         self.camera_controller = CameraController()
+        self.system_controller= sys_controller
         self.camera = Camera(function_getter,sys_controller,self.camera_controller)
         self.started = False
     def start_gesture_recognition(self):
@@ -16,6 +17,7 @@ class Controller():
 
     def stop_gesture_recognition(self):
         if self.started is True:
+            self.system_controller.stop_mouse()
             self.camera.stop_gesture_recognition()
             self.t.join()
             self.started=False

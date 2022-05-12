@@ -35,7 +35,7 @@ class Camera():
         self.encoder.summary()
 
         self.lstminput = Input((10, 1024))
-        #
+
         self.x = self.model.layers[-2](self.lstminput)
         self.x = self.model.layers[-1](self.x)
 
