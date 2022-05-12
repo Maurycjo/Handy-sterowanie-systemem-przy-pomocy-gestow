@@ -11,6 +11,7 @@ from controllers.controller import Controller
 from controllers.gesture_name_mapper import NameMapper
 from controllers.functions_getter import FunctionsGetter
 from controllers.system_controller import SystemController
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -159,7 +160,7 @@ class Ui_MainWindow(object):
         self.CancelBTN.clicked.connect(self.CancelFeed)
         self.VBL.addWidget(self.CancelBTN)
 
-        self.Worker1 = Worker1()
+        self.Worker1 = Worker1(self.cont)
 
         self.Worker1.start()
         self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
@@ -220,11 +221,15 @@ class Ui_MainWindow(object):
 
 
 class Worker1(QThread):
+    def __init__(self,controller):
+        super().__init__()
+        self.controller=controller
     ImageUpdate = pyqtSignal(QImage)
 
     def run(self):
         self.ThreadActive = True
-        Capture = cv2.VideoCapture(2,  cv2.CAP_DSHOW)
+        self.camera=self.controller.get_camera_controller()
+        Capture = self.camera.get_capture()
         while self.ThreadActive:
             ret, frame = Capture.read()
             if ret:

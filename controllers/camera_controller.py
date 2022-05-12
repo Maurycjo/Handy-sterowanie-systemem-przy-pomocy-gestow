@@ -29,6 +29,9 @@ class CameraController():
     def set_used_camera_number(self,number):
         self.used_camera_number=number
 
+    def get_capture(self):
+        return self.cap
+
 if __name__ == '__main__':
-    ap=ApplicationController()
+    ap=CameraController()
     ap.get_all_camera_from_system
