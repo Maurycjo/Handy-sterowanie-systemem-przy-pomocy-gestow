@@ -14,6 +14,7 @@ class GestureMouseSteering:
 
     def start_mouse_steering(self):
         self.active = True
+        self.sensitivity=30
         mp_hands = mp.solutions.hands
         hands =mp_hands.Hands()
         mp_draw=mp.solutions.drawing_utils
@@ -56,16 +57,16 @@ class GestureMouseSteering:
                             pyautogui.moveTo(mouse_x, mouse_y)
                         if points[2][0] < points[1][0]and points[3][0] < points[2][0] and points[4][0] < points[3][0]:
                             if mouse_click_lock is False:
-                                if math.fabs(mouse_x - mouse_x_before) < 10 \
-                                        and math.fabs(mouse_y - mouse_y_before) < 10:
+                                if math.fabs(mouse_x - mouse_x_before) < self.sensitivity \
+                                        and math.fabs(mouse_y - mouse_y_before) < self.sensitivity:
                                     pyautogui.click()
                                     mouse_click_lock = True
                         else:
                             mouse_click_lock = False
                         if points[10][1] < points[9][1] and points[11][1] < points[10][1] and points[12][1] < points[11][1]:
                             if right_mouse_click_lock is False:
-                                if math.fabs(mouse_y - mouse_y_before) < 10 \
-                                        and math.fabs(mouse_x - mouse_x_before) < 10:
+                                if math.fabs(mouse_y - mouse_y_before) < self.sensitivity \
+                                        and math.fabs(mouse_x - mouse_x_before) < self.sensitivity:
                                     pyautogui.click(button='right')
                                     right_mouse_click_lock = True
                         else:

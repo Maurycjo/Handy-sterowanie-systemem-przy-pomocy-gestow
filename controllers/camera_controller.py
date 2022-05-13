@@ -1,6 +1,7 @@
 import cv2
 from controllers.camera_checker import CameraChecker
 from threading import Thread, Lock
+
 class CameraController():
     def __init__(self):
 
@@ -23,7 +24,9 @@ class CameraController():
         return self.used_camera_number
     #Klasy camera oraz mouse_steering powinny obraz z kamery pobierać przy pomocy tej funkcji
     def get_camera_image(self):
+        self.mutex.acquire()
         ret, frame = self.cap.read()
+        self.mutex.release()
         return ret,frame
     def get_all_cameras(self):
         return self.camera_list

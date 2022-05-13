@@ -5,8 +5,6 @@ from controllers.system_controller import SystemController
 from controllers.chrome_controller import ChromeController
 from controllers.gesture_name_mapper import NameMapper
 import json
-from plyer import notification
-
 class Mapping():
     def __init__(self,func_getter,sys_controller):
         self.gesture={}
@@ -15,7 +13,6 @@ class Mapping():
         self.controller = sys_controller
         self.chrome = ChromeController()
         self.function_getter=func_getter
-
     def save_configuration_to_file(self):
         with open("../user_configuration.json", "w") as outfile:
             json.dump(self.gesture, outfile)
@@ -29,7 +26,8 @@ class Mapping():
             data = json.load(json_file)
             self.gesture.clear()
             self.gesture = {int(k): v for (k, v) in data.items()}
-
+    def show_message(self,str1,str2):
+        self.BalloonTip.show("Handy", str1)
     def gesture_action(self,number):
         print(str(number)+" "+self.name_mapper.get_gesture_name(number))
         # notification.notify(
