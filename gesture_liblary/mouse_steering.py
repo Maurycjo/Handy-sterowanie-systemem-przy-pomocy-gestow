@@ -14,7 +14,7 @@ class GestureMouseSteering:
 
     def start_mouse_steering(self):
         self.active = True
-        self.sensitivity=30
+        self.sensitivity=10
         mp_hands = mp.solutions.hands
         hands =mp_hands.Hands()
         mp_draw=mp.solutions.drawing_utils
@@ -33,7 +33,10 @@ class GestureMouseSteering:
         while True:
             if self.active is False:
                 break
-            succes, img =self.cam.get_camera_image()
+            success, img =self.cam.get_camera_image()
+            if success is False:
+                time.sleep(0.01)
+                continue
             flip_img = cv2.flip(img, 1)
             img_rgb=cv2.cvtColor(flip_img, cv2.COLOR_BGR2RGB)
             results= hands.process(img_rgb)

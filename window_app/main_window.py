@@ -5,6 +5,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import cv2
+import time
 import sys
 sys.path.insert(0,"..")
 from controllers.controller import Controller
@@ -13,13 +14,17 @@ from controllers.functions_getter import FunctionsGetter
 from controllers.system_controller import SystemController
 
 class Ui_MainWindow(object):
+    def set_cameras_combo_box(self,lst):
+        self.camerasComboBox.clear()
+        for a in lst:
+            self.camerasComboBox.addItem(str(a))
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(725, 571)
         self.name_mapper=NameMapper()
         self.sys_cont=SystemController()
         self.func_get=FunctionsGetter(self.sys_cont)
-        self.cont=Controller(self.func_get,self.sys_cont)
+        self.cont=Controller(self.func_get,self.sys_cont,self)
         self.sys_cont.set_camera_reference(self.cont.get_camera_controller())
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -168,9 +173,9 @@ class Ui_MainWindow(object):
         for i in arr:
             self.camerasComboBox.addItem(str(i))
 
-        cameraNumber=int(self.camerasComboBox.currentText())
+
         self.camerasComboBox.activated.connect(lambda:
-            self.cont.get_camera_controller().set_used_camera_number(cameraNumber))
+            self.cont.get_camera_controller().set_used_camera_number(int(self.camerasComboBox.currentText())))
 
         self.Worker1.start()
         self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
@@ -240,15 +245,16 @@ class Worker1(QThread):
         self.camera=self.controller.get_camera_controller()
 
         while self.ThreadActive:
-            Capture = self.camera.get_capture()
-            ret, frame = Capture.read()
-            if ret:
+            ret, frame = self.camera.get_camera_image()
+            if ret is True:
                 Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 FlippedImage = cv2.flip(Image, 1)
                 ConvertToQtFormat = QImage(FlippedImage.data, FlippedImage.shape[1], FlippedImage.shape[0],
                                            QImage.Format_RGB888)
                 Pic = ConvertToQtFormat.scaled(640, 480, Qt.KeepAspectRatio)
                 self.ImageUpdate.emit(Pic)
+
+
 
     def stop(self):
         self.ThreadActive = False

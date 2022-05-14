@@ -11,7 +11,7 @@ class CameraChecker():
                 arr.append(index)
             cap.release()
             index += 1
-
+        arr.pop(-1)
         return arr
 
 

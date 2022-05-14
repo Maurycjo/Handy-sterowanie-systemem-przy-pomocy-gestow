@@ -5,6 +5,7 @@ from collections import deque
 import numpy as np
 import datetime
 import cv2
+import time
 import sys
 sys.path.insert(0,"..")
 from controllers.mapping import Mapping
@@ -54,6 +55,9 @@ class Camera():
             if self.recognize is False:
                 return
             ret, frame = self.cam_controller.get_camera_image()
+            if ret is False:
+                time.sleep(0.01)
+                continue
             self.q.popleft()
             self.q.append(self.encoder.predict(np.array([cv2.resize(frame / 255., (100, 150))]))[0])
             our_values = self.lstm.predict(np.array([self.q]))
