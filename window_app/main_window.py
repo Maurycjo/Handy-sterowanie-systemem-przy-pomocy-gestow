@@ -163,12 +163,12 @@ class Ui_MainWindow(object):
 
 
         self.camerasComboBox = QtWidgets.QComboBox(self.cameraTab)
-
-
+        self.camera_refresh_button = QtWidgets.QPushButton("Refresh camera list")
+        self.VBL.addWidget(self.camera_refresh_button)
         self.VBL.addWidget(self.camerasComboBox)
-
+        self.VBL.addWidget(self.camera_refresh_button)
         self.Worker1 = Worker1(self.cont)
-
+        self.camera_refresh_button.clicked.connect(lambda: self.cont.get_camera_controller().refresh_camera_list())
         arr = self.cont.get_camera_controller().get_all_cameras()
         for i in arr:
             self.camerasComboBox.addItem(str(i))
@@ -179,12 +179,6 @@ class Ui_MainWindow(object):
 
         self.Worker1.start()
         self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
-        # self.setLayout(self.VBL)
-
-        # self.videoVidget = QVideoWidget(self.cameraTab)
-        # self.videoVidget.setGeometry(QtCore.QRect(200, 70, 311, 141))
-        # self.videoVidget.setLocale(QtCore.QLocale(QtCore.QLocale.Polish, QtCore.QLocale.Poland))
-        # self.videoVidget.setObjectName("videoVidget")
 
         self.tabWidget.addTab(self.cameraTab, "")
         self.horizontalLayout_2.addWidget(self.tabWidget)
