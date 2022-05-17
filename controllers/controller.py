@@ -14,6 +14,7 @@ class Controller():
             self.started = True
             self.t=threading.Thread(name='daemon',target=self.camera.start_windows_gesture_library)
             self.t.start()
+            print("Handy started")
 
     def stop_gesture_recognition(self):
         if self.started is True:
@@ -21,5 +22,6 @@ class Controller():
             self.camera.stop_gesture_recognition()
             self.t.join()
             self.started=False
+            print("Handy stopped")
     def get_camera_controller(self):
         return self.camera_controller
