@@ -20,7 +20,10 @@ class CameraController():
     #Klasy camera oraz mouse_steering powinny obraz z kamery pobierać przy pomocy tej funkcji
     def get_camera_image(self):
         self.mutex.acquire()
-        ret, frame = self.cap.read()
+        if self.used_camera_number > -1:
+            ret, frame = self.cap.read()
+        else:
+            ret, frame = False, False
         self.mutex.release()
         if ret is False:
             self.set_used_camera_number(0)

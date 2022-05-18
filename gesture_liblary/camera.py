@@ -58,6 +58,7 @@ class Camera():
             if ret is False:
                 time.sleep(0.01)
                 continue
+
             self.q.popleft()
             self.q.append(self.encoder.predict(np.array([cv2.resize(frame / 255., (100, 150))]))[0])
             our_values = self.lstm.predict(np.array([self.q]))
