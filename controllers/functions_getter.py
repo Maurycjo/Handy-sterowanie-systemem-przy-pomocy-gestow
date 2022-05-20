@@ -26,7 +26,7 @@ class FunctionsGetter():
             "mouse_start": self.controller.mouse_start
         }
         self.dct = {**self.dct, **self.u_dict}
-        print(self.dct)
+
     def call_function(self,name):
         for key in self.dct.keys():
             if name==key:
