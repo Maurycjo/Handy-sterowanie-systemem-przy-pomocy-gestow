@@ -1,6 +1,7 @@
 import os
-
-from controllers import user_scripts
+import sys
+sys.path.insert(0, "..")
+import user_scripts
 
 class FunctionsGetter():
 

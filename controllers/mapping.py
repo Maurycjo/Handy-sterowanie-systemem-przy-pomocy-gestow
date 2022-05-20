@@ -24,7 +24,7 @@ class Mapping():
             data = json.load(json_file)
             self.gesture = {int(k): v for (k, v) in data.items()}
     def read_default_configuration_from_file(self):
-        with open('../default_configuration.json') as json_file:
+        with open('../configuration/default_configuration.json') as json_file:
             data = json.load(json_file)
             self.gesture.clear()
             self.gesture = {int(k): v for (k, v) in data.items()}
