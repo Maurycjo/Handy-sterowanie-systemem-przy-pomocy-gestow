@@ -7,11 +7,8 @@ class FunctionsGetter():
     def __init__(self, controller):
         self.u_scripts=user_scripts
         self.controller = controller
-        self.dct={}
-
         self.u_dict = self.u_scripts.get_functions()
-        self.dct={**self.dct,** self.u_dict}
-        self.u_dict={"minimize_window": self.controller.minimize_window ,
+        self.dct={"minimize_window": self.controller.minimize_window ,
             "maximize_window": self.controller.maximize_window ,
             "close_window": self.controller.close_window ,
             "scroll_up": self.controller.scroll_up ,
@@ -28,7 +25,7 @@ class FunctionsGetter():
             "mouse_start": self.controller.mouse_start
         }
         self.dct = {**self.dct, **self.u_dict}
-
+        print(self.dct)
     def call_function(self,name):
         for key in self.dct.keys():
             if name==key:

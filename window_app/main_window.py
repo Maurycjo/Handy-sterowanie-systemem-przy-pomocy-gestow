@@ -247,6 +247,7 @@ class Worker1(QThread):
                                            QImage.Format_RGB888)
                 Pic = ConvertToQtFormat.scaled(640, 480, Qt.KeepAspectRatio)
                 self.ImageUpdate.emit(Pic)
+            time.sleep(0.02)
 
 
 

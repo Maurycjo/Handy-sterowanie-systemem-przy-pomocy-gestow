@@ -10,7 +10,7 @@ class Mapping():
     def __init__(self,func_getter,sys_controller):
         self.gesture={}
         self.name_mapper=NameMapper()
-        self.read_default_configuration_from_file()
+        self.read_configuration_from_file()
         self.controller = sys_controller
         self.chrome = ChromeController()
         self.function_getter=func_getter
@@ -35,10 +35,10 @@ class Mapping():
         self.mutex.acquire()
         for key in self.gesture.keys():
             if key==number:
+                self.mutex.release()
                 return True
-        return False
-
         self.mutex.release()
+        return False
 
     def gesture_action(self,number):
         print(str(number)+" "+self.name_mapper.get_gesture_name(number))
