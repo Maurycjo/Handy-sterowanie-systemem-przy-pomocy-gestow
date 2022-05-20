@@ -14,10 +14,14 @@ class CameraController():
             self.used_camera_number = -1
             self.cap = None
         self.mutex = Lock()
-
+    def release_camera(self):
+        self.mutex.acquire()
+        if self.cap != None:
+            self.cap.release()
+        self.mutex.release()
     def get_used_camera_number(self):
         return self.used_camera_number
-    #Klasy camera oraz mouse_steering powinny obraz z kamery pobierać przy pomocy tej funkcji
+
     def get_camera_image(self):
         self.mutex.acquire()
         if self.used_camera_number > -1:
@@ -60,7 +64,6 @@ class CameraController():
             self.used_camera_number = -1
             self.cap = None
         self.win.set_cameras_combo_box(self.camera_list)
-
 
         self.mutex.release()
 if __name__ == '__main__':

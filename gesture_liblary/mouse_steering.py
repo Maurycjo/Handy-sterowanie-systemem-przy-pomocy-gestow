@@ -3,14 +3,13 @@ import cv2
 import mediapipe as mp
 import pyautogui
 from win32api import GetSystemMetrics
-
+import time
 class GestureMouseSteering:
     def __init__(self,camera):
         self.active=True
         self.cam = camera
     def stop_mouse_steering(self):
         self.active=False
-
 
     def start_mouse_steering(self):
         self.active = True
@@ -21,8 +20,6 @@ class GestureMouseSteering:
 
         width = GetSystemMetrics(0)
         height = GetSystemMetrics(1)
-        #cap.set(cv2.CAP_PROP_FRAME_WIDTH, 600)
-        #cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
         pyautogui.FAILSAFE=False
         mouse_click_lock=False
         right_mouse_click_lock=False
