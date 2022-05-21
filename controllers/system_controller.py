@@ -30,6 +30,8 @@ class SystemController:
         self.current_volume = self.volume.GetMasterVolumeLevel()
         self.camera=None
         self.mouse_steering = None
+    def set_reference(self,function_getter):
+        self.function_getter=function_getter
     def set_camera_reference(self,camera):
         self.camera= camera
         self.mouse_steering = GestureMouseSteering(camera)
@@ -128,8 +130,7 @@ class SystemController:
         pyautogui.press('tab')
         pyautogui.keyUp('alt')
     def mouse_start(self):
-        print('mouse_start')
         self.mouse_steering.start_mouse_steering()
-        print('mouse_stop')
+        self.function_getter.set_time_before()
     def stop_mouse(self):
         self.mouse_steering.stop_mouse_steering()

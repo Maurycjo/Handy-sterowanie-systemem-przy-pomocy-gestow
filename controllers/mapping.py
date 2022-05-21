@@ -16,7 +16,8 @@ class Mapping():
         self.function_getter=func_getter
         self.mutex = Lock()
         self.toaster=tn()
-        self.message = []
+        self.message = 1
+        self.new_message = False
         self.message_mutex = Lock()
         t = threading.Thread(name='daemon',target=self.show_message)
         t.start()
@@ -28,7 +29,6 @@ class Mapping():
             json.dump(self.gesture, outfile)
 
     def read_configuration_from_file(self):
-
         with open('user_configuration.json') as json_file:
             data = json.load(json_file)
             self.gesture = {int(k): v for (k, v) in data.items()}
@@ -37,18 +37,18 @@ class Mapping():
             data = json.load(json_file)
             self.gesture.clear()
             self.gesture = {int(k): v for (k, v) in data.items()}
+
     def show_message(self):
         while self.end is False:
             self.message_mutex.acquire()
-            if len(self.message) == 1:
-
+            if self.new_message is True:
                 self.toaster.show_toast("Gesture detected",
-                                        "Gesture name: "+self.name_mapper.get_gesture_name(self.message[0])+"\n"
-                                        +"Action name: "+self.gesture.get(self.message[0]),
-                           duration=2.5,icon_path=None)
-                self.message.clear()
+                                        "Gesture name: "+self.name_mapper.get_gesture_name(self.message)+"\n"
+                                        +"Action name: "+self.gesture.get(self.message),
+                           duration=1.7,icon_path=None,threaded = True)
+                self.new_message = False
             self.message_mutex.release()
-            time.sleep(0.5)
+            time.sleep(1.78)
     def get_gesture(self, number:int):
         self.mutex.acquire()
         for key in self.gesture.keys():
@@ -60,12 +60,9 @@ class Mapping():
 
     def gesture_action(self,number):
         self.message_mutex.acquire()
-        if len(self.message) == 1:
-            self.message[0] = number
-        else:
-            self.message.append(number)
+        self.new_message = True
+        self.message = number
         self.message_mutex.release()
-
         if self.get_gesture(number)  == True:
             return self.function_getter.call_function(self.gesture.get(number))
         else:

@@ -16,8 +16,10 @@ class CameraController():
         self.mutex = Lock()
     def release_camera(self):
         self.mutex.acquire()
-        if self.cap != None:
+        if self.used_camera_number > -1:
+            self.used_camera_number = -1
             self.cap.release()
+            self.cap = None
         self.mutex.release()
     def get_used_camera_number(self):
         return self.used_camera_number
@@ -68,6 +70,6 @@ class CameraController():
         self.mutex.release()
 if __name__ == '__main__':
     ap=CameraController()
-    print(ap.camera_list)
+
 
 
