@@ -31,7 +31,11 @@ class FunctionsGetter():
             "do_nothing": self.controller.do_nothing,
             "minimize_all_windows": self.controller.minimize_all_windows,
             "preview_of_opened_windows": self.controller.preview_of_opened_windows,
-            "open_action_center": self.controller.open_action_center
+            "open_action_center": self.controller.open_action_center,
+            "page_up": self.controller.page_up,
+            "page_down": self.controller.page_down,
+            "space": self.controller.space,
+            "pause": self.controller.pause
         }
         self.dct = {**self.dct, **self.u_dict}
     def set_time_before(self):

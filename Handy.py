@@ -11,5 +11,6 @@ app.lastWindowClosed.connect(end_application)
 MainWindow = QtWidgets.QMainWindow()
 ui = win()
 ui.setupUi(MainWindow)
-MainWindow.show()
+MainWindow.showNormal()
+
 sys.exit(app.exec_())

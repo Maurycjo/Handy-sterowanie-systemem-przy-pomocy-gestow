@@ -162,3 +162,11 @@ class SystemController:
         pyautogui.keyDown('win')
         pyautogui.press('a')
         pyautogui.keyUp('win')
+    def page_up(self):
+        pyautogui.press('pageup')
+    def page_down(self):
+        pyautogui.press('pagedown')
+    def space(self):
+        pyautogui.press('space')
+    def pause(self):
+        pyautogui.press('pause')
