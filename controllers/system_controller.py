@@ -134,3 +134,31 @@ class SystemController:
         self.function_getter.set_time_before()
     def stop_mouse(self):
         self.mouse_steering.stop_mouse_steering()
+
+    def window_left(self):
+        pyautogui.keyDown('win')
+        pyautogui.press('left')
+        pyautogui.keyUp('win')
+    def window_right(self):
+        pyautogui.keyDown('win')
+        pyautogui.press('right')
+        pyautogui.keyUp('win')
+    def escape(self):
+        pyautogui.press('esc')
+    def set_controller_reference(self,cont):
+        self.controller_reference=cont
+
+    def do_nothing(self):
+        pass
+    def minimize_all_windows(self):
+        pyautogui.keyDown('win')
+        pyautogui.press('d')
+        pyautogui.keyUp('win')
+    def preview_of_opened_windows(self):
+        pyautogui.keyDown('win')
+        pyautogui.press('tab')
+        pyautogui.keyUp('win')
+    def open_action_center(self):
+        pyautogui.keyDown('win')
+        pyautogui.press('a')
+        pyautogui.keyUp('win')

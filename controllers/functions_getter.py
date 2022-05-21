@@ -24,7 +24,14 @@ class FunctionsGetter():
             "scroll_right": self.controller.scroll_right ,
             "scroll_left": self.controller.scroll_left ,
             "switch_window": self.controller.switch_window ,
-            "mouse_start": self.controller.mouse_start
+            "mouse_start": self.controller.mouse_start,
+            "window_left": self.controller.window_left,
+            "window_right": self.controller.window_right,
+            "escape": self.controller.escape,
+            "do_nothing": self.controller.do_nothing,
+            "minimize_all_windows": self.controller.minimize_all_windows,
+            "preview_of_opened_windows": self.controller.preview_of_opened_windows,
+            "open_action_center": self.controller.open_action_center
         }
         self.dct = {**self.dct, **self.u_dict}
     def set_time_before(self):

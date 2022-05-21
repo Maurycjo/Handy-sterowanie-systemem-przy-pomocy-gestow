@@ -25,6 +25,7 @@ class Controller():
             self.camera.stop_gesture_recognition()
             self.t.join()
             self.started=False
+            print("disabled")
             self.win.status_label.setText("Gesture recognition disabled")
     def get_camera_controller(self):
         return self.camera_controller

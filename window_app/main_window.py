@@ -14,6 +14,13 @@ from controllers.system_controller import SystemController
 class Ui_MainWindow(object):
     def __init__(self):
         self.close_time=False
+        self.name_mapper = NameMapper()
+        self.sys_cont = SystemController()
+        self.func_get = FunctionsGetter(self.sys_cont)
+        self.cont = Controller(self.func_get, self.sys_cont, self)
+        self.sys_cont.set_camera_reference(self.cont.get_camera_controller())
+    def get_controller(self):
+        return self.cont
     def get_close_time(self):
         return self.close_time
     def close_application(self):
@@ -29,11 +36,6 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(725, 571)
-        self.name_mapper=NameMapper()
-        self.sys_cont=SystemController()
-        self.func_get=FunctionsGetter(self.sys_cont)
-        self.cont=Controller(self.func_get,self.sys_cont,self)
-        self.sys_cont.set_camera_reference(self.cont.get_camera_controller())
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.centralwidget)
