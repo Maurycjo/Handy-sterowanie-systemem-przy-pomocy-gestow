@@ -1092,6 +1092,9 @@ class Ui_MainWindow(object):
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
+
+        #feedlabel maurycy
+
         self.Feedlabel = QtWidgets.QLabel(self.cameraTab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -1104,8 +1107,14 @@ class Ui_MainWindow(object):
         self.formLayout_3 = QtWidgets.QFormLayout()
         self.formLayout_3.setObjectName("formLayout_3")
 
-        '''refresh button
-        '''
+
+
+
+
+        
+
+        #refresh button
+
         self.refreshCameras_Button = QtWidgets.QPushButton(self.cameraTab)
         self.refreshCameras_Button.setStyleSheet("background-color: rgb(112, 211, 69);")
         self.refreshCameras_Button.setObjectName("refreshCameras_Button")
@@ -1118,9 +1127,10 @@ class Ui_MainWindow(object):
 
 
 
-        '''kamera'''
+        #kamera
 
 
+        
         sizePolicy.setHeightForWidth(self.setCamera_combobox.sizePolicy().hasHeightForWidth())
         self.setCamera_combobox.setSizePolicy(sizePolicy)
         self.setCamera_combobox.setStyleSheet("background-color: rgb(255, 255, 255);\n""border: 1px solid black;")
@@ -1132,7 +1142,7 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.cameraTab, "")
         self.horizontalLayout_2.addWidget(self.tabWidget)
 
-        '''pracowacz'''
+        #pracowacz
         self.Worker1 = Worker1(self.cont, self)
         arr=self.cont.get_camera_controller().get_all_cameras()
         for i in arr:
@@ -1140,6 +1150,10 @@ class Ui_MainWindow(object):
 
         self.Worker1.start()
         self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
+
+
+
+
 
 
         MainWindow.setCentralWidget(self.centralwidget)
@@ -1189,12 +1203,15 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.applyButton, self.cancelButton)
         MainWindow.setTabOrder(self.cancelButton, self.resetButton)
 
-        action_name = ["switch_window", "escape", "preview_of_opened_windows", "minimize_all_windows",
+        action_name2 = ["switch_window", "escape", "preview_of_opened_windows", "minimize_all_windows",
                        "space", "page_down", "page_up", "open_action_center", "brightness_down",
                        "volume_down", "volume_up", "brightness_up", "pause", "scroll_down",
                        "scroll_left", "scroll_right", "scroll_up", "close_window", "mouse_start",
                        "window_right", "window_left", "maximize_window", "zoom_in", "minimize_window",
                        "zoom_out"]
+
+        '''wziecie wszystkich nazw akcji'''
+        action_name=self.cont.get_camera().get_mapping().function_getter.get_all_functions_names()
 
         '''dodanie akcji do comboboxow'''
         for i in action_name:
@@ -1226,15 +1243,24 @@ class Ui_MainWindow(object):
             self.action25_comboBox.addItem(i)
 
         '''listenery nie dzialaja'''
-        self.refreshCameras_Button.clicked.connect(lambda: self.cont.get_camera_controller().refresh_camera_list())
-        arr = self.cont.get_camera_controller().get_all_cameras()
+        #self.refreshCameras_Button.clicked.connect(lambda: self.cont.get_camera_controller().refresh_camera_list())
+        #arr = self.cont.get_camera_controller().get_all_cameras()
+
+
+        self.authorButton.clicked.connect(lambda: print("Authors"))
+        self.documentationButton.clicked.connect(lambda: print("Documentation"))
+
 
         self.setCamera_combobox.activated.connect(lambda:
                                                self.cont.get_camera_controller().set_used_camera_number(
                                                    int(self.setCamera_combobox.currentText())))
 
         self.startHandyButton.clicked.connect(lambda: self.cont.start_gesture_recognition())
+        #self.startHandyButton.clicked.connect(lambda: print("clicked"))
+
         self.stopHandyButton.clicked.connect(lambda: self.cont.stop_gesture_recognition())
+
+
 
 
     def retranslateUi(self, MainWindow):
