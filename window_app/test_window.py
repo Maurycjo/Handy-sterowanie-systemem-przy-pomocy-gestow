@@ -1336,7 +1336,7 @@ class Worker1(QThread):
                     FlippedImage = cv2.flip(Image, 1)
                     ConvertToQtFormat = QImage(FlippedImage.data, FlippedImage.shape[1], FlippedImage.shape[0],
                                                QImage.Format_RGB888)
-                    Pic = ConvertToQtFormat.scaled(100, 100, Qt.KeepAspectRatio)
+                    Pic = ConvertToQtFormat.scaled(640, 480, Qt.KeepAspectRatio)
                     self.ImageUpdate.emit(Pic)
             time.sleep(0.02)
 
