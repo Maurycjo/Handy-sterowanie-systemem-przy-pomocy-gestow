@@ -201,7 +201,7 @@ class Camera():
                     gesture = True
                     wait_time = 2.0
                     self.gesture_map.gesture_action(25)
-
+            time.sleep(0.0001)
 
 if __name__ == '__main__':
     cam=Camera

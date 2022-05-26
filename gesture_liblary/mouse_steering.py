@@ -78,7 +78,7 @@ class GestureMouseSteering:
                                                                        "Gesture name: mouse_stop",
                                                                        duration=1.9, icon_path=None,threaded = True)
                         return
-
+            time.sleep(0.0001)
 if __name__ == "__main__":
     c=GestureMouseSteering()
     c.start_mouse_steering()

@@ -23,6 +23,11 @@ class Mapping():
         t.start()
     def end_thread(self):
         self.end=True
+    def get_gestures_list(self):
+        self.mutex.acquire()
+        dict={**self.gesture}
+        self.mutex.release()
+        return dict
     def save_configuration_to_file(self):
 
         with open("user_configuration.json", "w") as outfile:
@@ -33,10 +38,16 @@ class Mapping():
             data = json.load(json_file)
             self.gesture = {int(k): v for (k, v) in data.items()}
     def read_default_configuration_from_file(self):
+        self.mutex.acquire()
         with open('configuration/default_configuration.json') as json_file:
             data = json.load(json_file)
             self.gesture.clear()
             self.gesture = {int(k): v for (k, v) in data.items()}
+        self.mutex.release()
+        try:
+            self.save_configuration_to_file()
+        except:
+            pass
 
     def show_message(self):
         while self.end is False:
@@ -48,7 +59,7 @@ class Mapping():
                            duration=1.7,icon_path=None,threaded = True)
                 self.new_message = False
             self.message_mutex.release()
-            time.sleep(1.78)
+            time.sleep(0.1)
     def get_gesture(self, number:int):
         self.mutex.acquire()
         for key in self.gesture.keys():
@@ -57,7 +68,17 @@ class Mapping():
                 return True
         self.mutex.release()
         return False
+    def set_gesture(self,gesture_action: dict):
+        '''Changes gesture-action configuration'''
+        self.mutex.acquire()
+        self.gesture = {**gesture_action}
 
+        try:
+            self.save_configuration_to_file()
+        except:
+            pass
+
+        self.mutex.release()
     def gesture_action(self,number):
         self.message_mutex.acquire()
         self.new_message = True

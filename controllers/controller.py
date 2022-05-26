@@ -15,7 +15,7 @@ class Controller():
     def start_gesture_recognition(self):
         if self.started is False:
             self.started = True
-            self.win.status_label.setText("Gesture recognition enabled")
+            self.win.show_handy_started()
             self.t=threading.Thread(name='daemon',target=self.camera.start_windows_gesture_library)
             self.t.start()
 
@@ -25,7 +25,6 @@ class Controller():
             self.camera.stop_gesture_recognition()
             self.t.join()
             self.started=False
-            print("disabled")
-            self.win.status_label.setText("Gesture recognition disabled")
+            self.win.show_handy_stopped()
     def get_camera_controller(self):
         return self.camera_controller
