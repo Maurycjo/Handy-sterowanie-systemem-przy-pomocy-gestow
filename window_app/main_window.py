@@ -1286,6 +1286,7 @@ class Ui_MainWindow(QMainWindow):
         MainWindow.setTabOrder(self.action2_comboBox, self.applyButton)
         MainWindow.setTabOrder(self.applyButton, self.cancelButton)
         MainWindow.setTabOrder(self.cancelButton, self.resetButton)
+        self.tabWidget.setCurrentIndex(0)
 
         resolution_list=[[320, 240], [480, 320], [640, 480], [800, 480], [800, 600],
                          [1024, 768], [1280, 720], [1366, 768], [1280, 800], [1366, 768],
