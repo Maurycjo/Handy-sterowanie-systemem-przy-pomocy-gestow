@@ -25,7 +25,7 @@ class Mapping():
         self.end=True
     def get_gestures_list(self):
         self.mutex.acquire()
-        dict=self.gesture()
+        dict={**self.gesture}
         self.mutex.release()
         return dict
     def save_configuration_to_file(self):
@@ -71,12 +71,12 @@ class Mapping():
     def set_gesture(self,gesture_action: dict):
         '''Changes gesture-action configuration'''
         self.mutex.acquire()
-        for a in gesture_action.keys():
-            self.gesture[a] == gesture_action.get(a)
+        self.gesture = {**gesture_action}
+        print(self.gesture)
         try:
             self.save_configuration_to_file()
         except:
-            pass
+            print("save error")
 
         self.mutex.release()
     def gesture_action(self,number):

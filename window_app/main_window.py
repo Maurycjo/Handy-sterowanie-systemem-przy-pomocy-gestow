@@ -24,6 +24,60 @@ class Ui_MainWindow(object):
         self.cont = Controller(self.func_get, self.sys_cont, self)
         self.sys_cont.set_camera_reference(self.cont.get_camera_controller())
 
+    def show_handy_started(self):
+        self.recognition_in_starttab_label.setText("Gesture recognition enabled")
+        self.recognition_in_gesturetab_label.setText("Gesture recognition enabled")
+        self.recognition_in_cameratab_label.setText("Gesture recognition enabled")
+        self.recognition_in_starttab_label.setStyleSheet("background-color: rgb(0, 255, 0);\n"
+                                                             "border: 1px solid black;")
+        self.recognition_in_gesturetab_label.setStyleSheet("background-color: rgb(0, 255, 0);\n"
+                                                               "border: 1px solid black;")
+        self.recognition_in_cameratab_label.setStyleSheet("background-color: rgb(0, 255, 0);\n"
+                                                              "border: 1px solid black;")
+    def show_handy_stopped(self):
+        self.recognition_in_starttab_label.setText("Gesture recognition disabled")
+        self.recognition_in_gesturetab_label.setText("Gesture recognition disabled")
+        self.recognition_in_cameratab_label.setText("Gesture recognition disabled")
+        self.recognition_in_starttab_label.setStyleSheet("background-color: rgb(255, 0, 0);\n"
+                                                             "border: 1px solid black;")
+        self.recognition_in_gesturetab_label.setStyleSheet("background-color: rgb(255, 0, 0);\n"
+                                                               "border: 1px solid black;")
+        self.recognition_in_cameratab_label.setStyleSheet("background-color: rgb(255, 0, 0);\n"
+                                                              "border: 1px solid black;")
+    def open_documentation(self):
+        print("documentation opened")
+    def show_authors(self):
+        print("about authors")
+    def get_config(self):
+        config = self.cont.get_camera().get_mapping().get_gestures_list()
+        self.action1_comboBox.setCurrentText(config.get(1))
+        self.action2_comboBox.setCurrentText(config.get(2))
+        self.action3_comboBox.setCurrentText(config.get(3))
+        self.action4_comboBox.setCurrentText(config.get(4))
+        self.action5_comboBox.setCurrentText(config.get(5))
+        self.action6_comboBox.setCurrentText(config.get(6))
+        self.action7_comboBox.setCurrentText(config.get(7))
+        self.action8_comboBox.setCurrentText(config.get(8))
+        self.action9_comboBox.setCurrentText(config.get(9))
+        self.action10_comboBox.setCurrentText(config.get(10))
+        self.action11_comboBox.setCurrentText(config.get(11))
+        self.action12_comboBox.setCurrentText(config.get(12))
+        self.action13_comboBox.setCurrentText(config.get(13))
+        self.action14_comboBox.setCurrentText(config.get(14))
+        self.action15_comboBox.setCurrentText(config.get(15))
+        self.action16_comboBox.setCurrentText(config.get(16))
+        self.action17_comboBox.setCurrentText(config.get(17))
+        self.action18_comboBox.setCurrentText(config.get(18))
+        self.action19_comboBox.setCurrentText(config.get(19))
+        self.action20_comboBox.setCurrentText(config.get(20))
+        self.action21_comboBox.setCurrentText(config.get(21))
+        self.action22_comboBox.setCurrentText(config.get(22))
+        self.action23_comboBox.setCurrentText(config.get(23))
+        self.action24_comboBox.setCurrentText(config.get(24))
+        self.action25_comboBox.setCurrentText(config.get(25))
+    def get_default_config(self):
+        self.cont.get_camera().get_mapping().read_default_configuration_from_file()
+        self.get_config()
     def set_config(self):
         dict={}
         print("a")
@@ -74,7 +128,7 @@ class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(954, 846)
+        MainWindow.resize(927, 846)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -308,25 +362,6 @@ class Ui_MainWindow(object):
         self.tab.setObjectName("tab")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.tab)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.stopHandyButton = QtWidgets.QPushButton(self.tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.stopHandyButton.sizePolicy().hasHeightForWidth())
-        self.stopHandyButton.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        font.setBold(True)
-        font.setItalic(False)
-        font.setUnderline(False)
-        font.setWeight(75)
-        font.setStrikeOut(False)
-        font.setKerning(True)
-        self.stopHandyButton.setFont(font)
-        self.stopHandyButton.setStyleSheet("background-color: rgb(36, 34, 70);border: 2px solid black;\n"
-                                           "background-color: rgb(112, 211, 69);")
-        self.stopHandyButton.setObjectName("stopHandyButton")
-        self.gridLayout_2.addWidget(self.stopHandyButton, 3, 2, 1, 1)
         self.documentationButton = QtWidgets.QPushButton(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -340,16 +375,10 @@ class Ui_MainWindow(object):
         self.documentationButton.setFont(font)
         self.documentationButton.setStyleSheet("background-color: rgb(36, 34, 70);border: 2px solid black;\n"
                                                "background-color: rgb(112, 211, 69);")
-
-        '''otworzenie dokumentacji'''
         self.documentationButton.setObjectName("documentationButton")
-        self.gridLayout_2.addWidget(self.documentationButton, 4, 1, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
-        self.gridLayout_2.addItem(spacerItem, 5, 1, 1, 1)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem1, 3, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.documentationButton, 4, 0, 1, 1)
         self.startHandyButton = QtWidgets.QPushButton(self.tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.startHandyButton.sizePolicy().hasHeightForWidth())
@@ -390,11 +419,10 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         font.setKerning(False)
         self.startHandyButton.setFont(font)
-        self.startHandyButton.setStyleSheet("background-color: rgb(79, 79, 79);\n""border: 2px solid black;")
-
-        '''przycisk start rozpoznawania gestow'''
+        self.startHandyButton.setStyleSheet("background-color: rgb(79, 79, 79);\n"
+                                            "border: 2px solid black;")
         self.startHandyButton.setObjectName("startHandyButton")
-        self.gridLayout_2.addWidget(self.startHandyButton, 3, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.startHandyButton, 3, 0, 1, 1)
         self.authorButton = QtWidgets.QPushButton(self.tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -405,42 +433,89 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-
-        '''przycisk o autorach'''
         self.authorButton.setFont(font)
         self.authorButton.setStyleSheet("background-color: rgb(79, 79, 79);border: 2px solid black;")
         self.authorButton.setObjectName("authorButton")
-        self.gridLayout_2.addWidget(self.authorButton, 4, 2, 1, 1)
-
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
-        self.gridLayout_2.addItem(spacerItem2, 0, 2, 1, 1)
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem3, 4, 3, 1, 1)
-
+        self.gridLayout_2.addWidget(self.authorButton, 4, 1, 1, 1)
+        self.recognition_in_starttab_label = QtWidgets.QLabel(self.tab)
+        self.recognition_in_starttab_label.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.recognition_in_starttab_label.sizePolicy().hasHeightForWidth())
+        self.recognition_in_starttab_label.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.recognition_in_starttab_label.setFont(font)
+        self.recognition_in_starttab_label.setStyleSheet("background-color: rgb(255, 0, 0);\n"
+                                                         "border: 1px solid black;")
+        self.recognition_in_starttab_label.setAlignment(
+            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.recognition_in_starttab_label.setObjectName("recognition_in_starttab_label")
+        self.gridLayout_2.addWidget(self.recognition_in_starttab_label, 0, 0, 1, 1)
+        self.stopHandyButton = QtWidgets.QPushButton(self.tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stopHandyButton.sizePolicy().hasHeightForWidth())
+        self.stopHandyButton.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setWeight(75)
+        font.setStrikeOut(False)
+        font.setKerning(True)
+        self.stopHandyButton.setFont(font)
+        self.stopHandyButton.setStyleSheet("background-color: rgb(36, 34, 70);border: 2px solid black;\n"
+                                           "background-color: rgb(112, 211, 69);")
+        self.stopHandyButton.setObjectName("stopHandyButton")
+        self.gridLayout_2.addWidget(self.stopHandyButton, 3, 1, 1, 1)
         self.tabWidget.addTab(self.tab, "")
         self.gestureTab = QtWidgets.QWidget()
         self.gestureTab.setObjectName("gestureTab")
         self.gridLayout = QtWidgets.QGridLayout(self.gestureTab)
         self.gridLayout.setObjectName("gridLayout")
+        self.recognition_in_gesturetab_label = QtWidgets.QLabel(self.gestureTab)
+        self.recognition_in_gesturetab_label.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.recognition_in_gesturetab_label.sizePolicy().hasHeightForWidth())
+        self.recognition_in_gesturetab_label.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.recognition_in_gesturetab_label.setFont(font)
+        self.recognition_in_gesturetab_label.setStyleSheet("background-color: rgb(255, 0, 0);\n"
+                                                           "border: 1px solid black;")
+        self.recognition_in_gesturetab_label.setAlignment(
+            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.recognition_in_gesturetab_label.setObjectName("recognition_in_gesturetab_label")
+        self.gridLayout.addWidget(self.recognition_in_gesturetab_label, 0, 4, 1, 1)
         self.scrollArea = QtWidgets.QScrollArea(self.gestureTab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
         self.scrollArea.setSizePolicy(sizePolicy)
-        self.scrollArea.setStyleSheet("background-color: rgb(48, 48, 48);\n""")
+        self.scrollArea.setStyleSheet("background-color: rgb(48, 48, 48);\n"
+                                      "")
         self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.scrollArea.setWidgetResizable(True)
-
-        '''scroll area gestow'''
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 801, 1238))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 774, 1238))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.widget_2 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
-        self.widget_2.setStyleSheet("border: 1px solid black;\n""background-color: rgb(112, 211, 69);")
+        self.widget_2.setStyleSheet("border: 1px solid black;\n"
+                                    "background-color: rgb(112, 211, 69);")
         self.widget_2.setObjectName("widget_2")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.widget_2)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
@@ -449,14 +524,11 @@ class Ui_MainWindow(object):
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
-
-        ''' elementy scroll arey'''
         self.gesturename_label.setFont(font)
         self.gesturename_label.setStyleSheet("")
         self.gesturename_label.setAlignment(QtCore.Qt.AlignCenter)
         self.gesturename_label.setObjectName("gesturename_label")
         self.horizontalLayout_5.addWidget(self.gesturename_label)
-        #self.status_label = QtWidgets.QLabel(self.widget_2)
         self.actionNameLabel = QtWidgets.QLabel(self.widget_2)
         font = QtGui.QFont()
         font.setPointSize(16)
@@ -468,7 +540,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.addWidget(self.actionNameLabel)
         self.verticalLayout_2.addWidget(self.widget_2)
         self.widget_7 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
-        self.widget_7.setStyleSheet("background-color: rgb(79, 79, 79);\n""background-color: rgb(111, 111, 111);\n""")
+        self.widget_7.setStyleSheet("background-color: rgb(79, 79, 79);\n"
+                                    "background-color: rgb(111, 111, 111);\n"
+                                    "")
         self.widget_7.setObjectName("widget_7")
         self.horizontalLayout_11 = QtWidgets.QHBoxLayout(self.widget_7)
         self.horizontalLayout_11.setObjectName("horizontalLayout_11")
@@ -484,7 +558,8 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         self.action1_comboBox.setFont(font)
-        self.action1_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n""border: 1px solid black;")
+        self.action1_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
+                                            "border: 1px solid black;")
         self.action1_comboBox.setObjectName("action1_comboBox")
         self.horizontalLayout_11.addWidget(self.action1_comboBox)
         self.verticalLayout_2.addWidget(self.widget_7)
@@ -574,7 +649,6 @@ class Ui_MainWindow(object):
         self.action5_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                             "border: 1px solid black;")
         self.action5_comboBox.setObjectName("action5_comboBox")
-
         self.horizontalLayout_13.addWidget(self.action5_comboBox)
         self.verticalLayout_2.addWidget(self.widget_9)
         self.widget_11 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -597,7 +671,6 @@ class Ui_MainWindow(object):
         self.action6_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                             "border: 1px solid black;")
         self.action6_comboBox.setObjectName("action6_comboBox")
-
         self.horizontalLayout_15.addWidget(self.action6_comboBox)
         self.verticalLayout_2.addWidget(self.widget_11)
         self.widget_10 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -620,7 +693,6 @@ class Ui_MainWindow(object):
         self.action7_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                             "border: 1px solid black;")
         self.action7_comboBox.setObjectName("action7_comboBox")
-
         self.horizontalLayout_14.addWidget(self.action7_comboBox)
         self.verticalLayout_2.addWidget(self.widget_10)
         self.widget_12 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -648,7 +720,6 @@ class Ui_MainWindow(object):
         self.action8_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                             "border: 1px solid black;")
         self.action8_comboBox.setObjectName("action8_comboBox")
-
         self.horizontalLayout_16.addWidget(self.action8_comboBox)
         self.verticalLayout_2.addWidget(self.widget_12)
         self.widget_13 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -676,7 +747,6 @@ class Ui_MainWindow(object):
         self.action9_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                             "border: 1px solid black;")
         self.action9_comboBox.setObjectName("action9_comboBox")
-
         self.horizontalLayout_17.addWidget(self.action9_comboBox)
         self.verticalLayout_2.addWidget(self.widget_13)
         self.widget_15 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -699,7 +769,6 @@ class Ui_MainWindow(object):
         self.action10_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action10_comboBox.setObjectName("action10_comboBox")
-
         self.horizontalLayout_23.addWidget(self.action10_comboBox)
         self.verticalLayout_2.addWidget(self.widget_15)
         self.widget_16 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -722,7 +791,6 @@ class Ui_MainWindow(object):
         self.action11_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action11_comboBox.setObjectName("action11_comboBox")
-
         self.horizontalLayout_24.addWidget(self.action11_comboBox)
         self.verticalLayout_2.addWidget(self.widget_16)
         self.widget_26 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -745,7 +813,6 @@ class Ui_MainWindow(object):
         self.action12_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action12_comboBox.setObjectName("action12_comboBox")
-
         self.horizontalLayout_34.addWidget(self.action12_comboBox)
         self.verticalLayout_2.addWidget(self.widget_26)
         self.widget_25 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -768,7 +835,6 @@ class Ui_MainWindow(object):
         self.action13_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action13_comboBox.setObjectName("action13_comboBox")
-
         self.horizontalLayout_33.addWidget(self.action13_comboBox)
         self.verticalLayout_2.addWidget(self.widget_25)
         self.widget_24 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -796,7 +862,6 @@ class Ui_MainWindow(object):
         self.action14_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action14_comboBox.setObjectName("action14_comboBox")
-
         self.horizontalLayout_32.addWidget(self.action14_comboBox)
         self.verticalLayout_2.addWidget(self.widget_24)
         self.widget_23 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -819,7 +884,6 @@ class Ui_MainWindow(object):
         self.action15_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action15_comboBox.setObjectName("action15_comboBox")
-
         self.horizontalLayout_31.addWidget(self.action15_comboBox)
         self.verticalLayout_2.addWidget(self.widget_23)
         self.widget_22 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -842,7 +906,6 @@ class Ui_MainWindow(object):
         self.action16_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action16_comboBox.setObjectName("action16_comboBox")
-
         self.horizontalLayout_30.addWidget(self.action16_comboBox)
         self.verticalLayout_2.addWidget(self.widget_22)
         self.widget_21 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -865,7 +928,6 @@ class Ui_MainWindow(object):
         self.action17_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action17_comboBox.setObjectName("action17_comboBox")
-
         self.horizontalLayout_29.addWidget(self.action17_comboBox)
         self.verticalLayout_2.addWidget(self.widget_21)
         self.widget_20 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -888,7 +950,6 @@ class Ui_MainWindow(object):
         self.action18_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action18_comboBox.setObjectName("action18_comboBox")
-
         self.horizontalLayout_28.addWidget(self.action18_comboBox)
         self.verticalLayout_2.addWidget(self.widget_20)
         self.widget_19 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -911,7 +972,6 @@ class Ui_MainWindow(object):
         self.action19_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action19_comboBox.setObjectName("action19_comboBox")
-
         self.horizontalLayout_27.addWidget(self.action19_comboBox)
         self.verticalLayout_2.addWidget(self.widget_19)
         self.widget_17 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -934,7 +994,6 @@ class Ui_MainWindow(object):
         self.action20_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action20_comboBox.setObjectName("action20_comboBox")
-
         self.horizontalLayout_25.addWidget(self.action20_comboBox)
         self.verticalLayout_2.addWidget(self.widget_17)
         self.widget_31 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -957,7 +1016,6 @@ class Ui_MainWindow(object):
         self.action21_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action21_comboBox.setObjectName("action21_comboBox")
-
         self.horizontalLayout_39.addWidget(self.action21_comboBox)
         self.verticalLayout_2.addWidget(self.widget_31)
         self.widget_30 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -980,7 +1038,6 @@ class Ui_MainWindow(object):
         self.action22_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action22_comboBox.setObjectName("action22_comboBox")
-
         self.horizontalLayout_38.addWidget(self.action22_comboBox)
         self.verticalLayout_2.addWidget(self.widget_30)
         self.widget_29 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -1003,7 +1060,6 @@ class Ui_MainWindow(object):
         self.action23_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action23_comboBox.setObjectName("action23_comboBox")
-
         self.horizontalLayout_37.addWidget(self.action23_comboBox)
         self.verticalLayout_2.addWidget(self.widget_29)
         self.widget_28 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -1026,7 +1082,6 @@ class Ui_MainWindow(object):
         self.action24_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action24_comboBox.setObjectName("action24_comboBox")
-
         self.horizontalLayout_36.addWidget(self.action24_comboBox)
         self.verticalLayout_2.addWidget(self.widget_28)
         self.widget_27 = QtWidgets.QWidget(self.scrollAreaWidgetContents_2)
@@ -1049,16 +1104,14 @@ class Ui_MainWindow(object):
         self.action25_comboBox.setStyleSheet("background-color: rgb(171, 171, 171);\n"
                                              "border: 1px solid black;")
         self.action25_comboBox.setObjectName("action25_comboBox")
-
         self.horizontalLayout_35.addWidget(self.action25_comboBox)
         self.verticalLayout_2.addWidget(self.widget_27)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
-        self.gridLayout.addWidget(self.scrollArea, 0, 5, 1, 1)
-        self.gridLayout_3 = QtWidgets.QGridLayout()
-        self.gridLayout_3.setSizeConstraint(QtWidgets.QLayout.SetFixedSize)
-        self.gridLayout_3.setHorizontalSpacing(3)
-        self.gridLayout_3.setObjectName("gridLayout_3")
-        self.gridLayout.addLayout(self.gridLayout_3, 1, 5, 1, 1)
+        self.gridLayout.addWidget(self.scrollArea, 1, 4, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 2, 0, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem1, 2, 5, 1, 1)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.cancelButton = QtWidgets.QPushButton(self.gestureTab)
@@ -1089,8 +1142,8 @@ class Ui_MainWindow(object):
                                        "border: 1px solid black;")
         self.resetButton.setObjectName("resetButton")
         self.horizontalLayout_3.addWidget(self.resetButton)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_3.addItem(spacerItem4)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem2)
         self.applyButton = QtWidgets.QPushButton(self.gestureTab)
         self.applyButton.setMinimumSize(QtCore.QSize(120, 60))
         font = QtGui.QFont()
@@ -1102,39 +1155,60 @@ class Ui_MainWindow(object):
                                        "border: 1px solid black;")
         self.applyButton.setObjectName("applyButton")
         self.horizontalLayout_3.addWidget(self.applyButton)
-        self.gridLayout.addLayout(self.horizontalLayout_3, 2, 5, 1, 1)
-        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem5, 0, 6, 1, 1)
-        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem6, 0, 0, 1, 1)
-
-        '''elementy tab kamera
-            czy Feedlabel to obraz kamery
-        '''
+        self.gridLayout.addLayout(self.horizontalLayout_3, 3, 4, 1, 1)
         self.tabWidget.addTab(self.gestureTab, "")
         self.cameraTab = QtWidgets.QWidget()
         self.cameraTab.setObjectName("cameraTab")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.cameraTab)
         self.gridLayout_4.setObjectName("gridLayout_4")
+        self.recognition_in_cameratab_label = QtWidgets.QLabel(self.cameraTab)
+        self.recognition_in_cameratab_label.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.recognition_in_cameratab_label.sizePolicy().hasHeightForWidth())
+        self.recognition_in_cameratab_label.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.recognition_in_cameratab_label.setFont(font)
+        self.recognition_in_cameratab_label.setStyleSheet("background-color: rgb(255, 0, 0);\n"
+                                                          "border: 1px solid black;")
+        self.recognition_in_cameratab_label.setAlignment(
+            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.recognition_in_cameratab_label.setObjectName("recognition_in_cameratab_label")
+        self.gridLayout_4.addWidget(self.recognition_in_cameratab_label, 0, 0, 1, 1)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-
-        # feedlabel maurycy
-
-        self.Feedlabel = QtWidgets.QLabel(self.cameraTab)
+        self.FeedLabel = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Feedlabel.sizePolicy().hasHeightForWidth())
-
-        self.Feedlabel.setSizePolicy(sizePolicy)
-        self.Feedlabel.setObjectName("tubedziekamera_label")
-        self.verticalLayout_3.addWidget(self.Feedlabel)
+        #sizePolicy.setHeightForWidth(self.FeedLabel.sizePolicy().hasHeightForWidth())
+        #self.FeedLabel.setSizePolicy(sizePolicy)
+        #self.FeedLabel.setObjectName("FeedLabel")
+        self.verticalLayout_3.addWidget(self.FeedLabel)
+        self.formLayout_6 = QtWidgets.QFormLayout()
+        self.formLayout_6.setObjectName("formLayout_6")
+        self.setResolutionCamera_combobox = QtWidgets.QComboBox(self.cameraTab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.setResolutionCamera_combobox.sizePolicy().hasHeightForWidth())
+        self.setResolutionCamera_combobox.setSizePolicy(sizePolicy)
+        self.setResolutionCamera_combobox.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+                                                        "border: 1px solid black;")
+        self.setResolutionCamera_combobox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContentsOnFirstShow)
+        self.setResolutionCamera_combobox.setObjectName("setResolutionCamera_combobox")
+        self.formLayout_6.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.setResolutionCamera_combobox)
+        self.set_resolutionCameras_Button = QtWidgets.QPushButton(self.cameraTab)
+        self.set_resolutionCameras_Button.setStyleSheet("background-color: rgb(112, 211, 69);")
+        self.set_resolutionCameras_Button.setObjectName("set_resolutionCameras_Button")
+        self.formLayout_6.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.set_resolutionCameras_Button)
+        self.verticalLayout_3.addLayout(self.formLayout_6)
         self.formLayout_3 = QtWidgets.QFormLayout()
         self.formLayout_3.setObjectName("formLayout_3")
-
-        # refresh button
-
         self.refreshCameras_Button = QtWidgets.QPushButton(self.cameraTab)
         self.refreshCameras_Button.setStyleSheet("background-color: rgb(112, 211, 69);")
         self.refreshCameras_Button.setObjectName("refreshCameras_Button")
@@ -1143,32 +1217,20 @@ class Ui_MainWindow(object):
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-
-        # kamera
-
         sizePolicy.setHeightForWidth(self.setCamera_combobox.sizePolicy().hasHeightForWidth())
         self.setCamera_combobox.setSizePolicy(sizePolicy)
-        self.setCamera_combobox.setStyleSheet("background-color: rgb(255, 255, 255);\n""border: 1px solid black;")
+        self.setCamera_combobox.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+                                              "border: 1px solid black;")
         self.setCamera_combobox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContentsOnFirstShow)
         self.setCamera_combobox.setObjectName("setCamera_combobox")
         self.formLayout_3.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.setCamera_combobox)
         self.verticalLayout_3.addLayout(self.formLayout_3)
-        self.gridLayout_4.addLayout(self.verticalLayout_3, 0, 0, 1, 1)
+        self.gridLayout_4.addLayout(self.verticalLayout_3, 1, 0, 1, 1)
         self.tabWidget.addTab(self.cameraTab, "")
         self.horizontalLayout_2.addWidget(self.tabWidget)
-
-        # pracowacz
-        self.Worker1 = Worker1(self.cont, self)
-        arr = self.cont.get_camera_controller().get_all_cameras()
-        for i in arr:
-            self.setCamera_combobox.addItem(str(i))
-
-        self.Worker1.start()
-        self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
-
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 954, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 927, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -1176,13 +1238,8 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        MainWindow.setTabOrder(self.authorButton, self.documentationButton)
-        MainWindow.setTabOrder(self.documentationButton, self.stopHandyButton)
-        MainWindow.setTabOrder(self.stopHandyButton, self.startHandyButton)
-        MainWindow.setTabOrder(self.startHandyButton, self.scrollArea)
-        MainWindow.setTabOrder(self.scrollArea, self.action6_comboBox)
         MainWindow.setTabOrder(self.action6_comboBox, self.action8_comboBox)
         MainWindow.setTabOrder(self.action8_comboBox, self.action9_comboBox)
         MainWindow.setTabOrder(self.action9_comboBox, self.action3_comboBox)
@@ -1210,19 +1267,11 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.action2_comboBox, self.applyButton)
         MainWindow.setTabOrder(self.applyButton, self.cancelButton)
         MainWindow.setTabOrder(self.cancelButton, self.resetButton)
-
-        action_name2 = ["switch_window", "escape", "preview_of_opened_windows", "minimize_all_windows",
-                        "space", "page_down", "page_up", "open_action_center", "brightness_down",
-                        "volume_down", "volume_up", "brightness_up", "pause", "scroll_down",
-                        "scroll_left", "scroll_right", "scroll_up", "close_window", "mouse_start",
-                        "window_right", "window_left", "maximize_window", "zoom_in", "minimize_window",
-                        "zoom_out"]
-
         '''wziecie wszystkich nazw akcji'''
-        action_name = self.cont.get_camera().get_mapping().function_getter.get_all_functions_names()
+        action_names = self.cont.get_camera().get_mapping().function_getter.get_all_functions_names()
 
         '''dodanie akcji do comboboxow'''
-        for i in action_name:
+        for i in action_names:
             self.action1_comboBox.addItem(i)
             self.action2_comboBox.addItem(i)
             self.action3_comboBox.addItem(i)
@@ -1248,69 +1297,50 @@ class Ui_MainWindow(object):
             self.action23_comboBox.addItem(i)
             self.action24_comboBox.addItem(i)
             self.action25_comboBox.addItem(i)
-        # config= self.cont.get_camera().get_mapping().get_gestures_list()
-        # print(config)
-        # self.action1_comboBox.setCurrentIndex(config.get[1])
-        # self.action2_comboBox.setCurrentIndex(config.get[2])
-        # self.action3_comboBox.setCurrentIndex(config.get[3])
-        # self.action4_comboBox.setCurrentIndex(config.get[4])
-        # self.action5_comboBox.setCurrentIndex(config.get[5])
-        # self.action6_comboBox.setCurrentIndex(config.get[6])
-        # self.action7_comboBox.setCurrentIndex(config.get[7])
-        # self.action8_comboBox.setCurrentIndex(config.get[8])
-        # self.action9_comboBox.setCurrentIndex(config.get[9])
-        # self.action10_comboBox.setCurrentIndex(config.get[10])
-        # self.action11_comboBox.setCurrentIndex(config.get[11])
-        # self.action12_comboBox.setCurrentIndex(config.get[12])
-        # self.action13_comboBox.setCurrentIndex(config.get[13])
-        # self.action14_comboBox.setCurrentIndex(config.get[14])
-        # self.action15_comboBox.setCurrentIndex(config.get[15])
-        # self.action16_comboBox.setCurrentIndex(config.get[16])
-        # self.action17_comboBox.setCurrentIndex(config.get[17])
-        # self.action18_comboBox.setCurrentIndex(config.get[18])
-        # self.action19_comboBox.setCurrentIndex(config.get[19])
-        # self.action20_comboBox.setCurrentIndex(config.get[20])
-        # self.action21_comboBox.setCurrentIndex(config.get[21])
-        # self.action22_comboBox.setCurrentIndex(config.get[22])
-        # self.action23_comboBox.setCurrentIndex(config.get[23])
-        # self.action24_comboBox.setCurrentIndex(config.get[24])
-        # self.action25_comboBox.setCurrentIndex(config.get[25])
+        self.get_config()
+        arr = self.cont.get_camera_controller().get_all_cameras()
+        for i in arr:
+            self.setCamera_combobox.addItem(str(i))
 
-        '''listenery nie dzialaja'''
-        # self.refreshCameras_Button.clicked.connect(lambda: self.cont.get_camera_controller().refresh_camera_list())
-        # arr = self.cont.get_camera_controller().get_all_cameras()
+        self.refreshCameras_Button.clicked.connect(lambda: self.cont.get_camera_controller().refresh_camera_list())
 
-        self.authorButton.clicked.connect(lambda: print("Authors"))
-        self.documentationButton.clicked.connect(lambda: print("Documentation"))
+
+        self.authorButton.clicked.connect(lambda: self.show_authors())
+        self.documentationButton.clicked.connect(lambda: self.open_documentation())
 
         self.setCamera_combobox.activated.connect(lambda:
                                                   self.cont.get_camera_controller().set_used_camera_number(
                                                       int(self.setCamera_combobox.currentText())))
 
         self.startHandyButton.clicked.connect(lambda: self.cont.start_gesture_recognition())
-        # self.startHandyButton.clicked.connect(lambda: print("clicked"))
 
         self.stopHandyButton.clicked.connect(lambda: self.cont.stop_gesture_recognition())
-        self.applyButton.clicked.connect(lambda: print("c"))
+        self.applyButton.clicked.connect(lambda: self.set_config())
+        self.resetButton.clicked.connect(lambda: self.get_default_config())
+        self.cancelButton.clicked.connect(lambda: self.get_config())
+        self.Worker1 = Worker1(self.cont,self)
+        self.Worker1.start()
+        self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.stopHandyButton.setText(_translate("MainWindow", "Stop Handy"))
         self.documentationButton.setText(_translate("MainWindow", "Documentation"))
         self.startHandyButton.setText(_translate("MainWindow", "Start Handy"))
         self.authorButton.setText(_translate("MainWindow", "Authors"))
+        self.recognition_in_starttab_label.setText(_translate("MainWindow", "Gesture recognition disabled"))
+        self.stopHandyButton.setText(_translate("MainWindow", "Stop Handy"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Start"))
+        self.recognition_in_gesturetab_label.setText(_translate("MainWindow", "Gesture recognition disabled"))
         self.gesturename_label.setText(_translate("MainWindow", "Gesture name"))
         self.actionNameLabel.setText(_translate("MainWindow", "Action name"))
         self.pull_hand_in_label.setStyleSheet(_translate("MainWindow", "background-color: rgb(79, 79, 79);\n"
                                                                        "background-color: rgb(111, 111, 111);"))
         self.pull_hand_in_label.setText(_translate("MainWindow", "Pulling hand in"))
-
         self.drumming_fingers_label.setText(_translate("MainWindow", "Drumming fingers"))
         self.pushingTwoFingers_label.setText(_translate("MainWindow", "Pushing two fingers_away"))
         self.pullingTwoFingersfingers_label.setText(_translate("MainWindow", "Pulling two fingers in"))
         self.pushinHandAway_label.setText(_translate("MainWindow", "Pushing hand away"))
-
         self.rollingHandForward_label.setText(_translate("MainWindow", "Rolling hand forward"))
         self.rollingHandBackward_label.setText(_translate("MainWindow", "Rolling hand backward"))
         self.shakingHand_label.setText(_translate("MainWindow", "Shaking hand"))
@@ -1331,15 +1361,18 @@ class Ui_MainWindow(object):
         self.zoomingInWith2_label.setText(_translate("MainWindow", "Zoming in with two fingers"))
         self.zoomingOutWithFull_label.setText(_translate("MainWindow", "Zooming out with full hand"))
         self.zoomingOutWith2_label.setText(_translate("MainWindow", "Zooming out with two fingers"))
-
         self.cancelButton.setText(_translate("MainWindow", "Cancel"))
         self.resetButton.setText(_translate("MainWindow", "Reset"))
         self.applyButton.setText(_translate("MainWindow", "Apply"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.gestureTab), _translate("MainWindow", "Gestures"))
+        self.recognition_in_cameratab_label.setText(_translate("MainWindow", "Gesture recognition disabled"))
+        self.FeedLabel.setText(_translate("MainWindow", "TextLabel"))
+        self.set_resolutionCameras_Button.setText(_translate("MainWindow", "  Set resolution   "))
         self.refreshCameras_Button.setText(_translate("MainWindow", "Refresh cameras"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.cameraTab), _translate("MainWindow", "Camera"))
 
     def ImageUpdateSlot(self, Image):
+        pass
         self.FeedLabel.setPixmap(QPixmap.fromImage(Image))
 
     def is_active(self):
@@ -1359,6 +1392,7 @@ class Worker1(QThread):
 
         while self.win.get_close_time() is False:
             if self.win.is_active():
+                pass
                 ret, frame = self.camera.get_camera_image()
                 if ret is True:
                     Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
