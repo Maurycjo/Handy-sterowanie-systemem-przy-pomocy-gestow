@@ -4,7 +4,7 @@ class CameraChecker():
         index = 0
         arr = []
         while True:
-            cap = cv2.VideoCapture(index)
+            cap = cv2.VideoCapture(index, cv2.CAP_DSHOW)
             if not cap.read()[0]:
                 break
             else:

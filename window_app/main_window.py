@@ -125,6 +125,7 @@ class Ui_MainWindow(object):
         self.setCamera_combobox.clear()
         for a in lst:
             self.setCamera_combobox.addItem(str(a))
+        #self.setCamera_combobox.setCurrentText(str(self.cont.get_camera_controller().get_used_camera_number()))
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -1267,9 +1268,18 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.action2_comboBox, self.applyButton)
         MainWindow.setTabOrder(self.applyButton, self.cancelButton)
         MainWindow.setTabOrder(self.cancelButton, self.resetButton)
+
+        resolution_list=[[320, 240], [480, 320], [640, 480], [800, 480], [800, 600],
+                         [1024, 768], [1280, 720], [1366, 768], [1280, 800], [1366, 768],
+                         [1280, 800], [1440, 900], [1280, 1024], [1600, 1024], [1400, 1050],
+                         [1024, 600], [1680, 1050], [1600, 1200], [1600, 900], [1920, 1080],]
+        self.setResolutionCamera_combobox.addItem("Original")
+        for i in resolution_list:
+            self.setResolutionCamera_combobox.addItem(str(i[0])+"x"+str(i[1]))
+
+
         '''wziecie wszystkich nazw akcji'''
         action_names = self.cont.get_camera().get_mapping().function_getter.get_all_functions_names()
-
         '''dodanie akcji do comboboxow'''
         for i in action_names:
             self.action1_comboBox.addItem(i)
@@ -1302,6 +1312,8 @@ class Ui_MainWindow(object):
         for i in arr:
             self.setCamera_combobox.addItem(str(i))
 
+
+        self.set_resolutionCameras_Button.clicked.connect(lambda: self.cont.get_camera_controller().set_camera_resolution(self.setResolutionCamera_combobox.currentText()))
         self.refreshCameras_Button.clicked.connect(lambda: self.cont.get_camera_controller().refresh_camera_list())
 
 
@@ -1399,7 +1411,7 @@ class Worker1(QThread):
                     FlippedImage = cv2.flip(Image, 1)
                     ConvertToQtFormat = QImage(FlippedImage.data, FlippedImage.shape[1], FlippedImage.shape[0],
                                                QImage.Format_RGB888)
-                    Pic = ConvertToQtFormat.scaled(640, 480, Qt.KeepAspectRatio)
+                    Pic = ConvertToQtFormat.scaled(720, 540, Qt.KeepAspectRatio)
                     self.ImageUpdate.emit(Pic)
             time.sleep(0.02)
 
