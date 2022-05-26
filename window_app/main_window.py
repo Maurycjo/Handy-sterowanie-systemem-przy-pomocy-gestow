@@ -384,8 +384,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.documentationButton.setFont(font)
-        self.documentationButton.setStyleSheet("background-color: rgb(36, 34, 70);border: 2px solid black;\n"
-                                               "background-color: rgb(112, 211, 69);")
+        self.documentationButton.setStyleSheet("background-color: rgb(112, 211, 69);")
         self.documentationButton.setObjectName("documentationButton")
         self.gridLayout_2.addWidget(self.documentationButton, 4, 0, 1, 1)
         self.startHandyButton = QtWidgets.QPushButton(self.tab)
@@ -430,8 +429,8 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         font.setKerning(False)
         self.startHandyButton.setFont(font)
-        self.startHandyButton.setStyleSheet("background-color: rgb(79, 79, 79);\n"
-                                            "border: 2px solid black;")
+        self.startHandyButton.setStyleSheet("background-color: rgb(79, 79, 79);")
+
         self.startHandyButton.setObjectName("startHandyButton")
         self.gridLayout_2.addWidget(self.startHandyButton, 3, 0, 1, 1)
         self.authorButton = QtWidgets.QPushButton(self.tab)
@@ -445,7 +444,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.authorButton.setFont(font)
-        self.authorButton.setStyleSheet("background-color: rgb(79, 79, 79);border: 2px solid black;")
+        self.authorButton.setStyleSheet("background-color: rgb(79, 79, 79);")
         self.authorButton.setObjectName("authorButton")
         self.gridLayout_2.addWidget(self.authorButton, 4, 1, 1, 1)
         self.recognition_in_starttab_label = QtWidgets.QLabel(self.tab)
@@ -481,8 +480,7 @@ class Ui_MainWindow(object):
         font.setStrikeOut(False)
         font.setKerning(True)
         self.stopHandyButton.setFont(font)
-        self.stopHandyButton.setStyleSheet("background-color: rgb(36, 34, 70);border: 2px solid black;\n"
-                                           "background-color: rgb(112, 211, 69);")
+        self.stopHandyButton.setStyleSheet("background-color: rgb(112, 211, 69);")
         self.stopHandyButton.setObjectName("stopHandyButton")
         self.gridLayout_2.addWidget(self.stopHandyButton, 3, 1, 1, 1)
         self.tabWidget.addTab(self.tab, "")
@@ -1138,8 +1136,8 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.cancelButton.setFont(font)
-        self.cancelButton.setStyleSheet("background-color: rgb(112, 211, 69);\n"
-                                        "border: 1px solid black;")
+        self.cancelButton.setStyleSheet("background-color: rgb(112, 211, 69);")
+
         self.cancelButton.setObjectName("cancelButton")
         self.horizontalLayout_3.addWidget(self.cancelButton)
         self.resetButton = QtWidgets.QPushButton(self.gestureTab)
@@ -1149,8 +1147,8 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.resetButton.setFont(font)
-        self.resetButton.setStyleSheet("background-color: rgb(112, 211, 69);\n"
-                                       "border: 1px solid black;")
+        self.resetButton.setStyleSheet("background-color: rgb(112, 211, 69);")
+
         self.resetButton.setObjectName("resetButton")
         self.horizontalLayout_3.addWidget(self.resetButton)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -1162,8 +1160,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.applyButton.setFont(font)
-        self.applyButton.setStyleSheet("background-color: rgb(112, 211, 69);\n"
-                                       "border: 1px solid black;")
+        self.applyButton.setStyleSheet("background-color: rgb(112, 211, 69);")
         self.applyButton.setObjectName("applyButton")
         self.horizontalLayout_3.addWidget(self.applyButton)
         self.gridLayout.addLayout(self.horizontalLayout_3, 3, 4, 1, 1)
