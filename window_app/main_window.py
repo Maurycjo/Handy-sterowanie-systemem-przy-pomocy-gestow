@@ -1425,7 +1425,6 @@ class Worker1(QThread):
                     self.ImageUpdate.emit(Pic)
             time.sleep(0.02)
 
-
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
