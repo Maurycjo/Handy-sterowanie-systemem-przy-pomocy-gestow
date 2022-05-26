@@ -1,13 +1,12 @@
 import PyQt5.QtWidgets
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import cv2
 import time
 import sys
+
 
 sys.path.insert(0, "..")
 from controllers.controller import Controller
@@ -30,8 +29,9 @@ class MyComboBox(PyQt5.QtWidgets.QComboBox):
             return self.scrollWidget.wheelEvent(*args, **kwargs)
 
 
-class Ui_MainWindow(object):
+class Ui_MainWindow(QMainWindow):
     def __init__(self):
+        super().__init__()
         self.close_time = False
         self.name_mapper = NameMapper()
         self.sys_cont = SystemController()
@@ -1290,7 +1290,6 @@ class Ui_MainWindow(object):
         self.setResolutionCamera_combobox.addItem("Original")
         for i in resolution_list:
             self.setResolutionCamera_combobox.addItem(str(i[0])+"x"+str(i[1]))
-
         '''wziecie wszystkich nazw akcji'''
         action_names = self.cont.get_camera().get_mapping().function_getter.get_all_functions_names()
         '''dodanie akcji do comboboxow'''
@@ -1341,7 +1340,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("Handy", "Handy"))
         self.documentationButton.setText(_translate("MainWindow", "Documentation"))
         self.startHandyButton.setText(_translate("MainWindow", "Start Handy"))
         self.authorButton.setText(_translate("MainWindow", "Authors"))
@@ -1387,6 +1386,8 @@ class Ui_MainWindow(object):
         self.set_resolutionCameras_Button.setText(_translate("MainWindow", "  Set resolution   "))
         self.refreshCameras_Button.setText(_translate("MainWindow", "Refresh cameras"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.cameraTab), _translate("MainWindow", "Camera"))
+
+
 
     def ImageUpdateSlot(self, Image):
         pass
