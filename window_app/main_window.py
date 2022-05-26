@@ -131,11 +131,6 @@ class Ui_MainWindow(object):
         self.setCamera_combobox.clear()
         for a in lst:
             self.setCamera_combobox.addItem(str(a))
-        #self.setCamera_combobox.setCurrentText(str(self.cont.get_camera_controller().get_used_camera_number()))
-        #temp=self.cont.get_camera_controller().get_used_camera_number()
-        #print(temp)
-        #self.setCamera_combobox.setCurrentIndex(temp)
-
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -1193,12 +1188,9 @@ class Ui_MainWindow(object):
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        #sizePolicy.setHeightForWidth(self.FeedLabel.sizePolicy().hasHeightForWidth())
-        #self.FeedLabel.setSizePolicy(sizePolicy)
-        #self.FeedLabel.setObjectName("FeedLabel")
         self.verticalLayout_3.addWidget(self.FeedLabel)
-        self.formLayout_6 = QtWidgets.QFormLayout()
-        self.formLayout_6.setObjectName("formLayout_6")
+        self.formLayout_3 = QtWidgets.QFormLayout()
+        self.formLayout_3.setObjectName("formLayout_3")
         self.setResolutionCamera_combobox = QtWidgets.QComboBox(self.cameraTab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1209,18 +1201,15 @@ class Ui_MainWindow(object):
                                                         "border: 1px solid black;")
         self.setResolutionCamera_combobox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContentsOnFirstShow)
         self.setResolutionCamera_combobox.setObjectName("setResolutionCamera_combobox")
-        self.formLayout_6.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.setResolutionCamera_combobox)
+        self.formLayout_3.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.setResolutionCamera_combobox)
         self.set_resolutionCameras_Button = QtWidgets.QPushButton(self.cameraTab)
         self.set_resolutionCameras_Button.setStyleSheet("background-color: rgb(112, 211, 69);")
         self.set_resolutionCameras_Button.setObjectName("set_resolutionCameras_Button")
-        self.formLayout_6.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.set_resolutionCameras_Button)
-        self.verticalLayout_3.addLayout(self.formLayout_6)
-        self.formLayout_3 = QtWidgets.QFormLayout()
-        self.formLayout_3.setObjectName("formLayout_3")
+        self.formLayout_3.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.set_resolutionCameras_Button)
         self.refreshCameras_Button = QtWidgets.QPushButton(self.cameraTab)
         self.refreshCameras_Button.setStyleSheet("background-color: rgb(112, 211, 69);")
         self.refreshCameras_Button.setObjectName("refreshCameras_Button")
-        self.formLayout_3.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.refreshCameras_Button)
+        self.formLayout_3.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.refreshCameras_Button)
         self.setCamera_combobox = QtWidgets.QComboBox(self.cameraTab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1231,7 +1220,7 @@ class Ui_MainWindow(object):
                                               "border: 1px solid black;")
         self.setCamera_combobox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContentsOnFirstShow)
         self.setCamera_combobox.setObjectName("setCamera_combobox")
-        self.formLayout_3.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.setCamera_combobox)
+        self.formLayout_3.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.setCamera_combobox)
         self.verticalLayout_3.addLayout(self.formLayout_3)
         self.gridLayout_4.addLayout(self.verticalLayout_3, 1, 0, 1, 1)
         self.tabWidget.addTab(self.cameraTab, "")
@@ -1284,7 +1273,6 @@ class Ui_MainWindow(object):
         for i in resolution_list:
             self.setResolutionCamera_combobox.addItem(str(i[0])+"x"+str(i[1]))
 
-
         '''wziecie wszystkich nazw akcji'''
         action_names = self.cont.get_camera().get_mapping().function_getter.get_all_functions_names()
         '''dodanie akcji do comboboxow'''
@@ -1318,19 +1306,12 @@ class Ui_MainWindow(object):
         arr = self.cont.get_camera_controller().get_all_cameras()
         for i in arr:
             self.setCamera_combobox.addItem(str(i))
-
-
         self.set_resolutionCameras_Button.clicked.connect(lambda: self.cont.get_camera_controller().set_camera_resolution(self.setResolutionCamera_combobox.currentText()))
         self.refreshCameras_Button.clicked.connect(lambda: self.cont.get_camera_controller().refresh_camera_list())
-
-
         self.authorButton.clicked.connect(lambda: self.show_authors())
         self.documentationButton.clicked.connect(lambda: self.open_documentation())
-
         self.setCamera_combobox.activated.connect(lambda: self.set_camera())
-
         self.startHandyButton.clicked.connect(lambda: self.cont.start_gesture_recognition())
-
         self.stopHandyButton.clicked.connect(lambda: self.cont.stop_gesture_recognition())
         self.applyButton.clicked.connect(lambda: self.set_config())
         self.resetButton.clicked.connect(lambda: self.get_default_config())
@@ -1338,6 +1319,7 @@ class Ui_MainWindow(object):
         self.Worker1 = Worker1(self.cont,self)
         self.Worker1.start()
         self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -1402,7 +1384,6 @@ class Worker1(QThread):
         self.controller = controller
         self.win = win
         self.camera = self.controller.get_camera_controller()
-
     ImageUpdate = pyqtSignal(QImage)
 
     def run(self):
@@ -1423,7 +1404,6 @@ class Worker1(QThread):
 
 if __name__ == "__main__":
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
