@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtWidgets
-from window_app.test_window import Ui_MainWindow as win
+from window_app.test_window2 import Ui_MainWindow as win
 
 def end_application():
     ui.close_application()
