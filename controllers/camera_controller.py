@@ -22,9 +22,9 @@ class CameraController():
             self.cap = None
         self.mutex.release()
     def get_used_camera_number(self):
-        self.mutex.acquire()
+        #self.mutex.acquire()
         temp=self.used_camera_number
-        self.mutex.release()
+        #self.mutex.release()
         return temp
 
     def get_camera_image(self):
@@ -54,11 +54,14 @@ class CameraController():
                 contains = True
                 break
         self.win.set_cameras_combo_box(self.camera_list)
+
         if contains is True:
             self.used_camera_number=number
             self.cap.release()
             self.cap = cv2.VideoCapture(self.used_camera_number, cv2.CAP_DSHOW)
+        temp=self.used_camera_number
         self.mutex.release()
+        return temp
     def refresh_camera_list(self):
         self.mutex.acquire()
         self.camera_list = self.camera_checker.list_ports()

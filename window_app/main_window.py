@@ -24,6 +24,12 @@ class Ui_MainWindow(object):
         self.cont = Controller(self.func_get, self.sys_cont, self)
         self.sys_cont.set_camera_reference(self.cont.get_camera_controller())
 
+    def set_camera(self):
+        temp=self.cont.get_camera_controller().set_used_camera_number(int(self.setCamera_combobox.currentText()))
+        if temp >= 0:
+            self.setCamera_combobox.setCurrentText(str(temp))
+
+
     def show_handy_started(self):
         self.recognition_in_starttab_label.setText("Gesture recognition enabled")
         self.recognition_in_gesturetab_label.setText("Gesture recognition enabled")
@@ -126,6 +132,10 @@ class Ui_MainWindow(object):
         for a in lst:
             self.setCamera_combobox.addItem(str(a))
         #self.setCamera_combobox.setCurrentText(str(self.cont.get_camera_controller().get_used_camera_number()))
+        #temp=self.cont.get_camera_controller().get_used_camera_number()
+        #print(temp)
+        #self.setCamera_combobox.setCurrentIndex(temp)
+
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -1320,9 +1330,7 @@ class Ui_MainWindow(object):
         self.authorButton.clicked.connect(lambda: self.show_authors())
         self.documentationButton.clicked.connect(lambda: self.open_documentation())
 
-        self.setCamera_combobox.activated.connect(lambda:
-                                                  self.cont.get_camera_controller().set_used_camera_number(
-                                                      int(self.setCamera_combobox.currentText())))
+        self.setCamera_combobox.activated.connect(lambda: self.set_camera())
 
         self.startHandyButton.clicked.connect(lambda: self.cont.start_gesture_recognition())
 
