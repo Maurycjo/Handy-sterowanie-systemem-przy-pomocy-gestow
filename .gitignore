@@ -108,3 +108,6 @@ venv.bak/
 trained_models/rgblstm.h5
 
 .idea
+
+#user config in app
+user_configuration.json
