@@ -111,3 +111,4 @@ trained_models/rgblstm.h5
 
 #user config in app
 ./user_configuration.json
+user_configuration.json
