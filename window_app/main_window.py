@@ -1,8 +1,9 @@
 import PyQt5.QtWidgets
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets, QtWebEngineWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from PyQt5.QtWebEngine import *
 import cv2
 import time
 import sys
@@ -13,7 +14,7 @@ from controllers.controller import Controller
 from controllers.gesture_name_mapper import NameMapper
 from controllers.functions_getter import FunctionsGetter
 from controllers.system_controller import SystemController
-
+from window_app.authors_window import AuthorsWindow
 
 class MyComboBox(PyQt5.QtWidgets.QComboBox):
     '''Class which ignore scroll mouse in QComboBox'''
@@ -71,9 +72,50 @@ class Ui_MainWindow(QMainWindow):
         self.recognition_in_cameratab_label.setStyleSheet("background-color: rgb(255, 0, 0);\n"
                                                               "border: 1px solid black;")
     def open_documentation(self):
-        print("documentation opened")
+        self.documentation_window = AuthorsWindow()
+        label = QtWidgets.QLabel(self.documentation_window)
+        pixmap = QPixmap('window_app/test.jpg')
+        label.setPixmap(pixmap)
+        label.setScaledContents(True)
+        self.documentation_window.setCentralWidget(label)
+        self.documentation_window.resize(pixmap.width(), pixmap.height())
+        # --------------
+        self.scroll_documentation = QtWidgets.QScrollArea(self.documentation_window)
+
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.scroll_documentation.sizePolicy().hasHeightForWidth())
+        self.scroll_documentation.setSizePolicy(sizePolicy)
+        self.scroll_documentation.setStyleSheet("background-color: rgb(48, 48, 48);\n"
+                                      "")
+        self.scroll_documentation.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.scroll_documentation.setWidgetResizable(True)
+        # --------------
+        self.documentation_window.show()
+
     def show_authors(self):
-        print("about authors")
+        self.authors_window = AuthorsWindow()
+        self.authors_window.setWindowTitle("Authors")
+        self.authors_window.setFixedSize(660, 300)
+        self.authors_window.setStyleSheet("background-color: rgb(112, 211, 69);")
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(150)
+        self.authors_label = QtWidgets.QLabel(self.authors_window)
+        self.authors_label.setFont(font)
+        self.authors_label.setText("The application was created as part of the classes: Team project\n\n"
+                                   "Students:\n"
+                                   "Mateusz Urbańczyk\nMaurycy Niewczas\nTomasz Górniak\nYan Machulski\n\n"
+                                   "Mentors: \n"
+                                   "Mateusz Masłoń, Comarch S.A.\n"
+                                   "Tomasz Kubik, BEng, PhD, Wroclaw University of Science and Technology"
+                                   )
+        self.authors_label.resize(660, 280)
+        self.authors_label.move(3, 0)
+        self.authors_window.show()
+        self.hide()
     def get_config(self):
         config = self.cont.get_camera().get_mapping().get_gestures_list()
         self.action1_comboBox.setCurrentText(config.get(1))

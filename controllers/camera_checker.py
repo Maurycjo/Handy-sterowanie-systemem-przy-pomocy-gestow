@@ -1,6 +1,12 @@
 import cv2
 class CameraChecker():
     def list_ports(self):
+        """
+        Gets list of active camera's indexes.
+
+        Returns:
+            list(int) : List of camera's indexes
+        """
         index = 0
         arr = []
         while True:

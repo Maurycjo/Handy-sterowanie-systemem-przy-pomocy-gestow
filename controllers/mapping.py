@@ -34,7 +34,7 @@ class Mapping():
             json.dump(self.gesture, outfile)
 
     def read_configuration_from_file(self):
-        with open('user_configuration.json') as json_file:
+        with open('C://Users/Tomek/PycharmProjects/refaktoryzacja/Sterowanie-interfejsem-system-w-operacyjnym-przy-pomocy-gestow/user_configuration.json') as json_file:
             data = json.load(json_file)
             self.gesture = {int(k): v for (k, v) in data.items()}
     def read_default_configuration_from_file(self):

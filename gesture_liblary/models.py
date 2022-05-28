@@ -14,7 +14,7 @@ class ModelType:
     FULL = 2
 
 class ModelFactory:
-    def __init__(self,flowpath='trained_models/flowlstm.h5',rgbpath='trained_models/rgblstm.h5',fullpath='trained_models/rgbflow.h5',trained=True):
+    def __init__(self,flowpath='trained_models/flowlstm.h5',rgbpath='C://Users/Tomek/PycharmProjects/refaktoryzacja/Sterowanie-interfejsem-system-w-operacyjnym-przy-pomocy-gestow/trained_models/rgblstm.h5',fullpath='trained_models/rgbflow.h5',trained=True):
         self.flowpath = flowpath
         self.rgbpath = rgbpath
         self.fullpath = fullpath
