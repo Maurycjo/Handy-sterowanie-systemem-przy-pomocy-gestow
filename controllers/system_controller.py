@@ -78,14 +78,14 @@ class SystemController:
     def scroll_down(self, speed=_scroll_speed):
         pyautogui.scroll(-self.scroll_speed)
 
-    def windows_volume_up(self):
+    def volume_up(self):
         value = self.get_windows_volume() + self.volume_change
         if value > 0:
             value = 0
         self.current_volume = value
         self.volume.SetMasterVolumeLevel(self.current_volume, None)
 
-    def windows_volume_down(self):
+    def volume_down(self):
         value = self.get_windows_volume() - self.volume_change
         if value < -65.25:
             value = -65.25
