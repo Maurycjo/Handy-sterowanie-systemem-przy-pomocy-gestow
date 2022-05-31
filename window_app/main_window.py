@@ -74,24 +74,11 @@ class Ui_MainWindow(QMainWindow):
     def open_documentation(self):
         self.documentation_window = AuthorsWindow()
         label = QtWidgets.QLabel(self.documentation_window)
-        pixmap = QPixmap('window_app/test.jpg')
-        label.setPixmap(pixmap)
+        pixmap = QPixmap('window_app/documentation.png')
+        label.setPixmap(pixmap.scaled(2000, 1031,  QtCore.Qt.KeepAspectRatio))
         label.setScaledContents(True)
         self.documentation_window.setCentralWidget(label)
-        self.documentation_window.resize(pixmap.width(), pixmap.height())
-        # --------------
-        self.scroll_documentation = QtWidgets.QScrollArea(self.documentation_window)
-
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.scroll_documentation.sizePolicy().hasHeightForWidth())
-        self.scroll_documentation.setSizePolicy(sizePolicy)
-        self.scroll_documentation.setStyleSheet("background-color: rgb(48, 48, 48);\n"
-                                      "")
-        self.scroll_documentation.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.scroll_documentation.setWidgetResizable(True)
-        # --------------
+        self.documentation_window.move(0, 0)
         self.documentation_window.show()
 
     def show_authors(self):
