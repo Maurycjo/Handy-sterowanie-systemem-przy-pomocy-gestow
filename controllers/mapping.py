@@ -5,8 +5,10 @@ from win10toast import ToastNotifier as tn
 import threading
 from threading import Lock
 import time
+from window_app.action_name_mapper import ActionNameMapper
 class Mapping():
     def __init__(self,func_getter,sys_controller):
+        self.nm=ActionNameMapper()
         self.gesture={}
         self.end = False
         self.name_mapper=NameMapper()
@@ -55,7 +57,7 @@ class Mapping():
             if self.new_message is True:
                 self.toaster.show_toast("Gesture detected",
                                         "Gesture name: "+self.name_mapper.get_gesture_name(self.message)+"\n"
-                                        +"Action name: "+self.gesture.get(self.message),
+                                        +"Action name: "+self.nm.get_user_friendly_action_name(str(self.gesture.get(self.message))),
                            duration=1.7,icon_path=None,threaded = True)
                 self.new_message = False
             self.message_mutex.release()
@@ -83,9 +85,10 @@ class Mapping():
         self.message_mutex.acquire()
         self.new_message = True
         self.message = number
+        function = self.gesture.get(number)
         self.message_mutex.release()
         if self.get_gesture(number)  == True:
-            return self.function_getter.call_function(self.gesture.get(number))
+            return self.function_getter.call_function(function)
         else:
             return False
 
