@@ -8,7 +8,6 @@ import cv2
 import time
 import sys
 
-
 sys.path.insert(0, "..")
 from controllers.controller import Controller
 from controllers.gesture_name_mapper import NameMapper

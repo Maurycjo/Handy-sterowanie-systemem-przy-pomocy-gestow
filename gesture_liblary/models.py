@@ -1,9 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 
 from keras.models import Model,load_model
-from keras.layers import Conv2D,TimeDistributed,LSTM,Flatten,Input,Dense,Dropout,MaxPool2D,BatchNormalization,MaxPooling2D,merge,Activation,add,concatenate,GlobalAveragePooling2D
+from keras.layers import Conv2D,TimeDistributed,LSTM,Input,Dense,Dropout,BatchNormalization,MaxPooling2D,concatenate,GlobalAveragePooling2D
 from keras.models import Model
 #from keras.optimizers import Adam
 from keras.layers.advanced_activations import LeakyReLU
@@ -14,7 +11,7 @@ class ModelType:
     FULL = 2
 
 class ModelFactory:
-    def __init__(self,flowpath='trained_models/flowlstm.h5',rgbpath='C://Users/Tomek/PycharmProjects/refaktoryzacja/Sterowanie-interfejsem-system-w-operacyjnym-przy-pomocy-gestow/trained_models/rgblstm.h5',fullpath='trained_models/rgbflow.h5',trained=True):
+    def __init__(self,flowpath='trained_models/flowlstm.h5',rgbpath='trained_models/rgblstm.h5',fullpath='trained_models/rgbflow.h5',trained=True):
         self.flowpath = flowpath
         self.rgbpath = rgbpath
         self.fullpath = fullpath
@@ -33,20 +30,20 @@ class ModelFactory:
         if self.trained:
             return load_model(self.rgbpath)
         else:
-            return self.__rgb() #dodałem self.
+            return self.__rgb()
         
         
     def __flowmodel(self):
         if self.trained:
             return load_model(self.flowpath)
         else:
-            return self.__flow()  #dodałem self.
+            return self.__flow()
         
         
     def __fullmodel(self):
         if self.trained:
             return load_model(self.fullpath)
-        else:                #dodałem self.
+        else:
             return self.__full() # full training should be done after seperate rgb and flow trainings
         
     def __full(self):
@@ -190,8 +187,6 @@ class ModelFactory:
     
         return flowmodel
 
-
-# In[ ]:
 
 
 

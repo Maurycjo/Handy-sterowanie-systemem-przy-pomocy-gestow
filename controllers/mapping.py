@@ -1,4 +1,3 @@
-from controllers.chrome_controller import ChromeController
 from controllers.gesture_name_mapper import NameMapper
 import json
 from win10toast import ToastNotifier as tn
@@ -14,7 +13,6 @@ class Mapping():
         self.name_mapper=NameMapper()
         self.read_configuration_from_file()
         self.controller = sys_controller
-        self.chrome = ChromeController()
         self.function_getter=func_getter
         self.mutex = Lock()
         self.toaster=tn()

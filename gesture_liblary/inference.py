@@ -1,10 +1,9 @@
 
-from keras.models import Model,Sequential,load_model
 from keras.utils.vis_utils import plot_model
 import pandas as pd
 from utils import RgbGenerator
 from models import ModelFactory,ModelType
-import numpy as np  #linia dodana
+import numpy as np
 train=pd.read_csv('../neuron_network_files/train.csv')
 valid=pd.read_csv('../neuron_network_files/valid.csv')
 

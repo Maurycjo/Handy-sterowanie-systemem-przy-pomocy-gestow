@@ -73,7 +73,7 @@ class GestureMouseSteering:
                             right_mouse_click_lock = False
                         mouse_x_before = mouse_x
                         mouse_y_before = mouse_y
-                    elif points[0][1]< points[5][1] and points[5][1] < points[8][1] :   #palec wskazujący w dół-wyjście
+                    elif points[0][1]< points[5][1] and points[5][1] < points[8][1] :
                         self.toaster.show_toast("Gesture detected",
                                                                        "Gesture name: mouse_stop",
                                                                        duration=1.9, icon_path=None,threaded = True)
