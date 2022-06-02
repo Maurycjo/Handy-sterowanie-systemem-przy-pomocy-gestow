@@ -1346,3 +1346,13 @@ class Ui_MainWindow(object):
         self.refreshCameras_Button.setText(_translate("MainWindow", "Refresh cameras"))
         self.set_resolutionCameras_Button.setText(_translate("MainWindow", "  Set resolution   "))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.cameraTab), _translate("MainWindow", "Camera"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
