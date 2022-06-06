@@ -74,12 +74,12 @@ class Mapping():
                     self.new_mouse_message = False
                     self.toaster.show_toast("Gesture detected",
                                             "Action: mouse stop\n",
-                                            duration=1.9, icon_path=None, threaded=True)
+                                            duration=1.9, icon_path='./logo1.ico', threaded=True)
                 elif self.new_message is True:
                     self.toaster.show_toast("Gesture detected",
                                             "Gesture name: "+self.name_mapper.get_gesture_name(self.message)+"\n"
                                             +"Action name: "+self.nm.get_user_friendly_action_name(str(self.gesture.get(self.message))),
-                               duration=1.9,icon_path=None,threaded = True)
+                               duration=1.9,icon_path='./logo1.ico',threaded = True)
                     self.new_message = False
                 self.message_mutex.release()
             time.sleep(0.1)
