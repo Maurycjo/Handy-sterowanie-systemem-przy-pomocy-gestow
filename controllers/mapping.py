@@ -25,6 +25,7 @@ class Mapping():
         self.time_now = self.time_before
         self.gesture_timer = gt()
         self.last_gesture_number = -1
+        self.notifications_enabled= False
         t = threading.Thread(name='daemon',target=self.show_message)
         t.start()
     def end_thread(self):
@@ -58,21 +59,29 @@ class Mapping():
         self.message_mutex.acquire()
         self.new_mouse_message = True
         self.message_mutex.release()
+    def set_notifications_enabled(self,value: bool):
+        if value is True:
+            self.message_mutex.acquire()
+            self.new_mouse_message = False
+            self.new_message = False
+            self.message_mutex.release()
+        self.notifications_enabled = value
     def show_message(self):
         while self.end is False:
-            self.message_mutex.acquire()
-            if self.new_mouse_message is True:
-                self.new_mouse_message = False
-                self.toaster.show_toast("Gesture detected",
-                                        "Action: mouse stop\n",
-                                        duration=1.9, icon_path=None, threaded=True)
-            elif self.new_message is True:
-                self.toaster.show_toast("Gesture detected",
-                                        "Gesture name: "+self.name_mapper.get_gesture_name(self.message)+"\n"
-                                        +"Action name: "+self.nm.get_user_friendly_action_name(str(self.gesture.get(self.message))),
-                           duration=1.9,icon_path=None,threaded = True)
-                self.new_message = False
-            self.message_mutex.release()
+            if self.notifications_enabled is True:
+                self.message_mutex.acquire()
+                if self.new_mouse_message is True:
+                    self.new_mouse_message = False
+                    self.toaster.show_toast("Gesture detected",
+                                            "Action: mouse stop\n",
+                                            duration=1.9, icon_path=None, threaded=True)
+                elif self.new_message is True:
+                    self.toaster.show_toast("Gesture detected",
+                                            "Gesture name: "+self.name_mapper.get_gesture_name(self.message)+"\n"
+                                            +"Action name: "+self.nm.get_user_friendly_action_name(str(self.gesture.get(self.message))),
+                               duration=1.9,icon_path=None,threaded = True)
+                    self.new_message = False
+                self.message_mutex.release()
             time.sleep(0.1)
     def get_gesture(self, number:int):
         self.mutex.acquire()
