@@ -19,6 +19,7 @@ class Mapping():
         self.toaster=tn()
         self.message = 1
         self.new_message = False
+        self.new_mouse_message = False
         self.message_mutex = Lock()
         self.time_before = time.time()
         self.time_now = self.time_before
@@ -53,15 +54,23 @@ class Mapping():
             self.save_configuration_to_file()
         except:
             pass
-
+    def set_mouse_end_message(self):
+        self.message_mutex.acquire()
+        self.new_mouse_message = True
+        self.message_mutex.release()
     def show_message(self):
         while self.end is False:
             self.message_mutex.acquire()
-            if self.new_message is True:
+            if self.new_mouse_message is True:
+                self.new_mouse_message = False
+                self.toaster.show_toast("Gesture detected",
+                                        "Action: mouse stop\n",
+                                        duration=1.9, icon_path=None, threaded=True)
+            elif self.new_message is True:
                 self.toaster.show_toast("Gesture detected",
                                         "Gesture name: "+self.name_mapper.get_gesture_name(self.message)+"\n"
                                         +"Action name: "+self.nm.get_user_friendly_action_name(str(self.gesture.get(self.message))),
-                           duration=1.7,icon_path=None,threaded = True)
+                           duration=1.9,icon_path=None,threaded = True)
                 self.new_message = False
             self.message_mutex.release()
             time.sleep(0.1)
