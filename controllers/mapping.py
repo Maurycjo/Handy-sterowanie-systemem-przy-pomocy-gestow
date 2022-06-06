@@ -5,6 +5,7 @@ import threading
 from threading import Lock
 import time
 from window_app.action_name_mapper import ActionNameMapper
+from controllers.gesture_timer import GestureTimer as gt
 class Mapping():
     def __init__(self,func_getter,sys_controller):
         self.nm=ActionNameMapper()
@@ -19,6 +20,10 @@ class Mapping():
         self.message = 1
         self.new_message = False
         self.message_mutex = Lock()
+        self.time_before = time.time()
+        self.time_now = self.time_before
+        self.gesture_timer = gt()
+        self.last_gesture_number = -1
         t = threading.Thread(name='daemon',target=self.show_message)
         t.start()
     def end_thread(self):
@@ -80,13 +85,19 @@ class Mapping():
 
         self.mutex.release()
     def gesture_action(self,number):
-        self.message_mutex.acquire()
-        self.new_message = True
-        self.message = number
-        function = self.gesture.get(number)
-        self.message_mutex.release()
-        if self.get_gesture(number)  == True:
-            return self.function_getter.call_function(function)
+        self.time_now = time.time()
+        if self.time_now - self.time_before > self.gesture_timer.get_time(number) or number != self.last_gesture_number:
+            self.last_gesture_number = number
+            self.time_before = time.time()
+            self.message_mutex.acquire()
+            self.new_message = True
+            self.message = number
+            function = self.gesture.get(number)
+            self.message_mutex.release()
+            if self.get_gesture(number)  == True:
+                return self.function_getter.call_function(function)
+            else:
+                return False
         else:
             return False
 
