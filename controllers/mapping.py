@@ -55,18 +55,13 @@ class Mapping():
             self.save_configuration_to_file()
         except:
             pass
-<<<<<<< HEAD
 
-    def show_message(self):
-        while self.end is False:
-=======
     def set_mouse_end_message(self):
         self.message_mutex.acquire()
         self.new_mouse_message = True
         self.message_mutex.release()
     def set_notifications_enabled(self,value: bool):
         if value is True:
->>>>>>> master
             self.message_mutex.acquire()
             self.new_mouse_message = False
             self.new_message = False
@@ -101,21 +96,10 @@ class Mapping():
         '''Changes gesture-action configuration'''
         self.mutex.acquire()
         self.gesture = {**gesture_action}
-<<<<<<< HEAD
-        print(self.gesture)
-        try:
-            self.save_configuration_to_file()
-        except:
-            print("save error")
-
-=======
-
         try:
             self.save_configuration_to_file()
         except:
             pass
-
->>>>>>> master
         self.mutex.release()
     def gesture_action(self,number):
         self.time_now = time.time()
