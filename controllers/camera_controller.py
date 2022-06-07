@@ -21,11 +21,14 @@ class CameraController():
             self.cap.release()
             self.cap = None
         self.mutex.release()
+<<<<<<< HEAD
     def get_used_camera_number(self):
         #self.mutex.acquire()
         temp=self.used_camera_number
         #self.mutex.release()
         return temp
+=======
+>>>>>>> master
 
     def get_camera_image(self):
         self.mutex.acquire()
@@ -44,7 +47,8 @@ class CameraController():
             self.mutex.release()
         return ret,frame
     def get_all_cameras(self):
-        return self.camera_list
+        temp=self.camera_list
+        return temp
     def set_used_camera_number(self,number:int):
         self.mutex.acquire()
         self.camera_list = self.camera_checker.list_ports()
@@ -72,9 +76,13 @@ class CameraController():
             self.used_camera_number = -1
             self.cap = None
         self.win.set_cameras_combo_box(self.camera_list)
-
+        temp = self.used_camera_number
         self.mutex.release()
+<<<<<<< HEAD
 
+=======
+        return temp
+>>>>>>> master
     def set_camera_resolution(self, resolution):
         if resolution=="Original":
             self.mutex.acquire()

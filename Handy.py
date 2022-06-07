@@ -13,5 +13,4 @@ MainWindow = QtWidgets.QMainWindow()
 ui = win()
 ui.setupUi(MainWindow)
 MainWindow.showNormal()
-
 sys.exit(app.exec_())

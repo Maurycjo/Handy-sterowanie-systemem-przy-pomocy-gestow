@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from window_app.action_name_mapper import ActionNameMapper
 import cv2
 import time
 import sys
@@ -13,7 +14,7 @@ from controllers.controller import Controller
 from controllers.gesture_name_mapper import NameMapper
 from controllers.functions_getter import FunctionsGetter
 from controllers.system_controller import SystemController
-
+from window_app.authors_window import AuthorsWindow
 
 class MyComboBox(PyQt5.QtWidgets.QComboBox):
     '''Class which ignore scroll mouse in QComboBox'''
@@ -29,21 +30,28 @@ class MyComboBox(PyQt5.QtWidgets.QComboBox):
             return self.scrollWidget.wheelEvent(*args, **kwargs)
 
 
+
 class Ui_MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.close_time = False
+        self.nm = ActionNameMapper()
         self.name_mapper = NameMapper()
         self.sys_cont = SystemController()
         self.func_get = FunctionsGetter(self.sys_cont)
         self.cont = Controller(self.func_get, self.sys_cont, self)
         self.sys_cont.set_camera_reference(self.cont.get_camera_controller())
 
+    def refresh_camera_list(self):
+        temp = self.cont.get_camera_controller().refresh_camera_list()
+        if temp >= 0:
+            self.setResolutionCamera_combobox.setCurrentText("Original")
+            self.setCamera_combobox.setCurrentText(str(temp))
     def set_camera(self):
         temp=self.cont.get_camera_controller().set_used_camera_number(int(self.setCamera_combobox.currentText()))
         if temp >= 0:
             self.setCamera_combobox.setCurrentText(str(temp))
-
+            self.setResolutionCamera_combobox.setCurrentText("Original")
 
     def show_handy_started(self):
         self.recognition_in_starttab_label.setText("Gesture recognition enabled")
@@ -66,67 +74,97 @@ class Ui_MainWindow(QMainWindow):
         self.recognition_in_cameratab_label.setStyleSheet("background-color: rgb(255, 0, 0);\n"
                                                               "border: 1px solid black;")
     def open_documentation(self):
-        print("documentation opened")
+        self.documentation_window = AuthorsWindow()
+        self.documentation_window.setWindowTitle("Handy-documentation")
+        label = QtWidgets.QLabel(self.documentation_window)
+        pixmap = QPixmap('window_app/documentation.png')
+        label.setPixmap(pixmap.scaled(2000, 1031,  QtCore.Qt.KeepAspectRatio))
+        label.setScaledContents(True)
+        self.documentation_window.setCentralWidget(label)
+        self.documentation_window.move(0, 0)
+        self.documentation_window.show()
+        self.documentation_window.showMaximized()
+
     def show_authors(self):
-        print("about authors")
+        self.authors_window = AuthorsWindow()
+        self.authors_window.setWindowTitle("Handy-authors")
+        self.authors_window.setFixedSize(660, 300)
+        self.authors_window.setStyleSheet("background-color: rgb(51, 211, 69);")
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(150)
+        self.authors_label = QtWidgets.QLabel(self.authors_window)
+        self.authors_label.setFont(font)
+        self.authors_label.setText("The application was created as part of the classes: Team project\n\n"
+                                   "Students:\n"
+                                   "Mateusz Urbańczyk\nMaurycy Niewczas\nTomasz Górniak\nYan Machulski\n\n"
+                                   "Mentors: \n"
+                                   "Mateusz Masłoń, Comarch S.A.\n"
+                                   "Tomasz Kubik, BEng, PhD, Wroclaw University of Science and Technology"
+                                   )
+        self.authors_label.resize(660, 280)
+        self.authors_label.move(3, 0)
+        self.authors_window.show()
+        self.hide()
     def get_config(self):
         config = self.cont.get_camera().get_mapping().get_gestures_list()
-        self.action1_comboBox.setCurrentText(config.get(1))
-        self.action2_comboBox.setCurrentText(config.get(2))
-        self.action3_comboBox.setCurrentText(config.get(3))
-        self.action4_comboBox.setCurrentText(config.get(4))
-        self.action5_comboBox.setCurrentText(config.get(5))
-        self.action6_comboBox.setCurrentText(config.get(6))
-        self.action7_comboBox.setCurrentText(config.get(7))
-        self.action8_comboBox.setCurrentText(config.get(8))
-        self.action9_comboBox.setCurrentText(config.get(9))
-        self.action10_comboBox.setCurrentText(config.get(10))
-        self.action11_comboBox.setCurrentText(config.get(11))
-        self.action12_comboBox.setCurrentText(config.get(12))
-        self.action13_comboBox.setCurrentText(config.get(13))
-        self.action14_comboBox.setCurrentText(config.get(14))
-        self.action15_comboBox.setCurrentText(config.get(15))
-        self.action16_comboBox.setCurrentText(config.get(16))
-        self.action17_comboBox.setCurrentText(config.get(17))
-        self.action18_comboBox.setCurrentText(config.get(18))
-        self.action19_comboBox.setCurrentText(config.get(19))
-        self.action20_comboBox.setCurrentText(config.get(20))
-        self.action21_comboBox.setCurrentText(config.get(21))
-        self.action22_comboBox.setCurrentText(config.get(22))
-        self.action23_comboBox.setCurrentText(config.get(23))
-        self.action24_comboBox.setCurrentText(config.get(24))
-        self.action25_comboBox.setCurrentText(config.get(25))
+        self.action1_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(1)))
+        self.action2_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(2)))
+        self.action3_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(3)))
+        self.action4_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(4)))
+        self.action5_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(5)))
+        self.action6_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(6)))
+        self.action7_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(7)))
+        self.action8_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(8)))
+        self.action9_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(9)))
+        self.action10_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(10)))
+        self.action11_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(11)))
+        self.action12_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(12)))
+        self.action13_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(13)))
+        self.action14_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(14)))
+        self.action15_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(15)))
+        self.action16_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(16)))
+        self.action17_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(17)))
+        self.action18_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(18)))
+        self.action19_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(19)))
+        self.action20_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(20)))
+        self.action21_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(21)))
+        self.action22_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(22)))
+        self.action23_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(23)))
+        self.action24_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(24)))
+        self.action25_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(25)))
+
     def get_default_config(self):
         self.cont.get_camera().get_mapping().read_default_configuration_from_file()
         self.get_config()
     def set_config(self):
         dict={}
-        print("a")
-        dict[1] = self.action1_comboBox.currentText()
-        dict[2] = self.action2_comboBox.currentText()
-        dict[3] = self.action3_comboBox.currentText()
-        dict[4] = self.action4_comboBox.currentText()
-        dict[5] = self.action5_comboBox.currentText()
-        dict[6] = self.action6_comboBox.currentText()
-        dict[7] = self.action7_comboBox.currentText()
-        dict[8] = self.action8_comboBox.currentText()
-        dict[9] = self.action9_comboBox.currentText()
-        dict[10] = self.action10_comboBox.currentText()
-        dict[11] = self.action11_comboBox.currentText()
-        dict[12] = self.action12_comboBox.currentText()
-        dict[13] = self.action13_comboBox.currentText()
-        dict[14] = self.action14_comboBox.currentText()
-        dict[15] = self.action15_comboBox.currentText()
-        dict[16] = self.action16_comboBox.currentText()
-        dict[17] = self.action17_comboBox.currentText()
-        dict[18] = self.action18_comboBox.currentText()
-        dict[19] = self.action19_comboBox.currentText()
-        dict[20] = self.action20_comboBox.currentText()
-        dict[21] = self.action21_comboBox.currentText()
-        dict[22] = self.action22_comboBox.currentText()
-        dict[23] = self.action23_comboBox.currentText()
-        dict[24] = self.action24_comboBox.currentText()
-        dict[25] = self.action25_comboBox.currentText()
+        dict[1] = self.nm.get_normal_action_name(self.action1_comboBox.currentText())
+        dict[2] = self.nm.get_normal_action_name(self.action2_comboBox.currentText())
+        dict[3] = self.nm.get_normal_action_name(self.action3_comboBox.currentText())
+        dict[4] = self.nm.get_normal_action_name(self.action4_comboBox.currentText())
+        dict[5] = self.nm.get_normal_action_name(self.action5_comboBox.currentText())
+        dict[6] = self.nm.get_normal_action_name(self.action6_comboBox.currentText())
+        dict[7] = self.nm.get_normal_action_name(self.action7_comboBox.currentText())
+        dict[8] = self.nm.get_normal_action_name(self.action8_comboBox.currentText())
+        dict[9] = self.nm.get_normal_action_name(self.action9_comboBox.currentText())
+        dict[10] = self.nm.get_normal_action_name(self.action10_comboBox.currentText())
+        dict[11] = self.nm.get_normal_action_name(self.action11_comboBox.currentText())
+        dict[12] = self.nm.get_normal_action_name(self.action12_comboBox.currentText())
+        dict[13] = self.nm.get_normal_action_name(self.action13_comboBox.currentText())
+        dict[14] = self.nm.get_normal_action_name(self.action14_comboBox.currentText())
+        dict[15] = self.nm.get_normal_action_name(self.action15_comboBox.currentText())
+        dict[16] = self.nm.get_normal_action_name(self.action16_comboBox.currentText())
+        dict[17] = self.nm.get_normal_action_name(self.action17_comboBox.currentText())
+        dict[18] = self.nm.get_normal_action_name(self.action18_comboBox.currentText())
+        dict[19] = self.nm.get_normal_action_name(self.action19_comboBox.currentText())
+        dict[20] = self.nm.get_normal_action_name(self.action20_comboBox.currentText())
+        dict[21] = self.nm.get_normal_action_name(self.action21_comboBox.currentText())
+        dict[22] = self.nm.get_normal_action_name(self.action22_comboBox.currentText())
+        dict[23] = self.nm.get_normal_action_name(self.action23_comboBox.currentText())
+        dict[24] = self.nm.get_normal_action_name(self.action24_comboBox.currentText())
+        dict[25] = self.nm.get_normal_action_name(self.action25_comboBox.currentText())
         self.cont.get_camera().get_mapping().set_gesture(dict)
 
     def get_controller(self):
@@ -1238,6 +1276,8 @@ class Ui_MainWindow(QMainWindow):
                                               "border: 1px solid black;")
         self.setCamera_combobox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContentsOnFirstShow)
         self.setCamera_combobox.setObjectName("setCamera_combobox")
+        self.notifications_checkbox = QtWidgets.QCheckBox(self.cameraTab)
+        self.notifications_checkbox.setText("Notifications")
         self.formLayout_3.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.setCamera_combobox)
         self.verticalLayout_3.addLayout(self.formLayout_3)
         self.gridLayout_4.addLayout(self.verticalLayout_3, 1, 0, 1, 1)
@@ -1282,6 +1322,7 @@ class Ui_MainWindow(QMainWindow):
         MainWindow.setTabOrder(self.action2_comboBox, self.applyButton)
         MainWindow.setTabOrder(self.applyButton, self.cancelButton)
         MainWindow.setTabOrder(self.cancelButton, self.resetButton)
+        self.tabWidget.setCurrentIndex(0)
 
         resolution_list=[[320, 240], [480, 320], [640, 480], [800, 480], [800, 600],
                          [1024, 768], [1280, 720], [1366, 768], [1280, 800], [1366, 768],
@@ -1294,37 +1335,38 @@ class Ui_MainWindow(QMainWindow):
         action_names = self.cont.get_camera().get_mapping().function_getter.get_all_functions_names()
         '''dodanie akcji do comboboxow'''
         for i in action_names:
-            self.action1_comboBox.addItem(i)
-            self.action2_comboBox.addItem(i)
-            self.action3_comboBox.addItem(i)
-            self.action4_comboBox.addItem(i)
-            self.action5_comboBox.addItem(i)
-            self.action6_comboBox.addItem(i)
-            self.action7_comboBox.addItem(i)
-            self.action8_comboBox.addItem(i)
-            self.action9_comboBox.addItem(i)
-            self.action10_comboBox.addItem(i)
-            self.action11_comboBox.addItem(i)
-            self.action12_comboBox.addItem(i)
-            self.action13_comboBox.addItem(i)
-            self.action14_comboBox.addItem(i)
-            self.action15_comboBox.addItem(i)
-            self.action16_comboBox.addItem(i)
-            self.action17_comboBox.addItem(i)
-            self.action18_comboBox.addItem(i)
-            self.action19_comboBox.addItem(i)
-            self.action20_comboBox.addItem(i)
-            self.action21_comboBox.addItem(i)
-            self.action22_comboBox.addItem(i)
-            self.action23_comboBox.addItem(i)
-            self.action24_comboBox.addItem(i)
-            self.action25_comboBox.addItem(i)
+            self.action1_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action2_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action3_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action4_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action5_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action6_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action7_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action8_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action9_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action10_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action11_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action12_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action13_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action14_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action15_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action16_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action17_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action18_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action19_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action20_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action21_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action22_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action23_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action24_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
+            self.action25_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
         self.get_config()
         arr = self.cont.get_camera_controller().get_all_cameras()
         for i in arr:
             self.setCamera_combobox.addItem(str(i))
+        self.verticalLayout_3.addWidget(self.notifications_checkbox)
         self.set_resolutionCameras_Button.clicked.connect(lambda: self.cont.get_camera_controller().set_camera_resolution(self.setResolutionCamera_combobox.currentText()))
-        self.refreshCameras_Button.clicked.connect(lambda: self.cont.get_camera_controller().refresh_camera_list())
+        self.refreshCameras_Button.clicked.connect(lambda: self.refresh_camera_list())
         self.authorButton.clicked.connect(lambda: self.show_authors())
         self.documentationButton.clicked.connect(lambda: self.open_documentation())
         self.setCamera_combobox.activated.connect(lambda: self.set_camera())
@@ -1333,11 +1375,10 @@ class Ui_MainWindow(QMainWindow):
         self.applyButton.clicked.connect(lambda: self.set_config())
         self.resetButton.clicked.connect(lambda: self.get_default_config())
         self.cancelButton.clicked.connect(lambda: self.get_config())
+        self.notifications_checkbox.stateChanged.connect(lambda: self.cont.get_camera().get_mapping().set_notifications_enabled(self.notifications_checkbox.isChecked()))
         self.Worker1 = Worker1(self.cont,self)
         self.Worker1.start()
         self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
-
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("Handy", "Handy"))
@@ -1354,7 +1395,7 @@ class Ui_MainWindow(QMainWindow):
                                                                        "background-color: rgb(111, 111, 111);"))
         self.pull_hand_in_label.setText(_translate("MainWindow", "Pulling hand in"))
         self.drumming_fingers_label.setText(_translate("MainWindow", "Drumming fingers"))
-        self.pushingTwoFingers_label.setText(_translate("MainWindow", "Pushing two fingers_away"))
+        self.pushingTwoFingers_label.setText(_translate("MainWindow", "Pushing two fingers away"))
         self.pullingTwoFingersfingers_label.setText(_translate("MainWindow", "Pulling two fingers in"))
         self.pushinHandAway_label.setText(_translate("MainWindow", "Pushing hand away"))
         self.rollingHandForward_label.setText(_translate("MainWindow", "Rolling hand forward"))
@@ -1416,6 +1457,8 @@ class Worker1(QThread):
                     FlippedImage = cv2.flip(Image, 1)
                     ConvertToQtFormat = QImage(FlippedImage.data, FlippedImage.shape[1], FlippedImage.shape[0],
                                                QImage.Format_RGB888)
+
+
                     Pic = ConvertToQtFormat.scaled(720, 540, Qt.KeepAspectRatio)
                     self.ImageUpdate.emit(Pic)
             time.sleep(0.02)
