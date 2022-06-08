@@ -13,7 +13,6 @@ from controllers.controller import Controller
 from controllers.gesture_name_mapper import NameMapper
 from controllers.functions_getter import FunctionsGetter
 from controllers.system_controller import SystemController
-from window_app.authors_window import AuthorsWindow
 
 class MyComboBox(PyQt5.QtWidgets.QComboBox):
     '''Class which ignore scroll mouse in QComboBox'''
@@ -73,7 +72,7 @@ class Ui_MainWindow(QMainWindow):
         self.recognition_in_cameratab_label.setStyleSheet("background-color: rgb(255, 0, 0);\n"
                                                               "border: 1px solid black;")
     def open_documentation(self):
-        self.documentation_window = AuthorsWindow()
+        self.documentation_window = QMainWindow()
         self.documentation_window.setWindowTitle("Handy-documentation")
         label = QtWidgets.QLabel(self.documentation_window)
         pixmap = QPixmap('window_app/documentation.png')
@@ -85,7 +84,7 @@ class Ui_MainWindow(QMainWindow):
         self.documentation_window.showMaximized()
 
     def show_authors(self):
-        self.authors_window = AuthorsWindow()
+        self.authors_window = QMainWindow()
         self.authors_window.setWindowTitle("Handy-authors")
         self.authors_window.setFixedSize(660, 300)
         self.authors_window.setStyleSheet("background-color: rgb(51, 211, 69);")
