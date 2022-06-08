@@ -1,12 +1,12 @@
 import sys
 sys.path.insert(0, "..")
-import user_scripts
+from controllers import user_scripts
 import time
 class FunctionsGetter():
 
     def __init__(self, controller):
         self.time_before = time.time()
-        self.u_scripts=user_scripts
+        self.u_scripts= user_scripts
         self.controller = controller
         self.controller.set_reference(self)
         self.u_dict = self.u_scripts.get_functions()
