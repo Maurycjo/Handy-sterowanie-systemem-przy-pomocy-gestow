@@ -7,6 +7,9 @@ from window_app.action_name_mapper import ActionNameMapper
 import cv2
 import time
 import sys
+from PySide2 import QtGui as qtg
+
+
 
 sys.path.insert(0, "..")
 from controllers.controller import Controller
@@ -14,6 +17,7 @@ from controllers.gesture_name_mapper import NameMapper
 from controllers.functions_getter import FunctionsGetter
 from controllers.system_controller import SystemController
 from window_app.authors_window import AuthorsWindow
+
 
 class MyComboBox(PyQt5.QtWidgets.QComboBox):
     '''Class which ignore scroll mouse in QComboBox'''
@@ -28,8 +32,9 @@ class MyComboBox(PyQt5.QtWidgets.QComboBox):
         else:
             return self.scrollWidget.wheelEvent(*args, **kwargs)
 class MyLabel(QLabel):
-    def __init__(self, parent=None):
+    def __init__(self,win, parent=None):
         super(MyLabel, self).__init__(parent)
+        self.win = win
         self.setAutoFillBackground(True)
         p = self.palette()
         p.setColor(self.backgroundRole(), QColor(223, 230, 248))
@@ -57,11 +62,18 @@ class MyLabel(QLabel):
     def leaveEvent(self, a0: QtCore.QEvent) -> None:
         if id != -1:
             self.videoWindow.close()
+    def mouseMoveEvent(self, QMouseEvent):
+        screen = QDesktopWidget().screenGeometry()
+        y = screen.height()
+        pos = qtg.QCursor().pos()
+        pos_y = pos.y()
+        if pos_y > y -401:
+            pos_y -= (y-pos_y)
+        self.videoWindow.move(pos.x()+15,pos_y+15)
 
     def set_name(self,name:str):
         self.name = name
         self.id =0
-
 
 class Ui_MainWindow(QMainWindow):
     def __init__(self):
@@ -73,7 +85,10 @@ class Ui_MainWindow(QMainWindow):
         self.func_get = FunctionsGetter(self.sys_cont)
         self.cont = Controller(self.func_get, self.sys_cont, self)
         self.sys_cont.set_camera_reference(self.cont.get_camera_controller())
-
+    def get_geometry(self):
+        return self.geometry()
+    def get_position(self):
+        return self.pos()
     def refresh_camera_list(self):
         temp = self.cont.get_camera_controller().refresh_camera_list()
         if temp >= 0:
@@ -636,7 +651,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_7.setObjectName("widget_7")
         self.horizontalLayout_11 = QtWidgets.QHBoxLayout(self.widget_7)
         self.horizontalLayout_11.setObjectName("horizontalLayout_11")
-        self.pull_hand_in_label = MyLabel(self.widget_7)
+        self.pull_hand_in_label = MyLabel(self,self.widget_7)
         self.pull_hand_in_label.set_name("pulling_hand_in")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -660,7 +675,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget.setObjectName("widget")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.widget)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.drumming_fingers_label = MyLabel(self.widget)
+        self.drumming_fingers_label = MyLabel(self,self.widget)
         self.drumming_fingers_label.set_name("drumming_fingers")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -684,7 +699,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_14.setObjectName("widget_14")
         self.horizontalLayout_20 = QtWidgets.QHBoxLayout(self.widget_14)
         self.horizontalLayout_20.setObjectName("horizontalLayout_20")
-        self.pushingTwoFingers_label = MyLabel(self.widget_14)
+        self.pushingTwoFingers_label = MyLabel(self,self.widget_14)
         self.pushingTwoFingers_label.set_name("pushing_two_fingers_away")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -707,7 +722,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_8.setObjectName("widget_8")
         self.horizontalLayout_12 = QtWidgets.QHBoxLayout(self.widget_8)
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
-        self.pullingTwoFingersfingers_label = MyLabel(self.widget_8)
+        self.pullingTwoFingersfingers_label = MyLabel(self,self.widget_8)
         self.pullingTwoFingersfingers_label.set_name("pulling_two_fingers_in")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -730,7 +745,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_9.setObjectName("widget_9")
         self.horizontalLayout_13 = QtWidgets.QHBoxLayout(self.widget_9)
         self.horizontalLayout_13.setObjectName("horizontalLayout_13")
-        self.pushinHandAway_label = MyLabel(self.widget_9)
+        self.pushinHandAway_label = MyLabel(self,self.widget_9)
         self.pushinHandAway_label.set_name("pushing_hand_away")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -753,7 +768,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_11.setObjectName("widget_11")
         self.horizontalLayout_15 = QtWidgets.QHBoxLayout(self.widget_11)
         self.horizontalLayout_15.setObjectName("horizontalLayout_15")
-        self.rollingHandForward_label = MyLabel(self.widget_11)
+        self.rollingHandForward_label = MyLabel(self,self.widget_11)
         self.rollingHandForward_label.set_name("rolling_hand_forward")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -776,7 +791,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_10.setObjectName("widget_10")
         self.horizontalLayout_14 = QtWidgets.QHBoxLayout(self.widget_10)
         self.horizontalLayout_14.setObjectName("horizontalLayout_14")
-        self.rollingHandBackward_label = MyLabel(self.widget_10)
+        self.rollingHandBackward_label = MyLabel(self,self.widget_10)
         self.rollingHandBackward_label.set_name("rolling_hand_backward")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -799,7 +814,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_12.setObjectName("widget_12")
         self.horizontalLayout_16 = QtWidgets.QHBoxLayout(self.widget_12)
         self.horizontalLayout_16.setObjectName("horizontalLayout_16")
-        self.shakingHand_label = MyLabel(self.widget_12)
+        self.shakingHand_label = MyLabel(self,self.widget_12)
         self.shakingHand_label.set_name("shaking_hand")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -827,7 +842,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_13.setObjectName("widget_13")
         self.horizontalLayout_17 = QtWidgets.QHBoxLayout(self.widget_13)
         self.horizontalLayout_17.setObjectName("horizontalLayout_17")
-        self.sliding2Down_label = MyLabel(self.widget_13)
+        self.sliding2Down_label = MyLabel(self,self.widget_13)
         self.sliding2Down_label.set_name("sliding_two_fingers_down")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -855,7 +870,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_15.setObjectName("widget_15")
         self.horizontalLayout_23 = QtWidgets.QHBoxLayout(self.widget_15)
         self.horizontalLayout_23.setObjectName("horizontalLayout_23")
-        self.sliding2left_label = MyLabel(self.widget_15)
+        self.sliding2left_label = MyLabel(self,self.widget_15)
         self.sliding2left_label.set_name("sliding_two_fingers_left")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -878,7 +893,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_16.setObjectName("widget_16")
         self.horizontalLayout_24 = QtWidgets.QHBoxLayout(self.widget_16)
         self.horizontalLayout_24.setObjectName("horizontalLayout_24")
-        self.sliding2right_label = MyLabel(self.widget_16)
+        self.sliding2right_label = MyLabel(self,self.widget_16)
         self.sliding2right_label.set_name("sliding_two_fingers_right")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -901,7 +916,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_26.setObjectName("widget_26")
         self.horizontalLayout_34 = QtWidgets.QHBoxLayout(self.widget_26)
         self.horizontalLayout_34.setObjectName("horizontalLayout_34")
-        self.sliding2up_label = MyLabel(self.widget_26)
+        self.sliding2up_label = MyLabel(self,self.widget_26)
         self.sliding2up_label.set_name("sliding_two_fingers_up")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -924,7 +939,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_25.setObjectName("widget_25")
         self.horizontalLayout_33 = QtWidgets.QHBoxLayout(self.widget_25)
         self.horizontalLayout_33.setObjectName("horizontalLayout_33")
-        self.stopSign_label = MyLabel(self.widget_25)
+        self.stopSign_label = MyLabel(self,self.widget_25)
         self.stopSign_label.set_name("stop_sign")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -952,7 +967,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_24.setObjectName("widget_24")
         self.horizontalLayout_32 = QtWidgets.QHBoxLayout(self.widget_24)
         self.horizontalLayout_32.setObjectName("horizontalLayout_32")
-        self.swipingDown_label = MyLabel(self.widget_24)
+        self.swipingDown_label = MyLabel(self,self.widget_24)
         self.swipingDown_label.set_name("swiping_down")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -975,7 +990,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_23.setObjectName("widget_23")
         self.horizontalLayout_31 = QtWidgets.QHBoxLayout(self.widget_23)
         self.horizontalLayout_31.setObjectName("horizontalLayout_31")
-        self.swipingLeft_label = MyLabel(self.widget_23)
+        self.swipingLeft_label = MyLabel(self,self.widget_23)
         self.swipingLeft_label.set_name("swiping_left")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -998,7 +1013,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_22.setObjectName("widget_22")
         self.horizontalLayout_30 = QtWidgets.QHBoxLayout(self.widget_22)
         self.horizontalLayout_30.setObjectName("horizontalLayout_30")
-        self.swipingRight_label = MyLabel(self.widget_22)
+        self.swipingRight_label = MyLabel(self,self.widget_22)
         self.swipingRight_label.set_name("swiping_right")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -1021,7 +1036,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_21.setObjectName("widget_21")
         self.horizontalLayout_29 = QtWidgets.QHBoxLayout(self.widget_21)
         self.horizontalLayout_29.setObjectName("horizontalLayout_29")
-        self.swipingUp_label = MyLabel(self.widget_21)
+        self.swipingUp_label = MyLabel(self,self.widget_21)
         self.swipingUp_label.set_name("swiping_up")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -1044,7 +1059,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_20.setObjectName("widget_20")
         self.horizontalLayout_28 = QtWidgets.QHBoxLayout(self.widget_20)
         self.horizontalLayout_28.setObjectName("horizontalLayout_28")
-        self.thumbDown_label = MyLabel(self.widget_20)
+        self.thumbDown_label = MyLabel(self,self.widget_20)
         self.thumbDown_label.set_name("thumb_down")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -1067,7 +1082,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_19.setObjectName("widget_19")
         self.horizontalLayout_27 = QtWidgets.QHBoxLayout(self.widget_19)
         self.horizontalLayout_27.setObjectName("horizontalLayout_27")
-        self.ThumbUp_label = MyLabel(self.widget_19)
+        self.ThumbUp_label = MyLabel(self,self.widget_19)
         self.ThumbUp_label.set_name("thumb_up")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -1090,7 +1105,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_17.setObjectName("widget_17")
         self.horizontalLayout_25 = QtWidgets.QHBoxLayout(self.widget_17)
         self.horizontalLayout_25.setObjectName("horizontalLayout_25")
-        self.turningHandClockwise_label = MyLabel(self.widget_17)
+        self.turningHandClockwise_label = MyLabel(self,self.widget_17)
         self.turningHandClockwise_label.set_name("turning_hand_clockwise")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -1113,7 +1128,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_31.setObjectName("widget_31")
         self.horizontalLayout_39 = QtWidgets.QHBoxLayout(self.widget_31)
         self.horizontalLayout_39.setObjectName("horizontalLayout_39")
-        self.turningHandcounterclockwise_label = MyLabel(self.widget_31)
+        self.turningHandcounterclockwise_label = MyLabel(self,self.widget_31)
         self.turningHandcounterclockwise_label.set_name("turning_hand_counterclockwise")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -1136,7 +1151,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_30.setObjectName("widget_30")
         self.horizontalLayout_38 = QtWidgets.QHBoxLayout(self.widget_30)
         self.horizontalLayout_38.setObjectName("horizontalLayout_38")
-        self.zoomingInWithFull_label = MyLabel(self.widget_30)
+        self.zoomingInWithFull_label = MyLabel(self,self.widget_30)
         self.zoomingInWithFull_label.set_name("zooming_in_with_full_hand")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -1159,7 +1174,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_29.setObjectName("widget_29")
         self.horizontalLayout_37 = QtWidgets.QHBoxLayout(self.widget_29)
         self.horizontalLayout_37.setObjectName("horizontalLayout_37")
-        self.zoomingInWith2_label = MyLabel(self.widget_29)
+        self.zoomingInWith2_label = MyLabel(self,self.widget_29)
         self.zoomingInWith2_label.set_name("zooming_in_with_two_fingers")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -1182,7 +1197,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_28.setObjectName("widget_28")
         self.horizontalLayout_36 = QtWidgets.QHBoxLayout(self.widget_28)
         self.horizontalLayout_36.setObjectName("horizontalLayout_36")
-        self.zoomingOutWithFull_label = MyLabel(self.widget_28)
+        self.zoomingOutWithFull_label = MyLabel(self,self.widget_28)
         self.zoomingOutWithFull_label.set_name("zooming_out_with_full_hand")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -1205,7 +1220,7 @@ class Ui_MainWindow(QMainWindow):
         self.widget_27.setObjectName("widget_27")
         self.horizontalLayout_35 = QtWidgets.QHBoxLayout(self.widget_27)
         self.horizontalLayout_35.setObjectName("horizontalLayout_35")
-        self.zoomingOutWith2_label = MyLabel(self.widget_27)
+        self.zoomingOutWith2_label = MyLabel(self,self.widget_27)
         self.zoomingOutWith2_label.set_name("zooming_out_with_two_fingers")
         font = QtGui.QFont()
         font.setPointSize(12)
