@@ -37,11 +37,11 @@ class Mapping():
         return dict
     def save_configuration_to_file(self):
 
-        with open("user_configuration.json", "w") as outfile:
+        with open("configuration/user_configuration.json", "w") as outfile:
             json.dump(self.gesture, outfile)
 
     def read_configuration_from_file(self):
-        with open('./user_configuration.json') as json_file:
+        with open('configuration/user_configuration.json') as json_file:
             data = json.load(json_file)
             self.gesture = {int(k): v for (k, v) in data.items()}
     def read_default_configuration_from_file(self):

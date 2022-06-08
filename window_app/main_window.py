@@ -14,7 +14,6 @@ from controllers.gesture_name_mapper import NameMapper
 from controllers.functions_getter import FunctionsGetter
 from controllers.system_controller import SystemController
 from window_app.authors_window import AuthorsWindow
-
 class MyComboBox(PyQt5.QtWidgets.QComboBox):
     '''Class which ignore scroll mouse in QComboBox'''
     def __init__(self, scrollWidget=None, *args, **kwargs):
@@ -38,17 +37,26 @@ class MyLabel(QLabel):
         self.id = -1
         self.name=""
         self.authors_window = AuthorsWindow()
+        self.videoWindow = AuthorsWindow()
     def enterEvent(self, a0: QtCore.QEvent) -> None:
         if id != -1:
-            print("enter"+self.name)
-            self.authors_window.setWindowTitle("Gesture film")
-            self.authors_window.setFixedSize(330, 150)
-            self.authors_window.setStyleSheet("background-color: rgb(51, 211, 69);")
-            self.authors_window.show()
+            self.videoWindow.setFixedSize(172, 290)
+            self.videoWindow.wid = QWidget(self.videoWindow)
+            self.videoWindow.setCentralWidget(self.videoWindow.wid)
+            self.videoWindow.label = QLabel()
+            self.videoWindow.label.setFixedSize(152,270)
+            self.videoWindow.layout = QVBoxLayout()
+            self.videoWindow.layout.addWidget(self.videoWindow.label)
+            self.videoWindow.movie = QMovie("Nagrania/"+self.name+".gif")
+            self.videoWindow.label.setMovie(self.videoWindow.movie)
+            self.videoWindow.movie.start()
+            self.videoWindow.wid.setLayout(self.videoWindow.layout)
+            self.videoWindow.show()
+
     def leaveEvent(self, a0: QtCore.QEvent) -> None:
         if id != -1:
-            print("release"+self.name)
-            self.authors_window.close()
+            self.videoWindow.close()
+
     def set_name(self,name:str):
         self.name = name
         self.id =0
@@ -101,7 +109,7 @@ class Ui_MainWindow(QMainWindow):
         self.documentation_window = AuthorsWindow()
         self.documentation_window.setWindowTitle("Handy-documentation")
         label = QtWidgets.QLabel(self.documentation_window)
-        pixmap = QPixmap('window_app/documentation.png')
+        pixmap = QPixmap('documentation.png')
         label.setPixmap(pixmap.scaled(2000, 1031,  QtCore.Qt.KeepAspectRatio))
         label.setScaledContents(True)
         self.documentation_window.setCentralWidget(label)
