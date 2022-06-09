@@ -67,8 +67,8 @@ class MyLabel(QLabel):
         y = screen.height()
         pos = qtg.QCursor().pos()
         pos_y = pos.y()
-        if pos_y > y -401:
-            pos_y -= (y-pos_y)
+        if pos_y > y -451:
+            pos_y -= (y-pos_y)-30
         self.videoWindow.move(pos.x()+15,pos_y+15)
 
     def set_name(self,name:str):
@@ -92,14 +92,11 @@ class Ui_MainWindow(QMainWindow):
     def refresh_camera_list(self):
         temp = self.cont.get_camera_controller().refresh_camera_list()
         if temp >= 0:
-            self.setResolutionCamera_combobox.setCurrentText("Original")
             self.setCamera_combobox.setCurrentText(str(temp))
     def set_camera(self):
         temp=self.cont.get_camera_controller().set_used_camera_number(int(self.setCamera_combobox.currentText()))
         if temp >= 0:
             self.setCamera_combobox.setCurrentText(str(temp))
-            self.setResolutionCamera_combobox.setCurrentText("Original")
-
 
     def show_handy_started(self):
         self.recognition_in_starttab_label.setText("Gesture recognition enabled")
@@ -1319,21 +1316,9 @@ class Ui_MainWindow(QMainWindow):
         self.verticalLayout_3.addWidget(self.FeedLabel)
         self.formLayout_3 = QtWidgets.QFormLayout()
         self.formLayout_3.setObjectName("formLayout_3")
-        self.setResolutionCamera_combobox = QtWidgets.QComboBox(self.cameraTab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.setResolutionCamera_combobox.sizePolicy().hasHeightForWidth())
-        self.setResolutionCamera_combobox.setSizePolicy(sizePolicy)
-        self.setResolutionCamera_combobox.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-                                                        "border: 1px solid black;")
-        self.setResolutionCamera_combobox.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContentsOnFirstShow)
-        self.setResolutionCamera_combobox.setObjectName("setResolutionCamera_combobox")
-        self.formLayout_3.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.setResolutionCamera_combobox)
-        self.set_resolutionCameras_Button = QtWidgets.QPushButton(self.cameraTab)
-        self.set_resolutionCameras_Button.setStyleSheet("background-color: rgb(112, 211, 69);")
-        self.set_resolutionCameras_Button.setObjectName("set_resolutionCameras_Button")
-        self.formLayout_3.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.set_resolutionCameras_Button)
         self.refreshCameras_Button = QtWidgets.QPushButton(self.cameraTab)
         self.refreshCameras_Button.setStyleSheet("background-color: rgb(112, 211, 69);")
         self.refreshCameras_Button.setObjectName("refreshCameras_Button")
@@ -1396,13 +1381,6 @@ class Ui_MainWindow(QMainWindow):
         MainWindow.setTabOrder(self.cancelButton, self.resetButton)
         self.tabWidget.setCurrentIndex(0)
 
-        resolution_list=[[320, 240], [480, 320], [640, 480], [800, 480], [800, 600],
-                         [1024, 768], [1280, 720], [1366, 768], [1280, 800], [1366, 768],
-                         [1280, 800], [1440, 900], [1280, 1024], [1600, 1024], [1400, 1050],
-                         [1024, 600], [1680, 1050], [1600, 1200], [1600, 900], [1920, 1080],]
-        self.setResolutionCamera_combobox.addItem("Original")
-        for i in resolution_list:
-            self.setResolutionCamera_combobox.addItem(str(i[0])+"x"+str(i[1]))
         '''wziecie wszystkich nazw akcji'''
         action_names = self.cont.get_camera().get_mapping().function_getter.get_all_functions_names()
         '''dodanie akcji do comboboxow'''
@@ -1437,7 +1415,6 @@ class Ui_MainWindow(QMainWindow):
         for i in arr:
             self.setCamera_combobox.addItem(str(i))
         self.verticalLayout_3.addWidget(self.notifications_checkbox)
-        self.set_resolutionCameras_Button.clicked.connect(lambda: self.cont.get_camera_controller().set_camera_resolution(self.setResolutionCamera_combobox.currentText()))
         self.refreshCameras_Button.clicked.connect(lambda: self.refresh_camera_list())
         self.authorButton.clicked.connect(lambda: self.show_authors())
         self.documentationButton.clicked.connect(lambda: self.open_documentation())
@@ -1454,7 +1431,7 @@ class Ui_MainWindow(QMainWindow):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("Handy", "Handy"))
-        self.documentationButton.setText(_translate("MainWindow", "Documentation"))
+        self.documentationButton.setText(_translate("MainWindow", "Instruction"))
         self.startHandyButton.setText(_translate("MainWindow", "Start Handy"))
         self.authorButton.setText(_translate("MainWindow", "Authors"))
         self.recognition_in_starttab_label.setText(_translate("MainWindow", "Gesture recognition disabled"))
@@ -1496,7 +1473,6 @@ class Ui_MainWindow(QMainWindow):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.gestureTab), _translate("MainWindow", "Gestures"))
         self.recognition_in_cameratab_label.setText(_translate("MainWindow", "Gesture recognition disabled"))
         self.FeedLabel.setText(_translate("MainWindow", "TextLabel"))
-        self.set_resolutionCameras_Button.setText(_translate("MainWindow", "  Set resolution   "))
         self.refreshCameras_Button.setText(_translate("MainWindow", "Refresh cameras"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.cameraTab), _translate("MainWindow", "Camera"))
 

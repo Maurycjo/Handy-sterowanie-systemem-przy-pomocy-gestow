@@ -3,17 +3,22 @@ import cv2
 import mediapipe as mp
 import pyautogui
 from win32api import GetSystemMetrics
-from win10toast import ToastNotifier as tn
 import time
 class GestureMouseSteering:
     def __init__(self,camera):
+        with open("file.txt", "a") as f:
+            f.write("=======")
+            f.write("constructor\n")
         self.active=True
         self.cam = camera
         self.sensitivity=10
-        self.toaster = tn()
     def stop_mouse_steering(self):
         self.active=False
+        with open("file.txt", "a") as f:
+            f.write("stop\n")
     def start_mouse_steering(self):
+        with open("file.txt", "a") as f:
+            f.write("start\n")
         self.active = True
         mp_hands = mp.solutions.hands
         hands =mp_hands.Hands()
@@ -27,6 +32,8 @@ class GestureMouseSteering:
         mouse_y_before=0
         mouse_x=0
         mouse_y=0
+        with open("file.txt", "a") as f:
+            f.write("before_loop\n")
         while True:
             if self.active is False:
                 break
@@ -75,6 +82,8 @@ class GestureMouseSteering:
                         mouse_y_before = mouse_y
                     elif points[0][1]< points[5][1] and points[5][1] < points[8][1] :
                         self.cam.win.cont.get_camera().get_mapping().set_mouse_end_message()
+                        with open("file.txt", "a") as f:
+                            f.write("stop_gesture\n")
                         return
             time.sleep(0.0001)
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 import cv2
 from controllers.camera_checker import CameraChecker
-from threading import Thread, Lock
+from threading import Lock
 
 class CameraController():
     def __init__(self,win):

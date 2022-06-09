@@ -2,7 +2,6 @@ from keras.layers import Input
 from keras.models import Model
 from collections import deque
 import numpy as np
-import datetime
 import cv2
 import time
 import sys
