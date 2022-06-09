@@ -15,6 +15,7 @@ class Mapping():
         self.read_configuration_from_file()
         self.controller = sys_controller
         self.function_getter=func_getter
+        self.function_getter.set_mapping_reference(self)
         self.mutex = Lock()
         self.toaster=tn()
         self.message = 1
@@ -102,9 +103,14 @@ class Mapping():
             pass
 
         self.mutex.release()
+
+    def set_time_before(self):
+        self.time_before=time.time()
+
     def gesture_action(self,number):
         self.time_now = time.time()
-        if self.time_now - self.time_before > self.gesture_timer.get_time(number) or number != self.last_gesture_number:
+        if self.time_now - self.time_before > self.gesture_timer.get_time(number) or (number != self.last_gesture_number and not(
+                self.last_gesture_number == 19 and number ==18)):
             self.last_gesture_number = number
             self.time_before = time.time()
             self.message_mutex.acquire()

@@ -71,18 +71,6 @@ class CameraController():
         temp = self.used_camera_number
         self.mutex.release()
         return temp
-    def set_camera_resolution(self, resolution):
-        if resolution=="Original":
-            self.mutex.acquire()
-            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 10000)  # max value, opencv dostosuje rozdzielczosc
-            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 10000)
-            self.mutex.release()
-        else:
-            resolution_list=resolution.split("x")
-            self.mutex.acquire()
-            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, int(resolution_list[0]))
-            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, int(resolution_list[1]))
-            self.mutex.release()
 
 
 
