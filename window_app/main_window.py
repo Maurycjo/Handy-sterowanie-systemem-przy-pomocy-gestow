@@ -50,7 +50,7 @@ class MyLabel(QLabel):
             self.videoWindow.wid = QWidget(self.videoWindow)
             self.videoWindow.setCentralWidget(self.videoWindow.wid)
             self.videoWindow.label = QLabel()
-            self.videoWindow.label.setFixedSize(270,480)
+            self.videoWindow.label.setFixedSize(270,480)        #supperted gesture film resolution
             self.videoWindow.layout = QVBoxLayout()
             self.videoWindow.layout.addWidget(self.videoWindow.label)
             self.videoWindow.movie = QMovie("gesture_videos/"+self.name+".gif")
@@ -67,9 +67,9 @@ class MyLabel(QLabel):
         y = screen.height()
         pos = qtg.QCursor().pos()
         pos_y = pos.y()
-        if pos_y > y -451:
-            pos_y -= (y-pos_y)-30
-        self.videoWindow.move(pos.x()+15,pos_y+15)
+        if pos_y > y - 600:
+            pos_y = y - 600
+        self.videoWindow.move(pos.x()+15,pos_y)
 
     def set_name(self,name:str):
         self.name = name
