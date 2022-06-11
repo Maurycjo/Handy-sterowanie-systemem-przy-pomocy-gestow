@@ -32,6 +32,8 @@ class MyComboBox(PyQt5.QtWidgets.QComboBox):
             return QtGui.QComboBox.wheelEvent(self, *args, **kwargs)
         else:
             return self.scrollWidget.wheelEvent(*args, **kwargs)
+
+        #co do za kod???
 class MyLabel(QLabel):
     def __init__(self,win, parent=None):
         super(MyLabel, self).__init__(parent)
@@ -75,7 +77,7 @@ class MyLabel(QLabel):
     def set_name(self,name:str):
         self.name = name
         self.id =0
-
+#nie wiem
 
 class Ui_MainWindow(QMainWindow):
     def __init__(self):
