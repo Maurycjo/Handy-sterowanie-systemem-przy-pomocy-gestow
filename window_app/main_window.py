@@ -46,14 +46,14 @@ class MyLabel(QLabel):
         self.videoWindow = AuthorsWindow()
     def enterEvent(self, a0: QtCore.QEvent) -> None:
         if id != -1:
-            self.videoWindow.setFixedSize(172, 290)
+            self.videoWindow.setFixedSize(290, 500)
             self.videoWindow.wid = QWidget(self.videoWindow)
             self.videoWindow.setCentralWidget(self.videoWindow.wid)
             self.videoWindow.label = QLabel()
-            self.videoWindow.label.setFixedSize(152,270)
+            self.videoWindow.label.setFixedSize(270,480)
             self.videoWindow.layout = QVBoxLayout()
             self.videoWindow.layout.addWidget(self.videoWindow.label)
-            self.videoWindow.movie = QMovie("Nagrania/"+self.name+".gif")
+            self.videoWindow.movie = QMovie("gesture_videos/"+self.name+".gif")
             self.videoWindow.label.setMovie(self.videoWindow.movie)
             self.videoWindow.movie.start()
             self.videoWindow.wid.setLayout(self.videoWindow.layout)
