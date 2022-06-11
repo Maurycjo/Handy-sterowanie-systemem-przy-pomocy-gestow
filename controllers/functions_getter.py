@@ -1,12 +1,12 @@
 import sys
 sys.path.insert(0, "..")
-import user_scripts
+from controllers import user_scripts
 import time
 class FunctionsGetter():
 
     def __init__(self, controller):
         self.time_before = time.time()
-        self.u_scripts=user_scripts
+        self.u_scripts= user_scripts
         self.controller = controller
         self.controller.set_reference(self)
         self.u_dict = self.u_scripts.get_functions()
@@ -38,24 +38,21 @@ class FunctionsGetter():
             "pause": self.controller.pause
         }
         self.dct = {**self.dct, **self.u_dict}
+    def set_mapping_reference(self,ref):
+        self.map_ref = ref
     def set_time_before(self):
-        self.time_before=time.time()
-
+        self.map_ref.set_time_before()
     def call_function(self,name):
-        self.time_now = time.time()
-        if self.time_now - self.time_before >1.90:
-            self.time_before= self.time_now
-            for key in self.dct.keys():
-                if name==key:
-                    func=self.dct.get(key)
-                    try:
-                     func()
-                    except:
-                        return False
-                    return True
-            return False
-        else:
-            return False
+        for key in self.dct.keys():
+            if name==key:
+                func=self.dct.get(key)
+                try:
+                 func()
+                except:
+                    return False
+                return True
+        return False
+
     def get_all_functions_names(self):
         return self.dct.keys()
 

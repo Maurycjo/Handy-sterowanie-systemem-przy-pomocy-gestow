@@ -2,7 +2,6 @@
 from keras.models import Model,load_model
 from keras.layers import Conv2D,TimeDistributed,LSTM,Input,Dense,Dropout,BatchNormalization,MaxPooling2D,concatenate,GlobalAveragePooling2D
 from keras.models import Model
-#from keras.optimizers import Adam
 from keras.layers.advanced_activations import LeakyReLU
 
 class ModelType:
@@ -179,12 +178,8 @@ class ModelFactory:
 
         pred = Dense(27,activation ='softmax')(x)
 
-
         flowmodel = Model(inputs=flowinput,outputs=pred,name='flow_model')
 
-        #flowmodel.compile(Adam(0.0001),loss='categorical_crossentropy',metrics=['categorical_accuracy'])
-        #flowmodel.summary()
-    
         return flowmodel
 
 
