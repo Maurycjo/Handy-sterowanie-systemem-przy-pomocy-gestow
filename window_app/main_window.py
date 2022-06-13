@@ -127,9 +127,9 @@ class Ui_main_window(QMainWindow):
 
     def show_authors(self):
         self.authors_window = QMainWindow()
-        self.authors_window.setWindowTitle("Handy-authors")
-        self.authors_window.setFixedSize(660, 300)
-        self.authors_window.setStyleSheet("background-color: rgb(51, 211, 69);")
+        self.authors_window.setWindowTitle("Authors")
+        self.authors_window.setFixedSize(600, 300)
+        self.authors_window.setStyleSheet("background-color: rgb(255, 255, 255);")
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
