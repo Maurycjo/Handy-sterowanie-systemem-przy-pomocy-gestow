@@ -31,7 +31,7 @@ class MyComboBox(PyQt5.QtWidgets.QComboBox):
             return self.scrollWidget.wheelEvent(*args, **kwargs)
 
 
-class MyLabel(PyQt5.QtWidgets.QLabel):
+class MyLabel(PyQt5.QtWidgets.QLabel,PyQt5.QtWidgets.QPushButton):
     def __init__(self,win, parent=None):
         super(MyLabel, self).__init__(parent)
         self.win = win
@@ -44,16 +44,17 @@ class MyLabel(PyQt5.QtWidgets.QLabel):
         self.name=""
         self.authors_window = AuthorsWindow()
         self.videoWindow = AuthorsWindow()
-    def enterEvent(self, a0: QtCore.QEvent) -> None:
+
+    def mousePressEvent(self, ev: QtGui.QMouseEvent) -> None:
         if id != -1:
             self.videoWindow.setFixedSize(290, 500)
             self.videoWindow.wid = QWidget(self.videoWindow)
             self.videoWindow.setCentralWidget(self.videoWindow.wid)
             self.videoWindow.label = QLabel()
-            self.videoWindow.label.setFixedSize(270,480)        #supperted gesture film resolution
+            self.videoWindow.label.setFixedSize(270, 480)  # supperted gesture film resolution
             self.videoWindow.layout = QVBoxLayout()
             self.videoWindow.layout.addWidget(self.videoWindow.label)
-            self.videoWindow.movie = QMovie("gesture_videos/"+self.name+".gif")
+            self.videoWindow.movie = QMovie("gesture_videos/" + self.name + ".gif")
             self.videoWindow.label.setMovie(self.videoWindow.movie)
             self.videoWindow.movie.start()
             self.videoWindow.wid.setLayout(self.videoWindow.layout)
@@ -63,7 +64,6 @@ class MyLabel(PyQt5.QtWidgets.QLabel):
             if id != -1:
                     self.videoWindow.close()
 
-    #MASTER
     def mouseMoveEvent(self, QMouseEvent):
         screen = QDesktopWidget().screenGeometry()
         y = screen.height()
@@ -72,16 +72,6 @@ class MyLabel(PyQt5.QtWidgets.QLabel):
         if pos_y > y - 600:
             pos_y = y - 600
         self.videoWindow.move(pos.x()+15,pos_y)
-
-        #HEAD
-    # def mouseMoveEvent(self, QMouseEvent):
-    #         screen = QDesktopWidget().screenGeometry()
-    #         y = screen.height()
-    #         pos = qtg.QCursor().pos()
-    #         pos_y = pos.y()
-    #         if pos_y > y - 451:
-    #                 pos_y -= (y - pos_y) - 30
-    #         self.videoWindow.move(pos.x() + 15, pos_y + 15)
 
     def set_name(self, name: str):
         self.name = name
@@ -98,14 +88,21 @@ class Ui_main_window(QMainWindow):
         self.func_get = FunctionsGetter(self.sys_cont)
         self.cont = Controller(self.func_get, self.sys_cont, self)
         self.sys_cont.set_camera_reference(self.cont.get_camera_controller())
+
     def get_geometry(self):
         return self.geometry()
+
     def get_position(self):
         return self.pos()
+
     def refresh_camera_list(self):
         temp = self.cont.get_camera_controller().refresh_camera_list()
-        if temp >= 0:
-            self.camera_combo_box.setCurrentText("Camera "+str(temp))
+        self.camera_combo_box.clear()
+        if len(temp) > 0:
+            for a in temp:
+                self.camera_combo_box.addItem("Camera "+str(a))
+            self.camera_combo_box.setCurrentText("Camera 0")
+
     def set_camera(self):
         camera_text=self.camera_combo_box.currentText()
         camera_number=int(camera_text[-1])
@@ -127,8 +124,8 @@ class Ui_main_window(QMainWindow):
 
     def show_authors(self):
         self.authors_window = QMainWindow()
-        self.authors_window.setWindowTitle("Authors")
-        self.authors_window.setFixedSize(600, 300)
+        self.authors_window.setWindowTitle("Handy-authors")
+        self.authors_window.setFixedSize(670, 300)
         self.authors_window.setStyleSheet("background-color: rgb(255, 255, 255);")
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -806,7 +803,7 @@ class Ui_main_window(QMainWindow):
         self.rolling_hand_vertical_layout.setSpacing(0)
         self.rolling_hand_vertical_layout.setObjectName("rolling_hand_vertical_layout")
         self.rolling_hand_image_label = MyLabel(self.scrollAreaWidgetContents)
-        self.rolling_hand_image_label.set_name("rolling_hand_forward")
+        self.rolling_hand_image_label.set_name("rolling_hand_backward")
         self.rolling_hand_image_label.setMinimumSize(QtCore.QSize(0, 200))
         self.rolling_hand_image_label.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.rolling_hand_image_label.setText("")
@@ -1751,41 +1748,41 @@ class Ui_main_window(QMainWindow):
         main_window.setWindowTitle(_translate("main_window", "Handy"))
         self.select_camera_label.setText(_translate("main_window", "Select camera"))
         self.refresh_cameras_button.setText(_translate("main_window", "Refresh Cameras"))
-        self.show_notification_check_box.setText(_translate("main_window", "Show notification"))
+        self.show_notification_check_box.setText(_translate("main_window", "Show notifications"))
         self.modify_gestures_button.setText(_translate("main_window", "Modify gestures"))
         self.start_button.setText(_translate("main_window", "Start"))
         self.help_button.setText(_translate("main_window", "Help"))
         self.authors_button.setText(_translate("main_window", "Authors"))
         self.aplication_tab_widget.setTabText(self.aplication_tab_widget.indexOf(self.camera_tab), _translate("main_window", "Camera"))
-        self.mouse_right_button_name_label.setText(_translate("main_window", "Right Mouse Button"))
-        self.mouse_left_button_name_label.setText(_translate("main_window", "Left Mouse Button"))
-        self.turning_hand_counter_name_label.setText(_translate("main_window", "Turning Hand Counterclocwise"))
-        self.mouse_exit_name_label.setText(_translate("main_window", "Exit Mouse Mode"))
-        self.mouse_sterring_name_label.setText(_translate("main_window", "Mouse Steering"))
-        self.start_mouse_name_label.setText(_translate("main_window", "Start Mouse Controll"))
-        self.druming_fingers_name_label.setText(_translate("main_window", "Drumming Fingers"))
-        self.swiping_up_name_label.setText(_translate("main_window", "Swiping Up"))
-        self.swiping_down_name_label.setText(_translate("main_window", "Swiping Down"))
-        self.rolling_hand_name_label.setText(_translate("main_window", "Rolling Hand Backward"))
-        self.swiping_left_name_label.setText(_translate("main_window", "Swiping Left"))
-        self.rolling_hand_forward_name_label.setText(_translate("main_window", "Rolling Hand Forward"))
-        self.swiping_right_name_label.setText(_translate("main_window", "Swiping Right"))
-        self.stop_sign_name_label.setText(_translate("main_window", "Stop Sign"))
-        self.thumb_down_name_label.setText(_translate("main_window", "Thumb Down"))
-        self.shaking_hand_name_label.setText(_translate("main_window", "Shaking Hand"))
-        self.zooming_out_with_fiull_hand_name_label.setText(_translate("main_window", "Zooming Out With Full Hand"))
-        self.zooming_in_with_full_hand_name_label.setText(_translate("main_window", "Zoomong In With Full Hand"))
-        self.zooming_in_with_two_fing_name_label.setText(_translate("main_window", "Zooming In With Two Fingers"))
-        self.zooming_out_with_two_fing_name_label.setText(_translate("main_window", "Zooming Out With Two Fingers"))
-        self.turrning_hand_clock_name_label.setText(_translate("main_window", "Turning Hand Clockwise"))
-        self.pulling_hand_in_name_label.setText(_translate("main_window", "Pulling Hand In"))
-        self.pushing_hand_away_name_label.setText(_translate("main_window", "Pushing Hand Away"))
-        self.pulling_two_fingers_name_label.setText(_translate("main_window", "Pulling Two Fingers In"))
-        self.pushing_two_fingers_away_name_label.setText(_translate("main_window", "Pushing Two Fingers Away"))
-        self.sliding_two_fingers_left_name_label.setText(_translate("main_window", "Sliding Two Fingers Left"))
-        self.sliding_two_fingers_right_name_label.setText(_translate("main_window", "Sliding two Fingers Right"))
-        self.sliding_two_fingers_down_name_label.setText(_translate("main_window", "Sliding Two Fingers Down"))
-        self.sliding_two_fingers_up_name_label.setText(_translate("main_window", "Sliding Two Fingers Up"))
+        self.mouse_right_button_name_label.setText(_translate("main_window", "Right mouse button"))
+        self.mouse_left_button_name_label.setText(_translate("main_window", "Left mouse button"))
+        self.turning_hand_counter_name_label.setText(_translate("main_window", "Turning hand counterclockwise"))
+        self.mouse_exit_name_label.setText(_translate("main_window", "Stop mouse control"))
+        self.mouse_sterring_name_label.setText(_translate("main_window", "Mouse move"))
+        self.start_mouse_name_label.setText(_translate("main_window", "Start mouse control"))
+        self.druming_fingers_name_label.setText(_translate("main_window", "Drumming fingers"))
+        self.swiping_up_name_label.setText(_translate("main_window", "Swiping up"))
+        self.swiping_down_name_label.setText(_translate("main_window", "Swiping down"))
+        self.rolling_hand_name_label.setText(_translate("main_window", "Rolling hand backward"))
+        self.swiping_left_name_label.setText(_translate("main_window", "Swiping left"))
+        self.rolling_hand_forward_name_label.setText(_translate("main_window", "Rolling hand forward"))
+        self.swiping_right_name_label.setText(_translate("main_window", "Swiping right"))
+        self.stop_sign_name_label.setText(_translate("main_window", "Stop sign"))
+        self.thumb_down_name_label.setText(_translate("main_window", "Thumb down"))
+        self.shaking_hand_name_label.setText(_translate("main_window", "Shaking hand"))
+        self.zooming_out_with_fiull_hand_name_label.setText(_translate("main_window", "Zooming out with full hand"))
+        self.zooming_in_with_full_hand_name_label.setText(_translate("main_window", "Zooming in with full hand"))
+        self.zooming_in_with_two_fing_name_label.setText(_translate("main_window", "Zooming in with two fingers"))
+        self.zooming_out_with_two_fing_name_label.setText(_translate("main_window", "Zooming out with two fingers"))
+        self.turrning_hand_clock_name_label.setText(_translate("main_window", "Turning hand clockwise"))
+        self.pulling_hand_in_name_label.setText(_translate("main_window", "Pulling hand in"))
+        self.pushing_hand_away_name_label.setText(_translate("main_window", "Pushing hand away"))
+        self.pulling_two_fingers_name_label.setText(_translate("main_window", "Pulling two fingers in"))
+        self.pushing_two_fingers_away_name_label.setText(_translate("main_window", "Pushing two fingers away"))
+        self.sliding_two_fingers_left_name_label.setText(_translate("main_window", "Sliding two fingers left"))
+        self.sliding_two_fingers_right_name_label.setText(_translate("main_window", "Sliding two fingers right"))
+        self.sliding_two_fingers_down_name_label.setText(_translate("main_window", "Sliding two fingers down"))
+        self.sliding_two_fingers_up_name_label.setText(_translate("main_window", "Sliding two fingers up"))
         self.cancel_button.setText(_translate("main_window", "Cancel"))
         self.restore_button.setText(_translate("main_window", "Restore default settings"))
         self.apply_button.setText(_translate("main_window", "Apply"))

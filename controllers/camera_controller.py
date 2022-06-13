@@ -68,7 +68,7 @@ class CameraController():
             self.used_camera_number = -1
             self.cap = None
         self.win.set_cameras_combo_box(self.camera_list)
-        temp = self.used_camera_number
+        temp = self.camera_list
         self.mutex.release()
         return temp
 
