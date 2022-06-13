@@ -102,7 +102,7 @@ class Ui_MainWindow(QMainWindow):
         if temp >= 0:
             self.setCamera_combobox.setCurrentText(str(temp))
 
-
+#wypadlo z uzytku-----------------------------------------------------------
     def show_handy_started(self):
         self.recognition_in_starttab_label.setText("Gesture recognition enabled")
         self.recognition_in_gesturetab_label.setText("Gesture recognition enabled")
@@ -123,6 +123,10 @@ class Ui_MainWindow(QMainWindow):
                                                                "border: 1px solid black;")
         self.recognition_in_cameratab_label.setStyleSheet("background-color: rgb(255, 0, 0);\n"
                                                               "border: 1px solid black;")
+
+        #----------------------------------------------------------
+
+        #do przerobienia------------------
     def open_documentation(self):
         self.documentation_window = QMainWindow()
         self.documentation_window.setWindowTitle("Handy-documentation")
@@ -157,6 +161,8 @@ class Ui_MainWindow(QMainWindow):
         self.authors_label.move(3, 0)
         self.authors_window.show()
         self.hide()
+    #-------------------------------------------------
+
     def get_config(self):
         config = self.cont.get_camera().get_mapping().get_gestures_list()
         self.action1_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(1)))
