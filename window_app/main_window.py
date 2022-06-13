@@ -9,8 +9,6 @@ import time
 import sys
 from PySide2 import QtGui as qtg
 
-
-
 sys.path.insert(0, "..")
 from controllers.controller import Controller
 from controllers.gesture_name_mapper import NameMapper
