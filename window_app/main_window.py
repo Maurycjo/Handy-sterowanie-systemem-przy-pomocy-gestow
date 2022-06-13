@@ -1321,6 +1321,7 @@ class Ui_MainWindow(QMainWindow):
         self.gridLayout_4.addWidget(self.recognition_in_cameratab_label, 0, 0, 1, 1)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
+
         self.FeedLabel = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)

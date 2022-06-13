@@ -1,7 +1,8 @@
 import sys
 from PyQt5 import QtWidgets
-#from window_app.main_window import Ui_MainWindow as win
-from good_window_beta import Ui_main_window as win
+#from window_app.good_window_nowe import Ui_MainWindow as win
+#from good_window_beta import Ui_main_window as win
+from window_app.good_window_nowe import Ui_main_window as win
 from PyQt5.QtGui import QIcon
 def end_application():
     ui.close_application()
