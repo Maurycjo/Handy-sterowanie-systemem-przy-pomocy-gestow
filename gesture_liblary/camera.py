@@ -73,13 +73,13 @@ class Camera():
                 self.gesture_map.gesture_action(3)
             elif max_value > 0.9 and position == 5:
                 self.gesture_map.gesture_action(4)
-            elif max_value > 0.9 and position == 6:
+            elif max_value > 0.70 and position == 6:
                 self.gesture_map.gesture_action(5)
-            elif max_value > 0.75 and position == 7:
+            elif max_value > 0.72 and position == 7:
                 self.gesture_map.gesture_action(6)
-            elif max_value > 0.75 and position == 8:
+            elif max_value > 0.54 and position == 8:
                 self.gesture_map.gesture_action(7)
-            elif max_value > 0.9 and position == 9:
+            elif max_value > 0.55 and position == 9:
                 self.gesture_map.gesture_action(8)
             elif max_value > 0.9 and position == 10:
                 self.gesture_map.gesture_action(9)
@@ -87,9 +87,9 @@ class Camera():
                 self.gesture_map.gesture_action(10)
             elif max_value > 0.7 and position == 12:
                 self.gesture_map.gesture_action(11)
-            elif max_value > 0.7 and position == 13:
+            elif max_value > 0.65 and position == 13:
                 self.gesture_map.gesture_action(12)
-            elif max_value > 0.9 and position == 14:
+            elif max_value > 0.65 and position == 14:
                 self.gesture_map.gesture_action(13)
             elif max_value > 0.7 and position == 15:
                 self.gesture_map.gesture_action(14)
@@ -103,9 +103,9 @@ class Camera():
                 self.gesture_map.gesture_action(18)
             elif max_value > 0.9 and position == 20:
                 self.gesture_map.gesture_action(19)
-            elif max_value > 0.75 and position == 21:
+            elif max_value > 0.60 and position == 21:
                 self.gesture_map.gesture_action(20)
-            elif max_value > 0.70 and position == 22:
+            elif max_value > 0.60 and position == 22:
                 self.gesture_map.gesture_action(21)
             elif max_value > 0.9 and position == 23:
                 self.gesture_map.gesture_action(22)

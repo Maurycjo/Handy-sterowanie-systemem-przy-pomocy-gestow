@@ -9,8 +9,6 @@ import time
 import sys
 from PySide2 import QtGui as qtg
 
-
-
 sys.path.insert(0, "..")
 from controllers.controller import Controller
 from controllers.gesture_name_mapper import NameMapper
@@ -48,14 +46,14 @@ class MyLabel(PyQt5.QtWidgets.QLabel):
         self.videoWindow = AuthorsWindow()
     def enterEvent(self, a0: QtCore.QEvent) -> None:
         if id != -1:
-            self.videoWindow.setFixedSize(172, 290)
+            self.videoWindow.setFixedSize(290, 500)
             self.videoWindow.wid = QWidget(self.videoWindow)
             self.videoWindow.setCentralWidget(self.videoWindow.wid)
             self.videoWindow.label = QLabel()
-            self.videoWindow.label.setFixedSize(152,270)
+            self.videoWindow.label.setFixedSize(270,480)        #supperted gesture film resolution
             self.videoWindow.layout = QVBoxLayout()
             self.videoWindow.layout.addWidget(self.videoWindow.label)
-            self.videoWindow.movie = QMovie("Nagrania/"+self.name+".gif")
+            self.videoWindow.movie = QMovie("gesture_videos/"+self.name+".gif")
             self.videoWindow.label.setMovie(self.videoWindow.movie)
             self.videoWindow.movie.start()
             self.videoWindow.wid.setLayout(self.videoWindow.layout)
@@ -65,21 +63,29 @@ class MyLabel(PyQt5.QtWidgets.QLabel):
             if id != -1:
                     self.videoWindow.close()
 
+    #MASTER
     def mouseMoveEvent(self, QMouseEvent):
-            screen = QDesktopWidget().screenGeometry()
-            y = screen.height()
-            pos = qtg.QCursor().pos()
-            pos_y = pos.y()
-            if pos_y > y - 451:
-                    pos_y -= (y - pos_y) - 30
-            self.videoWindow.move(pos.x() + 15, pos_y + 15)
+        screen = QDesktopWidget().screenGeometry()
+        y = screen.height()
+        pos = qtg.QCursor().pos()
+        pos_y = pos.y()
+        if pos_y > y - 600:
+            pos_y = y - 600
+        self.videoWindow.move(pos.x()+15,pos_y)
+
+        #HEAD
+    # def mouseMoveEvent(self, QMouseEvent):
+    #         screen = QDesktopWidget().screenGeometry()
+    #         y = screen.height()
+    #         pos = qtg.QCursor().pos()
+    #         pos_y = pos.y()
+    #         if pos_y > y - 451:
+    #                 pos_y -= (y - pos_y) - 30
+    #         self.videoWindow.move(pos.x() + 15, pos_y + 15)
 
     def set_name(self, name: str):
-            self.name = name
-            self.id = 0
-
-
-
+        self.name = name
+        self.id = 0
 
 
 class Ui_main_window(QMainWindow):
@@ -463,7 +469,7 @@ class Ui_main_window(QMainWindow):
         self.mouse_right_button_vertical_layout.setSpacing(0)
         self.mouse_right_button_vertical_layout.setObjectName("mouse_right_button_vertical_layout")
         self.mouse_right_button_image_label = MyLabel(self.scrollAreaWidgetContents)
-        self.mouse_right_button_image_label.set_name("stop_sign")
+        self.mouse_right_button_image_label.set_name("mouse_right_click")
         self.mouse_right_button_image_label.setMinimumSize(QtCore.QSize(120, 200))
         self.mouse_right_button_image_label.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.mouse_right_button_image_label.setText("")
@@ -497,7 +503,7 @@ class Ui_main_window(QMainWindow):
         self.mouse_left_button_vertical_layout.setSpacing(0)
         self.mouse_left_button_vertical_layout.setObjectName("mouse_left_button_vertical_layout")
         self.mouse_left_button_image_label = MyLabel(self.scrollAreaWidgetContents)
-        self.mouse_left_button_image_label.set_name("stop_sign")
+        self.mouse_left_button_image_label.set_name("mouse_left_click")
         self.mouse_left_button_image_label.setMinimumSize(QtCore.QSize(120, 200))
         self.mouse_left_button_image_label.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.mouse_left_button_image_label.setText("")
@@ -571,7 +577,7 @@ class Ui_main_window(QMainWindow):
         self.mouse_exit_vertical_layout.setSpacing(0)
         self.mouse_exit_vertical_layout.setObjectName("mouse_exit_vertical_layout")
         self.mouse_exit_image_label = MyLabel(self.scrollAreaWidgetContents)
-        self.mouse_exit_image_label.set_name("stop_sign")
+        self.mouse_exit_image_label.set_name("mouse_stop")
         self.mouse_exit_image_label.setMinimumSize(QtCore.QSize(120, 200))
         self.mouse_exit_image_label.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.mouse_exit_image_label.setText("")
@@ -606,7 +612,7 @@ class Ui_main_window(QMainWindow):
         self.mouse_steering_vertical_layout.setSpacing(0)
         self.mouse_steering_vertical_layout.setObjectName("mouse_steering_vertical_layout")
         self.mouse_steering_image_label = MyLabel(self.scrollAreaWidgetContents)
-        self.mouse_steering_image_label.set_name("stop_sign")
+        self.mouse_steering_image_label.set_name("mouse_steering")
         self.mouse_steering_image_label.setMinimumSize(QtCore.QSize(180, 200))
         self.mouse_steering_image_label.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.mouse_steering_image_label.setText("")

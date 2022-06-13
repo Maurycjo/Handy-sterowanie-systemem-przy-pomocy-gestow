@@ -21,8 +21,6 @@ class GestureMouseSteering:
 
         width = GetSystemMetrics(0)
         height = GetSystemMetrics(1)
-        with open("file.txt", "a") as f:
-            f.write("start after win32\n")
         pyautogui.FAILSAFE=False
         mouse_click_lock=False
         right_mouse_click_lock=False
