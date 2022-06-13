@@ -12,10 +12,26 @@ class Controller():
         self.started = False
     def get_camera(self):
         return self.camera
+
+
+    def start_stop_gesture_recognition(self):
+        if self.started is False:
+            self.t = threading.Thread(name='daemon', target=self.camera.start_windows_gesture_library)
+            self.t.start()
+            self.win.set_button_to_stop_mode()
+            self.started = True
+        else:
+            self.system_controller.stop_mouse()
+            self.camera.stop_gesture_recognition()
+            self.t.join()
+            self.win.set_button_to_start_mode()
+            self.started = False
+
+
     def start_gesture_recognition(self):
         if self.started is False:
             self.started = True
-            self.win.show_handy_started()
+            #self.win.show_handy_started()
             self.t=threading.Thread(name='daemon',target=self.camera.start_windows_gesture_library)
             self.t.start()
 
@@ -25,6 +41,6 @@ class Controller():
             self.camera.stop_gesture_recognition()
             self.t.join()
             self.started=False
-            self.win.show_handy_stopped()
+           # self.win.show_handy_stopped()
     def get_camera_controller(self):
         return self.camera_controller

@@ -56,6 +56,7 @@ class Mapping():
             self.save_configuration_to_file()
         except:
             pass
+
     def set_mouse_end_message(self):
         self.message_mutex.acquire()
         self.new_mouse_message = True
@@ -96,12 +97,10 @@ class Mapping():
         '''Changes gesture-action configuration'''
         self.mutex.acquire()
         self.gesture = {**gesture_action}
-
         try:
             self.save_configuration_to_file()
         except:
             pass
-
         self.mutex.release()
 
     def set_time_before(self):
