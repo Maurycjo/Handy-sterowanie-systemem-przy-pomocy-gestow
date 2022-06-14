@@ -78,6 +78,17 @@ class MyLabel(PyQt5.QtWidgets.QLabel,PyQt5.QtWidgets.QPushButton):
         self.id = 0
 
 
+class MyCheckBox(PyQt5.QtWidgets.QCheckBox):
+    def __init__(self, parent=None):
+        super(MyCheckBox,self).__init__(parent)
+
+    def mouseMoveEvent(self, a0: QtGui.QMouseEvent) -> None:
+        pass
+    def wheelEvent(self, a0: QtGui.QWheelEvent) -> None:
+        pass
+    def keyPressEvent(self, e: QtGui.QKeyEvent) -> None:
+        pass
+
 class Ui_main_window(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -341,7 +352,7 @@ class Ui_main_window(QMainWindow):
         self.verticalLayout_3.addWidget(self.refresh_cameras_button)
         spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.verticalLayout_3.addItem(spacerItem6)
-        self.show_notification_check_box = QtWidgets.QCheckBox(self.camera_tab)
+        self.show_notification_check_box = MyCheckBox(self.camera_tab)
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
