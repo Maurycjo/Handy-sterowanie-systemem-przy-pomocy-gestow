@@ -14,7 +14,6 @@ from controllers.controller import Controller
 from controllers.gesture_name_mapper import NameMapper
 from controllers.functions_getter import FunctionsGetter
 from controllers.system_controller import SystemController
-from window_app.authors_window import AuthorsWindow
 
 
 class MyComboBox(PyQt5.QtWidgets.QComboBox):
@@ -42,8 +41,7 @@ class MyLabel(PyQt5.QtWidgets.QLabel,PyQt5.QtWidgets.QPushButton):
         self.setMouseTracking(True)
         self.id = -1
         self.name=""
-        self.authors_window = AuthorsWindow()
-        self.videoWindow = AuthorsWindow()
+        self.videoWindow = QMainWindow()
 
     def mousePressEvent(self, ev: QtGui.QMouseEvent) -> None:
         if id != -1:
@@ -126,12 +124,11 @@ class Ui_main_window(QMainWindow):
         self.documentation_window.setWindowTitle("Handy-documentation")
         label = QtWidgets.QLabel(self.documentation_window)
         pixmap = QPixmap('documentation.png')
-        label.setPixmap(pixmap.scaled(2000, 1031, QtCore.Qt.KeepAspectRatio))
+        label.setPixmap(pixmap)
         label.setScaledContents(True)
         self.documentation_window.setCentralWidget(label)
         self.documentation_window.move(0, 0)
         self.documentation_window.show()
-        self.documentation_window.showMaximized()
 
     def show_authors(self):
         self.authors_window = QMainWindow()
@@ -154,7 +151,7 @@ class Ui_main_window(QMainWindow):
         self.authors_label.resize(660, 280)
         self.authors_label.move(3, 0)
         self.authors_window.show()
-        self.hide()
+        #self.hide()
 
     def get_config(self):
         config = self.cont.get_camera().get_mapping().get_gestures_list()
