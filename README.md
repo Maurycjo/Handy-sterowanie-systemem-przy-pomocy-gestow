@@ -1,1 +1,2 @@
-#Projekt sterowania systemem operacyjnym Windows przy pomocy gestów
+# Projekt sterowania systemem operacyjnym Windows przy pomocy gestów
+
