@@ -121,14 +121,14 @@ class Ui_main_window(QMainWindow):
 
     def open_documentation(self):
         self.documentation_window = QMainWindow()
-        self.documentation_window.setWindowTitle("Handy-documentation")
+        self.documentation_window.setWindowTitle("Handy-instruction")
         label = QtWidgets.QLabel(self.documentation_window)
         pixmap = QPixmap('documentation.png')
         label.setPixmap(pixmap)
         label.setScaledContents(True)
         self.documentation_window.setCentralWidget(label)
         self.documentation_window.move(0, 0)
-        self.documentation_window.show()
+        self.documentation_window.showMaximized()
 
     def show_authors(self):
         self.authors_window = QMainWindow()
@@ -173,7 +173,6 @@ class Ui_main_window(QMainWindow):
         self.action16_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(16)))
         self.action17_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(17)))
         self.action18_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(18)))
-        #self.action19_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(19)))
         self.action20_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(20)))
         self.action21_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(21)))
         self.action22_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(22)))
