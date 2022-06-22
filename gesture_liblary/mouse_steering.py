@@ -4,21 +4,23 @@ import mediapipe as mp
 import pyautogui
 from win32api import GetSystemMetrics
 import time
+
+
 class GestureMouseSteering:
+
     def __init__(self,camera):
         self.active=True
         self.cam = camera
         self.sensitivity=10
+
     def stop_mouse_steering(self):
         self.active=False
 
     def start_mouse_steering(self):
         self.active = True
-
         mp_hands = mp.solutions.hands
         hands =mp_hands.Hands()
         mp_draw=mp.solutions.drawing_utils
-
         width = GetSystemMetrics(0)
         height = GetSystemMetrics(1)
         pyautogui.FAILSAFE=False
@@ -78,6 +80,4 @@ class GestureMouseSteering:
                         self.cam.win.cont.get_camera().get_mapping().set_mouse_end_message()
                         return
             time.sleep(0.0001)
-if __name__ == "__main__":
-    c=GestureMouseSteering()
-    c.start_mouse_steering()
+

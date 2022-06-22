@@ -6,7 +6,7 @@ import screen_brightness_control as sbc
 from ctypes import cast, POINTER, wintypes as w
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
-import math
+
 
 class SystemController:
 

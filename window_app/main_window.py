@@ -24,12 +24,10 @@ class MyComboBox(PyQt5.QtWidgets.QComboBox):
         super(PyQt5.QtWidgets.QComboBox, self).__init__(*args, **kwargs)
         self.scrollWidget = scrollWidget
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.reference_to_win = None
 
-    def wheelEvent(self, *args, **kwargs):
-        if self.hasFocus():
-            return QtGui.QComboBox.wheelEvent(self, *args, **kwargs)
-        else:
-            return self.scrollWidget.wheelEvent(*args, **kwargs)
+    def wheelEvent(self,  a0: QtGui.QWheelEvent):
+        pass
 
 
 class MyLabel(PyQt5.QtWidgets.QLabel,PyQt5.QtWidgets.QPushButton):
@@ -117,6 +115,7 @@ class Ui_main_window(QMainWindow):
             for a in temp:
                 self.camera_combo_box.addItem("Camera "+str(a))
             self.camera_combo_box.setCurrentText("Camera 0")
+
 
     def set_camera(self):
         camera_text=self.camera_combo_box.currentText()

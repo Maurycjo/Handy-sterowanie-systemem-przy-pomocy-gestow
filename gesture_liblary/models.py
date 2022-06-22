@@ -1,5 +1,5 @@
 
-from keras.models import Model,load_model
+from keras.models import load_model
 from keras.layers import Conv2D,TimeDistributed,LSTM,Input,Dense,Dropout,BatchNormalization,MaxPooling2D,concatenate,GlobalAveragePooling2D
 from keras.models import Model
 from keras.layers.advanced_activations import LeakyReLU
