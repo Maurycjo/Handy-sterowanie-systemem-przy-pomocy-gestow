@@ -32,14 +32,6 @@ class CameraController():
         else:
             ret, frame = False, False
         self.mutex.release()
-        if ret is False:
-            self.set_used_camera_number(0)
-            self.mutex.acquire()
-            if self.used_camera_number > -1:
-                ret, frame = self.cap.read()
-            else:
-                ret, frame = False, False
-            self.mutex.release()
         return ret,frame
 
     def get_all_cameras(self):
