@@ -27,10 +27,11 @@ class CameraController():
 
     def get_camera_image(self):
         self.mutex.acquire()
-        if self.used_camera_number > -1:
+        if self.used_camera_number != -1:
             ret, frame = self.cap.read()
         else:
             ret, frame = False, False
+            self.used_camera_number = -1
         self.mutex.release()
         return ret,frame
 
@@ -59,12 +60,14 @@ class CameraController():
         self.mutex.acquire()
         self.camera_list = self.camera_checker.list_ports()
         if len(self.camera_list) > 0:
+
+            if self.used_camera_number != -1:
+                self.cap.release()
             self.used_camera_number = self.camera_list[0]
             self.cap = cv2.VideoCapture(self.used_camera_number, cv2.CAP_DSHOW)
         else:
             self.used_camera_number = -1
             self.cap = None
-        self.win.set_cameras_combo_box(self.camera_list)
         temp = self.camera_list
         self.mutex.release()
         return temp

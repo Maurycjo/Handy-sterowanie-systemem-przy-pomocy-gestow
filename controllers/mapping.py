@@ -18,12 +18,12 @@ class Mapping():
         self.controller = sys_controller
         self.function_getter=func_getter
         self.function_getter.set_mapping_reference(self)
+        self.mutex = Lock()
         temp =  self.function_getter.get_all_functions_names()
         for a in self.gesture.values():
             if not a in temp:
                 self.read_default_configuration_from_file()
                 break
-        self.mutex = Lock()
         self.toaster=tn()
         self.message = 1
         self.new_message = False

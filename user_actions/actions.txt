@@ -1,4 +1,0 @@
-def function1():
-    print("function1")
-    with open("file.txt","w") as f:
-        f.write("aaaaaa")
