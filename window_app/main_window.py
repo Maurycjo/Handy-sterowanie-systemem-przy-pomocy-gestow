@@ -1802,7 +1802,7 @@ class Worker1(QThread):
     ImageUpdate = pyqtSignal(QImage)
 
     def run(self):
-        img = Image.open('./gesture_images/no_camera_picture.png')
+        img = Image.open('./other/no_camera_picture.png')
         no_cam = asarray(img)
         while self.win.get_close_time() is False:
             if self.win.is_active():

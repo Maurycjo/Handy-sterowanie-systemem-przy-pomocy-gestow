@@ -6,7 +6,7 @@ import screen_brightness_control as sbc
 from ctypes import cast, POINTER, wintypes as w
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
-
+import math
 
 class SystemController:
 
@@ -14,9 +14,18 @@ class SystemController:
 
     def __init__(self):
         self.operating_system_name = platform.system()
-        self.volume_change = 1.305
         self.camera=None
         self.mouse_steering = None
+        self.sound_values = []
+        self.read_sound_values_from_file()
+
+    def read_sound_values_from_file(self):
+        with open('./other/sound_level_values.txt','r') as f:
+            self.sound_values = f.readlines()
+        for a in range (len(self.sound_values)):
+            b = self.sound_values[a]
+            self.sound_values[a] = b[0:-2]
+        self.sound_values = [float(x)  for x in self.sound_values]
 
     def set_reference(self,function_getter):
         self.function_getter=function_getter
@@ -74,10 +83,15 @@ class SystemController:
                                                CLSCTX_ALL, None)
         self.volume = cast(self.interface, POINTER(IAudioEndpointVolume))
         self.current_volume = self.volume.GetMasterVolumeLevel()
-        value = self.current_volume + self.volume_change
-        if value > 0:
-            value = 0
-        self.current_volume = value
+        for a in range (len(self.sound_values)):
+            if self.current_volume <= self.sound_values[a]:
+                if a < 50:
+                    self.current_volume = self.sound_values[a+1]
+                else:
+                    self.current_volume = 0.0
+                break
+        if self.current_volume >0.0:
+            self.current_volume = 0.0
         try:
             self.volume.SetMasterVolumeLevel(self.current_volume, None)
         except OSError:
@@ -89,10 +103,15 @@ class SystemController:
                                                CLSCTX_ALL, None)
         self.volume = cast(self.interface, POINTER(IAudioEndpointVolume))
         self.current_volume = self.volume.GetMasterVolumeLevel()
-        value = self.current_volume - self.volume_change
-        if value < -65.25:
-            value = -65.25
-        self.current_volume = value
+        for a in range (len(self.sound_values)):
+            if self.current_volume <= self.sound_values[a]:
+                if a > 0:
+                    self.current_volume = self.sound_values[a - 1]
+                else:
+                    self.current_volume = -65.25
+                break
+        if self.current_volume < -65.25:
+            self.current_volume = -65.25
         try:
             self.volume.SetMasterVolumeLevel(self.current_volume, None)
         except OSError:

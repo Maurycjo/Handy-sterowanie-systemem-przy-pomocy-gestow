@@ -83,9 +83,9 @@ class Camera():
                 self.gesture_map.gesture_action(8)
             elif max_value > 0.9 and position == 10:
                 self.gesture_map.gesture_action(9)
-            elif max_value > 0.7 and position == 11:
+            elif max_value > 0.5 and position == 11:
                 self.gesture_map.gesture_action(10)
-            elif max_value > 0.7 and position == 12:
+            elif max_value > 0.5 and position == 12:
                 self.gesture_map.gesture_action(11)
             elif max_value > 0.65 and position == 13:
                 self.gesture_map.gesture_action(12)
