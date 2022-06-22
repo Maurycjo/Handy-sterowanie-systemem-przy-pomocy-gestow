@@ -1,3 +1,4 @@
+
 def get_functions():
     python_file = open("user_actions/actions.txt").read()
     ns = {}

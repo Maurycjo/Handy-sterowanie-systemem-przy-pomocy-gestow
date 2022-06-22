@@ -2,6 +2,8 @@ import sys
 sys.path.insert(0, "..")
 from controllers import user_scripts
 import time
+
+
 class FunctionsGetter():
 
     def __init__(self, controller):
@@ -38,10 +40,13 @@ class FunctionsGetter():
             "pause": self.controller.pause
         }
         self.dct = {**self.dct, **self.u_dict}
+
     def set_mapping_reference(self,ref):
         self.map_ref = ref
+
     def set_time_before(self):
         self.map_ref.set_time_before()
+
     def call_function(self,name):
         for key in self.dct.keys():
             if name==key:

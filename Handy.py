@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtWidgets
 from window_app.main_window import Ui_main_window as win
 from PyQt5.QtGui import QIcon
+
 def end_application():
     ui.close_application()
 

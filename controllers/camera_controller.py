@@ -2,7 +2,9 @@ import cv2
 from controllers.camera_checker import CameraChecker
 from threading import Lock
 
+
 class CameraController():
+
     def __init__(self,win):
         self.win=win
         self.camera_checker = CameraChecker()
@@ -14,6 +16,7 @@ class CameraController():
             self.used_camera_number = -1
             self.cap = None
         self.mutex = Lock()
+
     def release_camera(self):
         self.mutex.acquire()
         if self.used_camera_number > -1:
@@ -38,9 +41,11 @@ class CameraController():
                 ret, frame = False, False
             self.mutex.release()
         return ret,frame
+
     def get_all_cameras(self):
         temp=self.camera_list
         return temp
+
     def set_used_camera_number(self,number:int):
         self.mutex.acquire()
         self.camera_list = self.camera_checker.list_ports()
@@ -50,7 +55,6 @@ class CameraController():
                 contains = True
                 break
         self.win.set_cameras_combo_box(self.camera_list)
-
         if contains is True:
             self.used_camera_number=number
             self.cap.release()
@@ -58,6 +62,7 @@ class CameraController():
         temp=self.used_camera_number
         self.mutex.release()
         return temp
+
     def refresh_camera_list(self):
         self.mutex.acquire()
         self.camera_list = self.camera_checker.list_ports()
@@ -72,9 +77,6 @@ class CameraController():
         self.mutex.release()
         return temp
 
-
-if __name__ == '__main__':
-    ap=CameraController()
 
 
 

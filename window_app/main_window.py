@@ -8,7 +8,8 @@ import cv2
 import time
 import sys
 from PySide2 import QtGui as qtg
-
+from PIL import Image
+from numpy import asarray
 sys.path.insert(0, "..")
 from controllers.controller import Controller
 from controllers.gesture_name_mapper import NameMapper
@@ -18,6 +19,7 @@ from controllers.system_controller import SystemController
 
 class MyComboBox(PyQt5.QtWidgets.QComboBox):
     '''Class which ignore scroll mouse in QComboBox'''
+
     def __init__(self, scrollWidget=None, *args, **kwargs):
         super(PyQt5.QtWidgets.QComboBox, self).__init__(*args, **kwargs)
         self.scrollWidget = scrollWidget
@@ -49,7 +51,7 @@ class MyLabel(PyQt5.QtWidgets.QLabel,PyQt5.QtWidgets.QPushButton):
             self.videoWindow.wid = QWidget(self.videoWindow)
             self.videoWindow.setCentralWidget(self.videoWindow.wid)
             self.videoWindow.label = QLabel()
-            self.videoWindow.label.setFixedSize(270, 480)  # supperted gesture film resolution
+            self.videoWindow.label.setFixedSize(270, 480)
             self.videoWindow.layout = QVBoxLayout()
             self.videoWindow.layout.addWidget(self.videoWindow.label)
             self.videoWindow.movie = QMovie("gesture_videos/" + self.name + ".gif")
@@ -82,12 +84,16 @@ class MyCheckBox(PyQt5.QtWidgets.QCheckBox):
 
     def mouseMoveEvent(self, a0: QtGui.QMouseEvent) -> None:
         pass
+
     def wheelEvent(self, a0: QtGui.QWheelEvent) -> None:
         pass
+
     def keyPressEvent(self, e: QtGui.QKeyEvent) -> None:
         pass
 
+
 class Ui_main_window(QMainWindow):
+
     def __init__(self):
         super().__init__()
         self.close_time = False
@@ -151,7 +157,6 @@ class Ui_main_window(QMainWindow):
         self.authors_label.resize(660, 280)
         self.authors_label.move(3, 0)
         self.authors_window.show()
-        #self.hide()
 
     def get_config(self):
         config = self.cont.get_camera().get_mapping().get_gestures_list()
@@ -239,7 +244,6 @@ class Ui_main_window(QMainWindow):
                                         "")
         self.start_button.setText("Start")
 
-
     def set_button_to_stop_mode(self):
         self.start_button.setStyleSheet("border-style:outset;\n"
                                         "border-radius:8px;\n"
@@ -247,7 +251,6 @@ class Ui_main_window(QMainWindow):
                                         "color:white;\n"
                                         "")
         self.start_button.setText("Stop")
-
 
     def setupUi(self, main_window):
         main_window.setObjectName("main_window")
@@ -277,16 +280,6 @@ class Ui_main_window(QMainWindow):
 
         self.FeedLabel = QtWidgets.QLabel()
         self.gridLayout.addWidget(self.FeedLabel, 4, 10, 1, 1)
-
-        # self.to_bedzie_camera_label = QtWidgets.QLabel(self.camera_tab)
-        # self.to_bedzie_camera_label.setStyleSheet("background-color: rgb(255, 255, 255);")
-        # self.to_bedzie_camera_label.setText("")
-        # self.to_bedzie_camera_label.setPixmap(QtGui.QPixmap("../gesture_images/grafika_camery.png"))
-        # self.to_bedzie_camera_label.setScaledContents(True)
-        # self.to_bedzie_camera_label.setObjectName("to_bedzie_camera_label")
-        # self.gridLayout.addWidget(self.to_bedzie_camera_label, 4, 10, 1, 1)
-
-
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem3, 4, 11, 1, 1)
         spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -1720,7 +1713,6 @@ class Ui_main_window(QMainWindow):
             self.action16_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
             self.action17_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
             self.action18_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
-            #self.action19_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
             self.action20_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
             self.action21_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
             self.action22_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
@@ -1731,13 +1723,11 @@ class Ui_main_window(QMainWindow):
         arr = self.cont.get_camera_controller().get_all_cameras()
         for i in arr:
             self.camera_combo_box.addItem("Camera "+str(i))
-        #self.verticalLayout_3.addWidget(self.show_notification_check_box)
         self.refresh_cameras_button.clicked.connect(lambda: self.refresh_camera_list())
         self.authors_button.clicked.connect(lambda: self.show_authors())
         self.help_button.clicked.connect(lambda: self.open_documentation())
         self.camera_combo_box.activated.connect(lambda: self.set_camera())
         self.start_button.clicked.connect(lambda: self.cont.start_stop_gesture_recognition())
-        #self.stopHandyButton.clicked.connect(lambda: self.cont.stop_gesture_recognition())
         self.apply_button.clicked.connect(lambda: self.set_config())
         self.restore_button.clicked.connect(lambda: self.get_default_config())
         self.cancel_button.clicked.connect(lambda: self.get_config())
@@ -1748,7 +1738,6 @@ class Ui_main_window(QMainWindow):
         self.Worker1 = Worker1(self.cont, self)
         self.Worker1.start()
         self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
-
 
     def retranslateUi(self, main_window):
         _translate = QtCore.QCoreApplication.translate
@@ -1795,7 +1784,6 @@ class Ui_main_window(QMainWindow):
         self.apply_button.setText(_translate("main_window", "Apply"))
         self.aplication_tab_widget.setTabText(self.aplication_tab_widget.indexOf(self.gesture_tab), _translate("main_window", "Gestures"))
 
-
     def ImageUpdateSlot(self, Image):
         pass
         self.FeedLabel.setPixmap(QPixmap.fromImage(Image))
@@ -1805,6 +1793,7 @@ class Ui_main_window(QMainWindow):
 
 
 class Worker1(QThread):
+
     def __init__(self, controller, win):
         super().__init__()
         self.controller = controller
@@ -1813,28 +1802,22 @@ class Worker1(QThread):
     ImageUpdate = pyqtSignal(QImage)
 
     def run(self):
-
+        img = Image.open('./gesture_images/no_camera_picture.png')
+        no_cam = asarray(img)
         while self.win.get_close_time() is False:
             if self.win.is_active():
                 pass
                 ret, frame = self.camera.get_camera_image()
                 if ret is True:
-                    Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                    FlippedImage = cv2.flip(Image, 1)
+                    Image1 = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    FlippedImage = cv2.flip(Image1, 1)
                     ConvertToQtFormat = QImage(FlippedImage.data, FlippedImage.shape[1], FlippedImage.shape[0],
                                                QImage.Format_RGB888)
-
-
+                    Pic = ConvertToQtFormat.scaled(800, 640, Qt.KeepAspectRatio)
+                    self.ImageUpdate.emit(Pic)
+                else:
+                    ConvertToQtFormat = QImage(no_cam.data, no_cam.shape[1], no_cam.shape[0],
+                                               QImage.Format_RGB888)
                     Pic = ConvertToQtFormat.scaled(800, 640, Qt.KeepAspectRatio)
                     self.ImageUpdate.emit(Pic)
             time.sleep(0.02)
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_main_window()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

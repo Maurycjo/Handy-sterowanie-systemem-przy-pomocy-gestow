@@ -6,6 +6,8 @@ from threading import Lock
 import time
 from window_app.action_name_mapper import ActionNameMapper
 from controllers.gesture_timer import GestureTimer as gt
+
+
 class Mapping():
     def __init__(self,func_getter,sys_controller):
         self.nm=ActionNameMapper()
@@ -16,6 +18,11 @@ class Mapping():
         self.controller = sys_controller
         self.function_getter=func_getter
         self.function_getter.set_mapping_reference(self)
+        temp =  self.function_getter.get_all_functions_names()
+        for a in self.gesture.values():
+            if not a in temp:
+                self.read_default_configuration_from_file()
+                break
         self.mutex = Lock()
         self.toaster=tn()
         self.message = 1
@@ -29,13 +36,16 @@ class Mapping():
         self.notifications_enabled= False
         t = threading.Thread(name='daemon',target=self.show_message)
         t.start()
+
     def end_thread(self):
         self.end=True
+
     def get_gestures_list(self):
         self.mutex.acquire()
         dict={**self.gesture}
         self.mutex.release()
         return dict
+
     def save_configuration_to_file(self):
 
         with open("configuration/user_configuration.json", "w") as outfile:
@@ -45,6 +55,7 @@ class Mapping():
         with open('configuration/user_configuration.json') as json_file:
             data = json.load(json_file)
             self.gesture = {int(k): v for (k, v) in data.items()}
+
     def read_default_configuration_from_file(self):
         self.mutex.acquire()
         with open('configuration/default_configuration.json') as json_file:
@@ -61,6 +72,7 @@ class Mapping():
         self.message_mutex.acquire()
         self.new_mouse_message = True
         self.message_mutex.release()
+
     def set_notifications_enabled(self,value: bool):
         if value is True:
             self.message_mutex.acquire()
@@ -68,6 +80,7 @@ class Mapping():
             self.new_message = False
             self.message_mutex.release()
         self.notifications_enabled = value
+
     def show_message(self):
         while self.end is False:
             if self.notifications_enabled is True:
@@ -84,7 +97,8 @@ class Mapping():
                                duration=1.9,icon_path='./logo1.ico',threaded = True)
                     self.new_message = False
                 self.message_mutex.release()
-            time.sleep(0.1)
+            time.sleep(0.07)
+
     def get_gesture(self, number:int):
         self.mutex.acquire()
         for key in self.gesture.keys():
@@ -93,6 +107,7 @@ class Mapping():
                 return True
         self.mutex.release()
         return False
+
     def set_gesture(self,gesture_action: dict):
         '''Changes gesture-action configuration'''
         self.mutex.acquire()
