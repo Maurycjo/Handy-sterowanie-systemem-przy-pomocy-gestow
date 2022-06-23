@@ -1,2 +1,2 @@
-# Projekt sterowania systemem operacyjnym Windows przy pomocy gestów
+# Handy - aplikacja umożliwiająca sterowanie systemem operacyjnym Windows przy pomocy gestów
 
