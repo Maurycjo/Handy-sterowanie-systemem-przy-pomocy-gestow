@@ -40,7 +40,7 @@ class MyLabel(PyQt5.QtWidgets.QLabel,PyQt5.QtWidgets.QPushButton):
         self.setPalette(p)
         self.setMouseTracking(True)
         self.id = -1
-        self.name=""
+        self.name = ""
         self.videoWindow = QMainWindow()
 
     def mousePressEvent(self, ev: QtGui.QMouseEvent) -> None:
@@ -69,7 +69,7 @@ class MyLabel(PyQt5.QtWidgets.QLabel,PyQt5.QtWidgets.QPushButton):
         pos_y = pos.y()
         if pos_y > y - 600:
             pos_y = y - 600
-        self.videoWindow.move(pos.x()+15,pos_y)
+        self.videoWindow.move(pos.x() + 15, pos_y)
 
     def set_name(self, name: str):
         self.name = name
@@ -118,11 +118,11 @@ class Ui_main_window(QMainWindow):
 
 
     def set_camera(self):
-        camera_text=self.camera_combo_box.currentText()
-        camera_number=int(camera_text[-1])
+        camera_text = self.camera_combo_box.currentText()
+        camera_number = int(camera_text[-1])
         temp=self.cont.get_camera_controller().set_used_camera_number(camera_number)
         if temp >= 0:
-            self.camera_combo_box.setCurrentText("Camera "+str(temp))
+            self.camera_combo_box.setCurrentText("Camera "+ str(temp))
 
     def open_documentation(self):
         self.documentation_window = QMainWindow()
@@ -158,7 +158,7 @@ class Ui_main_window(QMainWindow):
         self.authors_window.show()
 
     def get_config(self):
-        config = self.cont.get_camera().get_mapping().get_gestures_list()
+        config = self.cont.get_gesture_recognition().get_mapping().get_gestures_list()
         self.action1_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(1)))
         self.action2_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(2)))
         self.action3_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(3)))
@@ -185,7 +185,7 @@ class Ui_main_window(QMainWindow):
         self.action25_comboBox.setCurrentText(self.nm.get_user_friendly_action_name(config.get(25)))
 
     def get_default_config(self):
-            self.cont.get_camera().get_mapping().read_default_configuration_from_file()
+            self.cont.get_gesture_recognition().get_mapping().read_default_configuration_from_file()
             self.get_config()
 
     def set_config(self):
@@ -215,7 +215,7 @@ class Ui_main_window(QMainWindow):
         dict[23] = self.nm.get_normal_action_name(self.action23_comboBox.currentText())
         dict[24] = self.nm.get_normal_action_name(self.action24_comboBox.currentText())
         dict[25] = self.nm.get_normal_action_name(self.action25_comboBox.currentText())
-        self.cont.get_camera().get_mapping().set_gesture(dict)
+        self.cont.get_gesture_recognition().get_mapping().set_gesture(dict)
 
     def get_controller(self):
         return self.cont
@@ -226,7 +226,8 @@ class Ui_main_window(QMainWindow):
     def close_application(self):
         self.close_time = True
         self.cont.get_camera_controller().release_camera()
-        self.cont.get_camera().get_mapping().end_thread()
+        self.cont.get_gesture_recognition().get_mapping().end_thread()
+        self.cont.stop_app()
         time.sleep(0.1)
         sys.exit(0)
 
@@ -1691,7 +1692,7 @@ class Ui_main_window(QMainWindow):
         QtCore.QMetaObject.connectSlotsByName(main_window)
 
         '''wziecie wszystkich nazw akcji'''
-        action_names = self.cont.get_camera().get_mapping().function_getter.get_all_functions_names()
+        action_names = self.cont.get_gesture_recognition().get_mapping().function_getter.get_all_functions_names()
         '''dodanie akcji do comboboxow'''
         for i in action_names:
             self.action1_comboBox.addItem(self.nm.get_user_friendly_action_name(i))
@@ -1731,7 +1732,7 @@ class Ui_main_window(QMainWindow):
         self.restore_button.clicked.connect(lambda: self.get_default_config())
         self.cancel_button.clicked.connect(lambda: self.get_config())
         self.show_notification_check_box.stateChanged.connect(
-                lambda: self.cont.get_camera().get_mapping().set_notifications_enabled(
+                lambda: self.cont.get_gesture_recognition().get_mapping().set_notifications_enabled(
                         self.show_notification_check_box.isChecked()))
         self.modify_gestures_button.clicked.connect(lambda: self.aplication_tab_widget.setCurrentIndex(1))
         self.Worker1 = Worker1(self.cont, self)

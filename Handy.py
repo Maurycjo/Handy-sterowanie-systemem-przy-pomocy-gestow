@@ -1,17 +1,68 @@
 import sys
 from PyQt5 import QtWidgets
-from window_app.main_window import Ui_main_window as win
+from PyQt5.QtWidgets import QApplication
+from window_app.start_app import StartApp
 from PyQt5.QtGui import QIcon
+from multiprocessing import Process, Event, Value
 
-def end_application():
-    ui.close_application()
 
-app = QtWidgets.QApplication(sys.argv)
-QtWidgets.QApplication.setWindowIcon(QIcon('logo.png'))
-app.setQuitOnLastWindowClosed(False)
-app.lastWindowClosed.connect(end_application)
-MainWindow = QtWidgets.QMainWindow()
-ui = win()
-ui.setupUi(MainWindow)
-MainWindow.showMaximized()
-sys.exit(app.exec_())
+class Handy:
+
+    def __init__(self):
+        self.ui = None
+        self.start_app = None
+        self.start_app_widget = None
+        self.app = None
+        self.started = False
+        self.start()
+
+    def end_application(self):
+        self.ui.close_application()
+    
+    def start_application(self):
+        from window_app.main_window import Ui_main_window as win 
+        self.app = QtWidgets.QApplication(sys.argv)
+        QtWidgets.QApplication.setWindowIcon(QIcon('logo.png'))
+        self.app.setQuitOnLastWindowClosed(False)
+        self.app.lastWindowClosed.connect(self.end_application)
+        self.MainWindow = QtWidgets.QMainWindow()
+        if self.v.value == 1:
+            return
+        self.ui = win()
+        self.ui.setupUi(self.MainWindow)
+        if self.v.value == 1:
+            self.MainWindow.close()
+            self.ui.close_application()
+            return
+        self.started = True
+        self.e.set()    
+        try:
+            self.p.terminate()
+        except Exception:
+            pass
+        self.MainWindow.showMaximized()
+        self.MainWindow.showMaximized()
+        sys.exit(self.app.exec_())
+
+    def start(self):
+        self.v = Value('i', 0)
+        self.e = Event()
+        self.p = Process(target=self.start_temp_app, args=(self.e, self.v))
+        self.p.daemon = True
+        self.p.start()
+        self.start_application()
+    
+    def assign(self, v):
+        v.value = 1
+
+    def start_temp_app(self, e, v):
+        self.start_app = QApplication(sys.argv)
+        self.start_app.setQuitOnLastWindowClosed(False)
+        self.start_app.lastWindowClosed.connect(lambda: self.assign(v))
+        QApplication.setWindowIcon(QIcon('logo.png'))
+        self.start_app_widget = StartApp(e)
+        sys.exit(self.start_app.exec_())      
+
+
+if __name__ == '__main__':
+    Handy()

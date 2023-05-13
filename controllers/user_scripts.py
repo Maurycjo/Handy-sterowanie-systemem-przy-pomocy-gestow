@@ -7,4 +7,3 @@ def get_functions():
     for a in ns.keys():
         ns2["user_"+a] = ns.get(a)
     return ns2
-
