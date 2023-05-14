@@ -1,6 +1,6 @@
 
-def get_functions():
-    python_file = open("user_actions/actions.txt").read()
+def get_functions(absolute_path):
+    python_file = open(absolute_path + "/user_actions/actions.txt").read()
     ns = {}
     exec(python_file, globals(), ns)
     ns2 = {}

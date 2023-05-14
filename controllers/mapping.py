@@ -11,6 +11,7 @@ from controllers.gesture_timer import GestureTimer as gt
 class Mapping():
 
     def __init__(self, func_getter, sys_controller):
+        self.absolute_path = func_getter.get_absolute_path()
         self.nm = ActionNameMapper()
         self.gesture = {}
         self.end = False
@@ -32,7 +33,7 @@ class Mapping():
         self.message_mutex = Lock()
         self.time_before = time.time()
         self.time_now = self.time_before
-        self.gesture_timer = gt()
+        self.gesture_timer = gt(self.absolute_path)
         self.last_gesture_number = -1
         self.notifications_enabled = False
         t = threading.Thread(name='daemon',target=self.show_message)
@@ -48,17 +49,17 @@ class Mapping():
         return dict
 
     def save_configuration_to_file(self):
-        with open("configuration/user_configuration.json", "w") as outfile:
+        with open(self.absolute_path + '/configuration/user_configuration.json', 'w') as outfile:
             json.dump(self.gesture, outfile)
 
     def read_configuration_from_file(self):
-        with open('configuration/user_configuration.json') as json_file:
+        with open(self.absolute_path + '/configuration/user_configuration.json') as json_file:
             data = json.load(json_file)
             self.gesture = {int(k): v for (k, v) in data.items()}
 
     def read_default_configuration_from_file(self):
         self.mutex.acquire()
-        with open('configuration/default_configuration.json') as json_file:
+        with open(self.absolute_path + '/configuration/default_configuration.json') as json_file:
             data = json.load(json_file)
             self.gesture.clear()
             self.gesture = {int(k): v for (k, v) in data.items()}
@@ -82,21 +83,21 @@ class Mapping():
         self.notifications_enabled = value
 
     def show_message(self):
+        temp_logo = self.absolute_path + '/logo1.ico'
         while self.end is False:
             if self.notifications_enabled is True:
-                self.message_mutex.acquire()
-                
+                self.message_mutex.acquire()                
                 if self.new_mouse_message is True:
                     self.new_mouse_message = False
                     self.toaster.show_toast("Gesture detected",
                                             "Action name: mouse stop\n",
-                                            duration=1.7, icon_path='./logo1.ico', threaded=True)
+                                            duration=1.7, icon_path=temp_logo, threaded=True)
                 elif self.new_message is True:
                     self.toaster.show_toast("Gesture detected",
                                             "Gesture name: " + self.name_mapper.get_gesture_name(self.message) + "\n"
                                             + "Action name: " + self.nm.get_user_friendly_action_name(
                                                 str(self.gesture.get(self.message))),
-                               duration=1.7, icon_path='./logo1.ico', threaded = True)
+                               duration=1.7, icon_path=temp_logo, threaded=True)
                     self.new_message = False
                 self.message_mutex.release()
             time.sleep(0.02)
@@ -111,7 +112,6 @@ class Mapping():
         return False
 
     def set_gesture(self,gesture_action: dict):
-        '''Changes gesture-action configuration'''
         self.mutex.acquire()
         self.gesture = {**gesture_action}
         try:

@@ -6,12 +6,13 @@ import time
 
 class FunctionsGetter():
 
-    def __init__(self, controller):
+    def __init__(self, controller, absolute_path):
+        self.absolute_path = absolute_path
         self.time_before = time.time()
         self.u_scripts = user_scripts
         self.controller = controller
         self.controller.set_reference(self)
-        self.u_dict = self.u_scripts.get_functions()
+        self.u_dict = self.u_scripts.get_functions(self.absolute_path)
         self.dct = {"minimize_window": self.controller.minimize_window,
             "maximize_window": self.controller.maximize_window,
             "close_window": self.controller.close_window,
@@ -40,6 +41,9 @@ class FunctionsGetter():
             "pause": self.controller.pause
         }
         self.dct = {**self.dct, **self.u_dict}
+
+    def get_absolute_path(self):
+        return self.absolute_path
 
     def set_mapping_reference(self, ref):
         self.map_ref = ref

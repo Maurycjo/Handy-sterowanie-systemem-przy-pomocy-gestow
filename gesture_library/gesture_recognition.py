@@ -14,12 +14,12 @@ from gesture_library.models import ModelFactory
 class GestureRecognition():
 
     def __init__(self, function_getter, sys_controller, camera_controller):
-
+        self.absolute_path = function_getter.get_absolute_path()
         self.default_thresholds = [0.90 , 0.90 , 0.90, 0.90, 0.70, 0.72, 0.45, 0.50, 0.90, 0.50, 0.50, 0.65, 0.65, 0.70, 0.90, 0.90, 0.90, 0.90, 0.90, 0.60
                       , 0.60, 0.90, 0.90, 0.90, 0.90]
         self.thresholds = None
         try:
-            with open('configuration/recognition_threshold_configuration.json') as json_file:
+            with open(self.absolute_path + '/configuration/recognition_threshold_configuration.json') as json_file:
                 self.thresholds = json.load(json_file)
                 self.thresholds = [float(v) for v in self.thresholds.values()]
                 if len(self.thresholds) != 25:
@@ -42,7 +42,7 @@ class GestureRecognition():
         self.recognize = False
 
     def initialize_recognition(self):
-        self.model = ModelFactory().getModel()
+        self.model = ModelFactory(self.absolute_path).getModel()
         self.model.summary()
         self.rgbinput = Input((150, 100, 3))
         self.x = self.model.layers[1].layer(self.rgbinput)

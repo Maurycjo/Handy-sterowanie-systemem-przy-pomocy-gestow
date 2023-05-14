@@ -12,7 +12,8 @@ class SystemController:
 
     _scroll_speed = 200
 
-    def __init__(self):
+    def __init__(self, absolute_path):
+        self.absolute_path = absolute_path
         self.operating_system_name = platform.system()
         self.camera = None
         self.mouse_steering = None
@@ -20,7 +21,7 @@ class SystemController:
         self.read_sound_values_from_file()
 
     def read_sound_values_from_file(self):
-        with open('./other/sound_level_values.txt','r') as f:
+        with open(self.absolute_path + '/other/sound_level_values.txt', 'r') as f:
             self.sound_values = f.readlines()
         for a in range (len(self.sound_values)):
             b = self.sound_values[a]
