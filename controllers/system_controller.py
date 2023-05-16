@@ -203,5 +203,9 @@ class SystemController:
     def space(self):
         pyautogui.press('space')
 
-    def pause(self):
-        pyautogui.press('pause')
+    def screen_keyboard(self):
+        pyautogui.keyDown('win')
+        pyautogui.keyDown('ctrl')
+        pyautogui.press('o')
+        pyautogui.keyUp('ctrl')
+        pyautogui.keyUp('win')
